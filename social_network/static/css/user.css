@@ -8,6 +8,12 @@ textarea {
     font-family: sans-serif;
 }
 
+
+.blog-link {
+    color: #f84747;
+}
+
+
 #upper-div {
     margin-top: 100px;
     margin-bottom: 10px;

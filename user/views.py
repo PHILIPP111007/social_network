@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from .models import MyUser, Blog, Subscriber
+import re
 
 
 
@@ -25,7 +26,7 @@ def make_content(request, username):
 		return HttpResponseRedirect(f'/social_network/user/{request.user.username}')
 
 	blog = Blog.objects.filter(user_id=username).order_by('-date_time')
-	
+
 	obj = Subscriber()
 	friends_count = obj.get_friends(username=username).count()
 
@@ -48,7 +49,7 @@ def make_content(request, username):
 		# If we are friends, I can see his blog
 		if Subscriber.objects.filter(user=request.user.username, subscriber=username) and Subscriber.objects.filter(user=username, subscriber=request.user.username):
 			result_dict['is_my_friend'] = True
-	
+
 	return result_dict
 
 
