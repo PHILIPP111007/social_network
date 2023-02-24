@@ -5,9 +5,9 @@ from django.contrib.auth.models import User
 class RegisterForm(forms.Form):
 	first_name = forms.CharField(min_length=1, max_length=20)
 	last_name = forms.CharField(min_length=1, max_length=20)
-	username = forms.CharField(min_length=1, max_length=20, help_text='(придумайте уникальное имя)')
+	username = forms.CharField(min_length=1, max_length=20, help_text='(create a unique name)')
 	email = forms.EmailField(max_length=254)
-	password = forms.CharField(label='Password', min_length=8, widget=forms.PasswordInput(), help_text='(пароль должен содержать более 8 символов)')
+	password = forms.CharField(label='Password', min_length=8, widget=forms.PasswordInput(), help_text='(password must be more than 8 characters long)')
 	password2 = forms.CharField(label='Repeat password', min_length=8, widget=forms.PasswordInput())
 	
 	def clean(self):
@@ -23,9 +23,6 @@ class RegisterForm(forms.Form):
 			raise forms.ValidationError('Passwords don\'t match.')
 
 
-
-
 class LoginForm(forms.Form):
 	username = forms.CharField(min_length=1, max_length=20)
 	password = forms.CharField(min_length=8, widget=forms.PasswordInput())
-

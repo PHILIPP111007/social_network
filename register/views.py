@@ -6,8 +6,6 @@ from .forms import RegisterForm, LoginForm
 from user.models import MyUser, Blog
 
 
-
-
 def index(request):
 
 	result_dict = {}
@@ -37,13 +35,7 @@ def index(request):
 		result_dict['registerform'] = RegisterForm()
 		result_dict['loginform'] = LoginForm()
 	
-
 	return render(request, 'register.html', result_dict)
-
-
-
-
-
 
 
 
@@ -58,12 +50,11 @@ def create_data(form, request):
 
 		User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password)
 		MyUser.objects.create(username=username, first_name=first_name, last_name=last_name)
-		Blog.objects.create(user_id=username, content=f'Привет! Я {first_name} {last_name} и это моя первая запись!')
+		Blog.objects.create(user_id=username, content=f'Hi, I\'m {first_name} {last_name} and this is my first post!')
 	
 	elif form == 'LoginForm':
 		username = request.POST.get('username')
 		password = request.POST.get('password')
-	
 	
 	user_login(request, username, password)
 
@@ -80,7 +71,3 @@ def user_login(request, username, password):
 		result_dict['registerform'] = RegisterForm()
 		result_dict['loginform'] = LoginForm()
 		return render(request, 'register.html', result_dict)
-
-
-
-

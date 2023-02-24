@@ -17,11 +17,11 @@
 	<div class="upper-line">
 		<h5>{{ name }} {{ surname }}</h5>
 		<nav id="navigation">
-			<button aria-expanded="false">Настройки</button>
+			<button aria-expanded="false">Settings</button>
 			<div class="settings-bar" hidden>
-	   		 	<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Изменить тему</button>
+	   		 	<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
 	   		 	<form id="quitButton" method="GET" action="quit/">
-					<input type="submit" value="Выйти">
+					<input type="submit" value="Quit">
 				</form>
 			</div>
 		</nav>
@@ -29,13 +29,11 @@
 
 
     <aside class="left-list">
-		<!-- Боковая панель (сайдбар) -->
 		<nav>
-			<!-- Дополнительное меню страницы -->
-			<p class="menu-link"><a href="/social_network/user/{{ nickname }}">Моя страница</a></p>
-			<p class="menu-link"><a href="">Мессенджер</a></p>
-			<p class="menu-link"><a href="/social_network/friends/{{ nickname }}">Друзья</a></p>
-			<p class="menu-link"><a href="/social_network/news/{{ nickname }}" style="background-color: rgb(205,205,205);">Новости</a></p>
+			<p class="menu-link"><a href="/social_network/user/{{ nickname }}">My page</a></p>
+			<p class="menu-link"><a href="">Messenger</a></p>
+			<p class="menu-link"><a href="/social_network/friends/{{ nickname }}">Friends</a></p>
+			<p class="menu-link"><a href="/social_network/news/{{ nickname }}" style="background-color: rgb(205,205,205);">News</a></p>
 		</nav>
 	</aside>
 
@@ -47,15 +45,15 @@
 			    {% for record in friends_records %}
 				    <div class="record">
                         <h3>@{{ record.user_id }}</h3>
-						<a href="/social_network/user/{{ record.user_id }}"><button>Профиль</button></a>
+						<a href="/social_network/user/{{ record.user_id }}"><button>Profile</button></a>
 
-						<h6>Запись от {{ record.date_time }} {% if record.is_changed %}&#91;&#10000; Изменено&#93;{% endif %}</h6>
+						<h6>Record from the {{ record.date_time }} {% if record.is_changed %}&#91;&#10000; Modified&#93;{% endif %}</h6>
 					
 					    <p>{{ record.content | linebreaks }}</p>
 				    </div>
                 {% endfor %}
 			{% else %}
-				<h3>Когда у вас появятся друзья, вы сможете увидеть их новости!</h3>
+				<h3>When you have friends, you can see their news!</h3>
 			{% endif %}
         </div>
 

@@ -41,11 +41,11 @@ def make_content(request, username):
 		'friends_count': friends_count
 	}
 
-	# если нахожусь на странице другого пользователя:
+	# If I am on another user's page:
 	if username != request.user.username:
 		result_dict['is_my_page'] = False
 
-		# если мы друзья, то я смогу увидеть его блог
+		# If we are friends, I can see his blog
 		if Subscriber.objects.filter(user=request.user.username, subscriber=username) and Subscriber.objects.filter(user=username, subscriber=request.user.username):
 			result_dict['is_my_friend'] = True
 	
@@ -112,9 +112,3 @@ def delete_record(request, username, id):
 			pass
 	else:
 		return HttpResponseRedirect('/social_network/auth')
-
-		
-
-
-
-

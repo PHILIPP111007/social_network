@@ -5,16 +5,16 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Добро пожаловать</title>
+	<title>Welcome</title>
 	<link rel="stylesheet" href='{% static "css/register.css" %}'>
 
 </head>
 <body>
-	<p id="hello">Добро пожаловать в social_network!</p>
+	<p id="hello">Welcome to social_network!</p>
 
 	<div class="main">
         <div class="register">
-            <h3>Регистрация</h3>
+            <h3>Registration</h3>
             <form method="POST" action="">
 				{% csrf_token %}
 				<table class="form">
@@ -26,7 +26,7 @@
 
 
         <div class="enter">
-            <h3>Вход</h3>
+            <h3>Log in</h3>
             <form method="POST" action="">
 				{% csrf_token %}
 				<table class="form">

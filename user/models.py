@@ -1,7 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
-
-
 
 
 class MyUser(models.Model):
@@ -22,7 +19,6 @@ class Blog(models.Model):
 
 	def __str__(self):
 		return self.user.username
-
 
 
 
@@ -64,6 +60,4 @@ class Subscriber(models.Model):
 		subscribers = subscribers.exclude(username__in=friends)
 
 		return subscribers
-
-
 

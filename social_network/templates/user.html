@@ -16,14 +16,14 @@
 	<div class="upper-line">
 		<h5>{{ global_name }} {{ global_surname }}</h5>
 		<nav id="navigation">
-			<button id="first_button" aria-expanded="false">Настройки</button>
+			<button id="first_button" aria-expanded="false">Settings</button>
 			<div class="settings-bar" hidden>
-       		 	<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Изменить тему</button>
+       		 	<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
        		 	<form id="quitButton" method="GET" action="quit/">
-					<input type="submit" value="Выйти">
+					<input type="submit" value="Quit">
 				</form>
 				<form id="deleteAccountButton" method="GET" action="delete_account/">
-					<input class="delete_account" type="submit" value="Удалить аккаунт">
+					<input class="delete_account" type="submit" value="Delete account">
 				</form>
     		</div>
     	</nav>
@@ -32,13 +32,11 @@
 	
 	
 	<aside class="left-list">
-		<!-- Боковая панель (сайдбар) -->
 		<nav>
-			<!-- Дополнительное меню страницы -->
-			<p class="menu-link"><a href="/social_network/user/{{ global_nickname }}" style="background-color: rgb(205,205,205);">Моя страница</a></p>
-			<p class="menu-link"><a href="">Мессенджер</a></p>
-			<p class="menu-link"><a href="/social_network/friends/{{ global_nickname }}">Друзья</a></p>
-			<p class="menu-link"><a href="/social_network/news/{{ global_nickname }}">Новости</a></p>
+			<p class="menu-link"><a href="/social_network/user/{{ global_nickname }}" style="background-color: rgb(205,205,205);">My page</a></p>
+			<p class="menu-link"><a href="">Messenger</a></p>
+			<p class="menu-link"><a href="/social_network/friends/{{ global_nickname }}">Friends</a></p>
+			<p class="menu-link"><a href="/social_network/news/{{ global_nickname }}">News</a></p>
 		</nav>
 	</aside>
 
@@ -46,11 +44,11 @@
 
 		<div class="user">
 			{% if is_my_page %}
-				<h3>Домашняя страница</h3>
+				<h3>Homepage</h3>
 			{% endif %}
 			<p>{{ name }} {{ surname }}</p>
 			<p>@{{ nickname }}</p>
-			<p>Количество друзей: {{ friends_count }}</p>
+			<p>Number of friends: {{ friends_count }}</p>
 		</div>
 
 		<div class="blog">
@@ -58,7 +56,7 @@
 				<form class="add_record" method="POST" action="create_record/">
 					{% csrf_token %}
 					<textarea name="my_textarea" wrap="soft" rows="6" cols="45" name="text" oninput="this.style.height = (this.scrollHeight - 4) + 'px';"></textarea>
-					<input type="submit" name="sms" value="Добавить запись">
+					<input type="submit" name="sms" value="Add record">
 				</form>
 			{% endif %}
 
@@ -66,7 +64,7 @@
 				{% for record in blog %}
 					<div class="record">
 					
-						<h6>Запись от {{ record.date_time }} {% if record.is_changed %}&#91;&#10000; Изменено&#93;{% endif %}</h6>
+						<h6>Record from the {{ record.date_time }} {% if record.is_changed %}&#91;&#10000; Modified&#93;{% endif %}</h6>
 					
 						<p>{{ record.content | linebreaks }}</p>
 						{% if is_my_page %}
@@ -75,19 +73,19 @@
 									<form method="POST" action="change_record/{{ record.id }}/">
 										{% csrf_token %}
 										<textarea name="my_textarea" wrap="soft" rows="6" cols="45" name="text" oninput="this.style.height = (this.scrollHeight - 4) + 'px';"></textarea>
-										<input type="submit" name="sms" value="Изменить запись">
+										<input type="submit" name="sms" value="Edit record">
 									</form>
 								</div>
 							</nav>
 							<form method="POST" action="delete_record/{{ record.id }}/">
 								{% csrf_token %}
-								<input class="delete_record" type="submit" value="Удалить запись">
+								<input class="delete_record" type="submit" value="Delete record">
 							</form>
 						{% endif %}
 					</div>
 				{% endfor %}
 			{% else %}
-				<h3>Подружитесь и сможете увидеть его блог!</h3>
+				<h3>Make friends and you can see his blog!</h3>
 			{% endif %}
 
 		</div>

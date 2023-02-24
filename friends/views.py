@@ -6,7 +6,6 @@ from user.models import Subscriber
 from .forms import FindUser
 
 
-
 def index(request, username):
     
     if request.user.is_authenticated:
@@ -20,7 +19,6 @@ def index(request, username):
             return render(request, 'friends.html', result_dict)
     else:
         return HttpResponseRedirect('/social_network/auth')
-
 
 
 
@@ -53,14 +51,11 @@ def make_content(request, find_users=None):
 
 
 
-
 def quit(request, username):
 
     if request.method == 'GET' and request.user.is_authenticated and request.user.username == username:
         logout(request)
         return HttpResponseRedirect('/social_network/auth')
-
-
 
 
 
@@ -91,8 +86,6 @@ def find_user(request):
 
 
 
-
-
 def add_friend(request, username):
     if request.method == 'POST':
         if request.user.is_authenticated:
@@ -104,7 +97,6 @@ def add_friend(request, username):
         else:
             return HttpResponseRedirect('/social_network/auth')
 
-    
 
 
 def delete_friend(request, username):
@@ -136,5 +128,3 @@ def delete_subscriber(request, username):
             return HttpResponseRedirect(f'/social_network/friends/{request.user.username}')
         else:
             return HttpResponseRedirect('/social_network/auth')
-
- 

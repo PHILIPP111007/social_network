@@ -15,11 +15,11 @@
 	<div class="upper-line">
 		<h5>{{ first_name }} {{ last_name }}</h5>
 		<nav id="navigation">
-			<button aria-expanded="false">Настройки</button>
+			<button aria-expanded="false">Settings</button>
 			<div class="settings-bar" hidden>
-	   		 	<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Изменить тему</button>
+	   		 	<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
 	   		 	<form id="quitButton" method="GET" action="quit/">
-					<input type="submit" value="Выйти">
+					<input type="submit" value="Quit">
 				</form>
 			</div>
 		</nav>
@@ -28,33 +28,31 @@
 	
 	
 	<aside class="left-list">
-		<!-- Боковая панель (сайдбар) -->
 		<nav>
-			<!-- Дополнительное меню страницы -->
-			<p class="menu-link"><a href="/social_network/user/{{ username }}">Моя страница</a></p>
-			<p class="menu-link"><a href="">Мессенджер</a></p>
-			<p class="menu-link"><a href="/social_network/friends/{{ username }}" style="background-color: rgb(205,205,205);">Друзья</a></p>
-			<p class="menu-link"><a href="/social_network/news/{{ username }}">Новости</a></p>
+			<p class="menu-link"><a href="/social_network/user/{{ username }}">My page</a></p>
+			<p class="menu-link"><a href="">Messenger</a></p>
+			<p class="menu-link"><a href="/social_network/friends/{{ username }}" style="background-color: rgb(205,205,205);">Friends</a></p>
+			<p class="menu-link"><a href="/social_network/news/{{ username }}">News</a></p>
 		</nav>
 	</aside>
 
 	<div class="main-content">
 
 		<div class="user">
-			<h3>Друзья</h3>
+			<h3>Friends</h3>
 			<p>{{ first_name }} {{ last_name }}</p>
 			<p>@{{ username }}</p>
-			<p>&#91; друзья: {{ friends.count }} &#93; &#91; подписки: {{ subscriptions.count }} &#93; &#91; подписчики: {{ subscribers.count }} &#93;</p>
+			<p>&#91; friends: {{ friends.count }} &#93; &#91; subscriptions: {{ subscriptions.count }} &#93; &#91; subscribers: {{ subscribers.count }} &#93;</p>
 		</div>
 
 		<div class="find-form">
-			<caption>Найди друзей!</caption>
+			<caption>Find people!</caption>
 			<form method="POST" action="">
 				{% csrf_token %}
 				<table class="form">
 					{{ find_user_form }}
 				</table>
-				<input type="submit" value="Найти">
+				<input type="submit" value="Find">
 			</form>
 		</div>
 
@@ -65,11 +63,11 @@
 						<h4>{{ user.first_name }} {{ user.last_name }}</h4>
 						<h4 style="color:gray; font-size: 13px">@{{ user.username }}</h4>
 
-						<a href="/social_network/user/{{ user.username }}"><button>Профиль</button></a>
+						<a href="/social_network/user/{{ user.username }}"><button>Profile</button></a>
 
 						<form method="POST" action="add_friend/{{ user.username }}/">
 							{% csrf_token %}
-							<input class="add_friend" type="submit" value="Добавить в друзья">
+							<input class="add_friend" type="submit" value="Add to friends">
 						</form>
 					</div>
 				{% endfor %}
@@ -81,77 +79,77 @@
 
 			<div class="my_friends">
 				{% if friends %}
-					<h3>Друзья</h3>
+					<h3>Friends</h3>
 					<div>
-						{% for friend in  friends %}
+						{% for friend in friends %}
 							<div class="user-card">
 								<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
 								<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
 						
-								<a href="/social_network/user/{{ friend.username }}"><button>Профиль</button></a>
+								<a href="/social_network/user/{{ friend.username }}"><button>Profile</button></a>
 
 								<form method="POST" action="delete_friend/{{ friend.username }}/">
 									{% csrf_token %}
-									<input class="delete_friend" type="submit" value="Удалить из друзей">
+									<input class="delete_friend" type="submit" value="Remove from friends">
 								</form>
 							</div>
 						{% endfor %}
 					</div>
 				{% else %}
-					<h3 style="color:gray;">У вас пока нет друзей</h3>
+					<h3 style="color:gray;">You don't have any friends yet</h3>
 				{% endif %}
 			</div>
 
 
 			<div class="my_friends">
 				{% if subscriptions %}
-					<h3>Подписки</h3>
+					<h3>Subscriptions</h3>
 					<div>
-						{% for friend in  subscriptions %}
+						{% for friend in subscriptions %}
 							<div class="user-card">
 								<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
 								<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
 
-								<a href="/social_network/user/{{ friend.username }}"><button>Профиль</button></a>
+								<a href="/social_network/user/{{ friend.username }}"><button>Profile</button></a>
 					
 								<form method="POST" action="delete_friend/{{ friend.username }}/">
 									{% csrf_token %}
-									<input class="remove_subscribe" type="submit" value="Убрать подписку">
+									<input class="remove_subscribe" type="submit" value="Remove subscription">
 								</form>
 							</div>
 						{% endfor %}
 					</div>
 				{% else %}
-					<h3 style="color:gray;">Вы пока ни на кого не подписаны</h3>
+					<h3 style="color:gray;">You are not yet subscribed to anyone</h3>
 				{% endif %}
 			</div>
 
 
 			<div class="my_friends">
 				{% if subscribers %}
-					<h3>Подписчики</h3>
+					<h3>Subscribers</h3>
 					<div>
-						{% for friend in  subscribers %}
+						{% for friend in subscribers %}
 							<div class="user-card">
 								<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
 								<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
 
-								<a href="/social_network/user/{{ friend.username }}"><button>Профиль</button></a>
+								<a href="/social_network/user/{{ friend.username }}"><button>Profile</button></a>
 								
 								<form method="POST" action="add_friend/{{ friend.username }}/">
 									{% csrf_token %}
-									<input class="add_friend" type="submit" value="Добавить в друзья">
+									<input class="add_friend" type="submit" value="Add to friends">
 								</form>
 
 								<form method="POST" action="delete_subscriber/{{ friend.username }}/">
 									{% csrf_token %}
-									<input class="remove_subscribe" type="submit" value="Удалить его подписку">
+									<input class="remove_subscribe" type="submit" value="Delete his subscription">
 								</form>
 							</div>
 						{% endfor %}
 					</div>
 				{% else %}
-					<h3 style="color:gray;">На вас пока никто не подписан</h3>
+					<h3 style="color:gray;">No one has subscribed to you yet</h3>
 				{% endif %}
 			</div>
 		

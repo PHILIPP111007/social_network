@@ -15,7 +15,6 @@ def index(request, username):
 
 
 
-
 def make_content(request):
 
     user = User.objects.get(username=request.user.username)
@@ -31,9 +30,7 @@ def make_content(request):
 		'nickname': user.username,
         'friends_records': friends_records
 	}
-
     return result_dict
-
 
 
 def quit(request, username):
@@ -41,5 +38,3 @@ def quit(request, username):
     if request.method == 'GET' and request.user.is_authenticated:
         logout(request)
         return HttpResponseRedirect('/social_network/auth')
-
-        
