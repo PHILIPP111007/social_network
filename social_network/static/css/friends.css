@@ -1,0 +1,133 @@
+body {
+    font-family: sans-serif;
+    background-color: rgb(250, 244, 244);
+}
+
+
+#upper-div {
+    margin-top: 100px;
+    margin-bottom: 10px;
+}
+
+.upper-line {
+    position: fixed;
+    display: inline-flex;
+    right: 0%;
+    top: 0%;
+    left: 0%;
+    bottom: 99%;
+    padding-bottom: 35px;
+    background: rgb(235,235,235);
+}
+    .upper-line h5 {
+        float: right;
+        margin-top: 9px;
+        margin-left: 80%;
+    }
+
+#navigation {
+    float: right;
+    margin-top: 7px;
+    margin-left: 20px;
+}
+    .menu-link:hover{
+        background-color: rgb(220, 220, 220);
+    }
+
+.settings-bar {
+    margin-top: 10px;
+    margin-left: -25px;
+    padding: 10px;
+    background-color: rgb(235,235,235);
+    border: 1px solid black;
+}
+    #backgroundColorChangeButton {
+        margin-bottom: 10px;
+    }
+
+
+
+/* Меню боковой панели */
+.left-list {
+    height: 100%; /* Полная высота: удалите это, если вы хотите "авто" высота */
+    width: 160px; /* Установите ширину боковой панели */
+    position: fixed; /* Фиксированная боковая панель (оставайтесь на месте при прокрутке) */
+    z-index: 1; /* Оставайтесь с верху */
+    top: 0; /* Оставайтесь на вершине */
+    left: 0;
+    background-color: rgb(235,235,235);
+    overflow-x: hidden; /* Отключить горизонтальную прокрутку */
+    padding-top: 20px;
+  }
+  
+    /* Ссылки в меню навигации */
+    .left-list a {
+        padding: 10px 8px 6px 12px;
+        text-decoration: none;
+        font-size: 17px;
+        color: #818181;
+        display: block;
+    }
+
+
+.main-content {
+    margin-left: 160px; /* То же, что и ширина боковой панели */
+    padding: 0px 10px;
+}
+
+.user {
+    width: 1000px;
+    padding: 5px 10px;
+    border-radius: 15px 15px 15px 0px;
+    background-color: #cac3c3;
+    font-size: 25px;
+}
+
+
+.form {
+    padding: 10px;
+}
+
+.find-form {
+    display: inline-block;
+    padding: 10px;
+    border-radius: 0px 0px 10px 10px;
+    background-color: #cac3c3;
+}
+
+
+.find-users {
+    display: flex;
+}
+
+.friends-section {
+    display: flex;
+}
+    .my_friends {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+
+    .user-card {
+        margin: 10px 20px;
+        padding: 10px 30px;
+        border-radius: 10px;
+        background-color: #725c5c0e;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
+
+    .user-card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+
+    .add_friend:hover {
+        background-color: rgb(124, 234, 120);
+    }
+
+    .remove_subscribe:hover {
+        background-color: rgb(250, 135, 135);
+    }
+
+    .delete_friend:hover {
+        background-color: rgb(250, 135, 135);
+    }

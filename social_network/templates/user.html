@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{ global_name }} {{ global_surname }}</title>
+	<link rel="stylesheet" href='{% static "css/user.css" %}'>
+
+</head>
+<body>
+	<div id="upper-div"></div>
+	
+	<div class="upper-line">
+		<h5>{{ global_name }} {{ global_surname }}</h5>
+		<nav id="navigation">
+			<button id="first_button" aria-expanded="false">Настройки</button>
+			<div class="settings-bar" hidden>
+       		 	<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Изменить тему</button>
+       		 	<form id="quitButton" method="GET" action="quit/">
+					<input type="submit" value="Выйти">
+				</form>
+				<form id="deleteAccountButton" method="GET" action="delete_account/">
+					<input class="delete_account" type="submit" value="Удалить аккаунт">
+				</form>
+    		</div>
+    	</nav>
+	</div>
+
+	
+	
+	<aside class="left-list">
+		<!-- Боковая панель (сайдбар) -->
+		<nav>
+			<!-- Дополнительное меню страницы -->
+			<p class="menu-link"><a href="/social_network/user/{{ global_nickname }}" style="background-color: rgb(205,205,205);">Моя страница</a></p>
+			<p class="menu-link"><a href="">Мессенджер</a></p>
+			<p class="menu-link"><a href="/social_network/friends/{{ global_nickname }}">Друзья</a></p>
+			<p class="menu-link"><a href="/social_network/news/{{ global_nickname }}">Новости</a></p>
+		</nav>
+	</aside>
+
+	<div class="main-content">
+
+		<div class="user">
+			{% if is_my_page %}
+				<h3>Домашняя страница</h3>
+			{% endif %}
+			<p>{{ name }} {{ surname }}</p>
+			<p>@{{ nickname }}</p>
+			<p>Количество друзей: {{ friends_count }}</p>
+		</div>
+
+		<div class="blog">
+			{% if is_my_page %}
+				<form class="add_record" method="POST" action="create_record/">
+					{% csrf_token %}
+					<textarea name="my_textarea" wrap="soft" rows="6" cols="45" name="text" oninput="this.style.height = (this.scrollHeight - 4) + 'px';"></textarea>
+					<input type="submit" name="sms" value="Добавить запись">
+				</form>
+			{% endif %}
+
+			{% if is_my_page or is_my_friend %}
+				{% for record in blog %}
+					<div class="record">
+					
+						<h6>Запись от {{ record.date_time }} {% if record.is_changed %}&#91;&#10000; Изменено&#93;{% endif %}</h6>
+					
+						<p>{{ record.content | linebreaks }}</p>
+						{% if is_my_page %}
+							<nav id="change-record">
+								<div>
+									<form method="POST" action="change_record/{{ record.id }}/">
+										{% csrf_token %}
+										<textarea name="my_textarea" wrap="soft" rows="6" cols="45" name="text" oninput="this.style.height = (this.scrollHeight - 4) + 'px';"></textarea>
+										<input type="submit" name="sms" value="Изменить запись">
+									</form>
+								</div>
+							</nav>
+							<form method="POST" action="delete_record/{{ record.id }}/">
+								{% csrf_token %}
+								<input class="delete_record" type="submit" value="Удалить запись">
+							</form>
+						{% endif %}
+					</div>
+				{% endfor %}
+			{% else %}
+				<h3>Подружитесь и сможете увидеть его блог!</h3>
+			{% endif %}
+
+		</div>
+	</div>
+
+    <div id="upper-div"></div>
+	
+	<script src="{% static 'js/user.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+</body>
+</html>

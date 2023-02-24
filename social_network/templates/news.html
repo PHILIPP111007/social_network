@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{ name }} {{ surname }}</title>
+	<link rel="stylesheet" href='{% static "css/news.css" %}'>
+
+</head>
+<body>
+
+    <div id="upper-div"></div>
+
+	<div class="upper-line">
+		<h5>{{ name }} {{ surname }}</h5>
+		<nav id="navigation">
+			<button aria-expanded="false">Настройки</button>
+			<div class="settings-bar" hidden>
+	   		 	<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Изменить тему</button>
+	   		 	<form id="quitButton" method="GET" action="quit/">
+					<input type="submit" value="Выйти">
+				</form>
+			</div>
+		</nav>
+	</div>
+
+
+    <aside class="left-list">
+		<!-- Боковая панель (сайдбар) -->
+		<nav>
+			<!-- Дополнительное меню страницы -->
+			<p class="menu-link"><a href="/social_network/user/{{ nickname }}">Моя страница</a></p>
+			<p class="menu-link"><a href="">Мессенджер</a></p>
+			<p class="menu-link"><a href="/social_network/friends/{{ nickname }}">Друзья</a></p>
+			<p class="menu-link"><a href="/social_network/news/{{ nickname }}" style="background-color: rgb(205,205,205);">Новости</a></p>
+		</nav>
+	</aside>
+
+
+	<div class="main-content">
+
+        <div class="blog">
+			{% if friends_records %}
+			    {% for record in friends_records %}
+				    <div class="record">
+                        <h3>@{{ record.user_id }}</h3>
+						<a href="/social_network/user/{{ record.user_id }}"><button>Профиль</button></a>
+
+						<h6>Запись от {{ record.date_time }} {% if record.is_changed %}&#91;&#10000; Изменено&#93;{% endif %}</h6>
+					
+					    <p>{{ record.content | linebreaks }}</p>
+				    </div>
+                {% endfor %}
+			{% else %}
+				<h3>Когда у вас появятся друзья, вы сможете увидеть их новости!</h3>
+			{% endif %}
+        </div>
+
+    </div>
+
+    <div id="upper-div"></div>
+
+	<script src="{% static 'js/news.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+
+</body>
+</html>
