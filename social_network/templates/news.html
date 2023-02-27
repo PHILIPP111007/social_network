@@ -40,22 +40,23 @@
 
 	<div class="main-content">
 
-        <div class="blog">
-			{% if friends_records %}
-			    {% for record in friends_records %}
-				    <div class="record">
-                        <h3>@{{ record.user_id }}</h3>
-						<a href="/social_network/user/{{ record.user_id }}"><button>Profile</button></a>
-
-						<h6>Record from the {{ record.date_time }} {% if record.is_changed %}&#91;&#10000; Modified&#93;{% endif %}</h6>
+			<div class="blog">
+				{% if friends_records %}
+					{% for record in friends_records %}
+						<div class="record">
+							<h3>@{{ record.user_id }}</h3>
+							
+							<a href="/social_network/user/{{ record.user_id }}"><button>Profile</button></a>
 					
-					    <p>{{ record.content | linebreaks | urlize }}</p>
-				    </div>
-                {% endfor %}
-			{% else %}
-				<h3>When you have friends, you can see their news!</h3>
-			{% endif %}
-        </div>
+							<h6>Record from the {{ record.date_time }} {% if record.is_changed %}&#91;&#10000; Modified&#93;{% endif %}</h6>
+					
+							<p>{{ record.content | linebreaks | urlize | truncatewords:50}}</p>
+						</div>
+                	{% endfor %}
+				{% else %}
+					<h3>When you have friends, you can see their news!</h3>
+				{% endif %}
+			</div>
 
     </div>
 
