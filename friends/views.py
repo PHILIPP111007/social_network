@@ -27,9 +27,7 @@ def make_content(request, find_users=None):
     user = User.objects.get(username=request.user.username)
 
     obj = Subscriber()
-    friends = obj.get_friends(username=request.user.username)
-    subscriptions = obj.get_subscriptions(username=request.user.username)
-    subscribers = obj.get_subscribers(username=request.user.username)
+    friends, subscriptions, subscribers = obj.get_friends(username=request.user.username)
 
     result_dict = {
 		'first_name': user.first_name,
@@ -43,9 +41,9 @@ def make_content(request, find_users=None):
 	}
 
     if find_users:
-        result_dict['find_users'] = result_dict['find_users'].exclude(username__in=friends)
-        result_dict['find_users'] = result_dict['find_users'].exclude(username__in=subscriptions)
-        result_dict['find_users'] = result_dict['find_users'].exclude(username__in=subscribers)
+        result_dict['find_users'] = result_dict['find_users'].exclude(username__in=friends.values_list('username'))
+        result_dict['find_users'] = result_dict['find_users'].exclude(username__in=subscriptions.values_list('username'))
+        result_dict['find_users'] = result_dict['find_users'].exclude(username__in=subscribers.values_list('username'))
 
     return result_dict
 

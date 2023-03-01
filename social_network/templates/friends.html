@@ -56,21 +56,22 @@
 			</form>
 		</div>
 
+		
 		<div class="find-users">
 			{% if find_users %}
-				{% for user in find_users %}
-					<div class="user-card">
-						<h4>{{ user.first_name }} {{ user.last_name }}</h4>
-						<h4 style="color:gray; font-size: 13px">@{{ user.username }}</h4>
-
-						<a href="/social_network/user/{{ user.username }}"><button>Profile</button></a>
-
-						<form method="POST" action="add_friend/{{ user.username }}/">
-							{% csrf_token %}
-							<input class="add_friend" type="submit" value="Add to friends">
-						</form>
-					</div>
-				{% endfor %}
+			{% for user in find_users %}
+			<div class="user-card">
+				<a class="profile-link" href="/social_network/user/{{ user.username }}">
+					<h4>{{ user.first_name }} {{ user.last_name }}</h4>
+					<h4 style="color:gray; font-size: 13px">@{{ user.username }}</h4>
+				</a>
+				
+				<form method="POST" action="add_friend/{{ user.username }}/">
+					{% csrf_token %}
+					<input class="add_friend" type="submit" value="Add to friends">
+				</form>
+			</div>
+			{% endfor %}
 			{% endif %}
 		</div>
 
@@ -83,11 +84,11 @@
 					<div>
 						{% for friend in friends %}
 							<div class="user-card">
-								<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
-								<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
+								<a class="profile-link" href="/social_network/user/{{ friend.username }}">
+									<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
+									<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
+								</a>
 						
-								<a href="/social_network/user/{{ friend.username }}"><button>Profile</button></a>
-
 								<form method="POST" action="delete_friend/{{ friend.username }}/">
 									{% csrf_token %}
 									<input class="delete_friend" type="submit" value="Remove from friends">
@@ -107,10 +108,10 @@
 					<div>
 						{% for friend in subscriptions %}
 							<div class="user-card">
-								<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
-								<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
-
-								<a href="/social_network/user/{{ friend.username }}"><button>Profile</button></a>
+								<a class="profile-link" href="/social_network/user/{{ friend.username }}">
+									<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
+									<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
+								</a>
 					
 								<form method="POST" action="delete_friend/{{ friend.username }}/">
 									{% csrf_token %}
@@ -131,10 +132,10 @@
 					<div>
 						{% for friend in subscribers %}
 							<div class="user-card">
-								<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
-								<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
-
-								<a href="/social_network/user/{{ friend.username }}"><button>Profile</button></a>
+								<a class="profile-link" href="/social_network/user/{{ friend.username }}">
+									<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
+									<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
+								</a>
 								
 								<form method="POST" action="add_friend/{{ friend.username }}/">
 									{% csrf_token %}

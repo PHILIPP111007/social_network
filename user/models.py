@@ -1,18 +1,10 @@
 from django.db import models
-
-
-class MyUser(models.Model):
-	username = models.CharField(primary_key=True, max_length=20)
-	first_name = models.CharField(max_length=20)
-	last_name = models.CharField(max_length=20)
-
-	def __str__(self):
-		return self.username
+from django.contrib.auth.models import User
 
 
 
 class Blog(models.Model):
-	user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, to_field='username', db_column='username', on_delete=models.CASCADE)  # !!!!!
 	date_time = models.DateTimeField(auto_now_add=True)
 	content = models.TextField()
 	is_changed = models.BooleanField(default=False)
@@ -23,7 +15,7 @@ class Blog(models.Model):
 
 
 class Subscriber(models.Model):
-	user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, to_field='username', db_column='username', on_delete=models.CASCADE)
 	subscriber = models.CharField(max_length=20)
 
 	def __str__(self):
@@ -31,33 +23,17 @@ class Subscriber(models.Model):
 
 
 	def get_friends(self, username):
-		lst_1 = self.__class__.objects.filter(user_id=username).values_list('subscriber')
-		lst_2 = self.__class__.objects.filter(subscriber=username).values_list('user_id')
-		lst = []
-		for person in lst_1:
-			if person in lst_2:
-				lst.append(MyUser.objects.get(username=person[0]))
-		friends = MyUser.objects.filter(username__in=lst)
 
-		return friends
+		lst_1 = self.__class__.objects.filter(user_id=username).values_list('subscriber', flat=True)
+		lst_2 = self.__class__.objects.filter(subscriber=username).values_list('user', flat=True)
 
-	
-	def get_subscriptions(self, username):
-		friends = self.get_friends(username)
+		friends_lst = list(set(lst_1) & set(lst_2))
+		friends = User.objects.filter(username__in=friends_lst)
 
-		subscriptions_list = self.__class__.objects.filter(user_id=username).values_list('subscriber')
-		subscriptions = MyUser.objects.filter(username__in=subscriptions_list)
-		subscriptions = subscriptions.exclude(username__in=friends)
+		subscriptions_lst = list(set(lst_1) - set(lst_2))
+		subscriptions = User.objects.filter(username__in=subscriptions_lst)
 
-		return subscriptions
-		
-	
-	def get_subscribers(self, username):
-		friends = self.get_friends(username)
+		subscribers_lst = list(set(lst_2) - set(lst_1))
+		subscribers = User.objects.filter(username__in=subscribers_lst)
 
-		subscribers_list = self.__class__.objects.filter(subscriber=username).values_list('user_id')
-		subscribers = MyUser.objects.filter(username__in=subscribers_list)
-		subscribers = subscribers.exclude(username__in=friends)
-
-		return subscribers
-
+		return friends, subscriptions, subscribers

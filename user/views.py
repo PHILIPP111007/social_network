@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
-from .models import MyUser, Blog, Subscriber
+from .models import Blog, Subscriber
 
 
 def index(request, username):
@@ -26,7 +26,7 @@ def make_content(request, username):
 	blog = Blog.objects.filter(user_id=username).order_by('-date_time')
 
 	obj = Subscriber()
-	friends_count = obj.get_friends(username=username).count()
+	friends_count = obj.get_friends(username=username)[0].count()
 
 	result_dict = {
 		'is_my_page': True,
@@ -64,7 +64,6 @@ def delete_account(request, username):
 
 	if request.method == 'GET' and request.user.is_authenticated:
 		User.objects.get(username=request.user.username).delete()
-		MyUser.objects.get(username=request.user.username).delete()
 		Subscriber.objects.filter(subscriber=request.user.username).delete()
 
 	return HttpResponseRedirect('/social_network/auth')

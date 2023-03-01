@@ -20,8 +20,8 @@ def make_content(request):
     user = User.objects.get(username=request.user.username)
 
     obj = Subscriber()
-    my_friends = obj.get_friends(username=request.user.username)
-    friends_records = Blog.objects.filter(user_id__in=my_friends).order_by('-date_time')
+    friends = obj.get_friends(username=request.user.username)[0]
+    friends_records = Blog.objects.filter(user_id__in=friends).order_by('-date_time')
 
     result_dict = {
 		'is_my_page': True,

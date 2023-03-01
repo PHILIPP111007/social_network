@@ -116,7 +116,7 @@ textarea {
     width: 1000px;
     word-wrap: break-word;
     margin-bottom: 10px;
-    margin-top: 10px;
+    margin-top: 40px;
     padding: 2px 10px 10px 10px;
     border-radius: 10px;
     background-color: #725c5c0e;
@@ -126,10 +126,7 @@ textarea {
         color: #ada7a7;
     }
 
-.record:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
+    
 .delete_record:hover {
     background-color: #f77373e2;
 }

@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from user.models import Blog
 from .forms import RegisterForm, LoginForm
-from user.models import MyUser, Blog
 
 
 def index(request):
@@ -49,7 +49,6 @@ def create_data(form, request):
 		password = request.POST.get('password')
 
 		User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password)
-		MyUser.objects.create(username=username, first_name=first_name, last_name=last_name)
 		Blog.objects.create(user_id=username, content=f'Hi, I\'m {first_name} {last_name} and this is my first post!')
 	
 	elif form == 'LoginForm':
