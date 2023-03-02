@@ -24,16 +24,16 @@ class Subscriber(models.Model):
 
 	def get_friends(self, username):
 
-		lst_1 = self.__class__.objects.filter(user_id=username).values_list('subscriber', flat=True)
-		lst_2 = self.__class__.objects.filter(subscriber=username).values_list('user', flat=True)
+		set_1 = set(self.__class__.objects.filter(user_id=username).values_list('subscriber', flat=True))
+		set_2 = set(self.__class__.objects.filter(subscriber=username).values_list('user', flat=True))
 
-		friends_set = set(lst_1) & set(lst_2)
+		friends_set = set_1 & set_2
 		friends = User.objects.filter(username__in=friends_set)
 
-		subscriptions_set = set(lst_1) - set(lst_2)
+		subscriptions_set = set_1 - set_2
 		subscriptions = User.objects.filter(username__in=subscriptions_set)
 
-		subscribers_set = set(lst_2) - set(lst_1)
+		subscribers_set = set_2 - set_1
 		subscribers = User.objects.filter(username__in=subscribers_set)
 
 		return friends, subscriptions, subscribers
