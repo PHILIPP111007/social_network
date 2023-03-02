@@ -27,13 +27,13 @@ class Subscriber(models.Model):
 		lst_1 = self.__class__.objects.filter(user_id=username).values_list('subscriber', flat=True)
 		lst_2 = self.__class__.objects.filter(subscriber=username).values_list('user', flat=True)
 
-		friends_lst = list(set(lst_1) & set(lst_2))
-		friends = User.objects.filter(username__in=friends_lst)
+		friends_set = set(lst_1) & set(lst_2)
+		friends = User.objects.filter(username__in=friends_set)
 
-		subscriptions_lst = list(set(lst_1) - set(lst_2))
-		subscriptions = User.objects.filter(username__in=subscriptions_lst)
+		subscriptions_set = set(lst_1) - set(lst_2)
+		subscriptions = User.objects.filter(username__in=subscriptions_set)
 
-		subscribers_lst = list(set(lst_2) - set(lst_1))
-		subscribers = User.objects.filter(username__in=subscribers_lst)
+		subscribers_set = set(lst_2) - set(lst_1)
+		subscribers = User.objects.filter(username__in=subscribers_set)
 
 		return friends, subscriptions, subscribers
