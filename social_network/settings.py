@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-^oc(lsgukc4la85pjg52@r74wfrw$x5+#ajp4ka&rc2&t6dd(2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['10.224.158.199', '127.0.0.1']
 
 
 # Application definition
@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'user',
     'friends',
     'messenger',
-    'news'
+    'news',
 ]
 
 MIDDLEWARE = [
@@ -73,6 +73,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'social_network.wsgi.application'
+
 
 
 # Database
