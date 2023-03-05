@@ -3,16 +3,18 @@ body {
     background-color: rgb(250, 244, 244);
 }
 
+button:focus, button:hover {
+    cursor: pointer;
+}
+input:focus, input:hover {
+    cursor: pointer;
+}
+
+
 textarea {
     background-color: rgb(250, 244, 244);
     font-family: sans-serif;
 }
-
-
-.blog-link {
-    color: #f84747;
-}
-
 
 #upper-div {
     margin-top: 100px;

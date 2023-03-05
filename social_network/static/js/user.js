@@ -8,12 +8,12 @@ function backgroundColorChange() {
 	}
 }
 
-var navButton = document.querySelector('nav #first_button');
-navButton.addEventListener('click', function() {
-    let expanded = this.getAttribute('aria-expanded') === 'true' || false;
-    this.setAttribute('aria-expanded', !expanded);
-    let menu = this.nextElementSibling;
-    menu.hidden = !menu.hidden;
+let btns = document.querySelectorAll('#toggleTextarea');
+btns.forEach(function (i) {
+	i.addEventListener('click', function() {
+	  let expanded = this.getAttribute('aria-expanded') === 'true' || false;
+	  this.setAttribute('aria-expanded', !expanded);
+	  let menu = this.nextElementSibling;
+	  menu.hidden = !menu.hidden;
+	});
 });
-
-

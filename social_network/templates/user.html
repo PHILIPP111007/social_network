@@ -15,7 +15,7 @@
 	<div class="upper-line">
 		<h5>{{ global_name }} {{ global_surname }}</h5>
 		<nav id="navigation">
-			<button id="first_button" aria-expanded="false">Settings</button>
+			<button id="toggleTextarea" aria-expanded="false">Settings</button>
 			<div class="settings-bar" hidden>
        		 	<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
        		 	<form id="quitButton" method="GET" action="quit/">
@@ -58,7 +58,7 @@
 					<input type="submit" name="sms" value="Add record">
 				</form>
 			{% endif %}
-
+			
 			{% if is_my_page or is_my_friend %}
 				{% for record in blog %}
 					<div class="record">
@@ -66,25 +66,31 @@
 						<h6>Record from the {{ record.date_time }} {% if record.is_changed %}&#91;&#10000; Modified&#93;{% endif %}</h6>
 					
 						<p>{{ record.content | linebreaks | urlize  }}</p>
+
 						{% if is_my_page %}
-							<nav id="change-record">
-								<div>
-									<form method="POST" action="change_record/{{ record.id }}/">
-										{% csrf_token %}
-										<textarea name="my_textarea" wrap="soft" rows="6" cols="45" name="text" oninput="this.style.height = (this.scrollHeight - 4) + 'px';"></textarea>
-										<input type="submit" name="sms" value="Edit record">
-									</form>
+							<button id="toggleTextarea" aria-expanded="false">
+								<img src="{% static 'images/three_points.svg' %}" width="20" height="20" alt="three points">
+							</button>
+							<div class="record-bar" hidden>
+								<div id="change-record">
+									<div>
+										<form method="POST" action="change_record/{{ record.id }}/">
+											{% csrf_token %}
+											<textarea name="my_textarea" wrap="soft" rows="6" cols="45" name="text" oninput="this.style.height = (this.scrollHeight - 4) + 'px';"></textarea>
+											<input type="submit" name="sms" value="Edit record">
+										</form>
+									</div>
 								</div>
-							</nav>
-							<form method="POST" action="delete_record/{{ record.id }}/">
-								{% csrf_token %}
-								<input class="delete_record" type="submit" value="Delete record">
-							</form>
+								<form method="POST" action="delete_record/{{ record.id }}/">
+									{% csrf_token %}
+									<input class="delete_record" type="submit" value="Delete record">
+								</form>
+							</div>
 						{% endif %}
 					</div>
 				{% endfor %}
 			{% else %}
-				<h3>Make friends and you can see his blog!</h3>
+				<h3>Make friends to see his blog!</h3>
 			{% endif %}
 
 		</div>

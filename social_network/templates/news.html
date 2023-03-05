@@ -17,7 +17,7 @@
 	<div class="upper-line">
 		<h5>{{ name }} {{ surname }}</h5>
 		<nav id="navigation">
-			<button aria-expanded="false">Settings</button>
+			<button id="toggleTextarea" aria-expanded="false">Settings</button>
 			<div class="settings-bar" hidden>
 	   		 	<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
 	   		 	<form id="quitButton" method="GET" action="quit/">
@@ -62,7 +62,7 @@
 
     <div id="upper-div"></div>
 
-	<script src="{% static 'js/news.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+	<script src="{% static 'js/user.js' %}" type="text/javascript" charset="utf-8" async defer></script>
 
 </body>
 </html>
