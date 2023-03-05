@@ -9,12 +9,12 @@ At the moment I have not implemented the messenger, but in the near future I wil
 Have fun!
 
 
-<img src="./images_for_README/image_1.png" alt="Alt text" title="Optional title">
+<img src="./images_for_README/1.png" alt="Alt text" title="Optional title">
 
-<img src="./images_for_README/image_2.png" alt="Alt text" title="Optional title">
+<img src="./images_for_README/2.png" alt="Alt text" title="Optional title">
 
-<img src="./images_for_README/image_3.png" alt="Alt text" title="Optional title">
+<img src="./images_for_README/3.png" alt="Alt text" title="Optional title">
 
-<img src="./images_for_README/image_4.png" alt="Alt text" title="Optional title">
+<img src="./images_for_README/4.png" alt="Alt text" title="Optional title">
 
-<img src="./images_for_README/image_5.png" alt="Alt text" title="Optional title">
+<img src="./images_for_README/5.png" alt="Alt text" title="Optional title">
