@@ -16,9 +16,9 @@
 	<div class="upper-line">
 		<h5>{{ name }} {{ surname }}</h5>
 		<nav id="navigation">
-			<button id="toggleTextarea" aria-expanded="false">
-				<img src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="16" alt="menu bar">
-			</button>
+
+			<img class="menu_burger_icon" aria-expanded="false" id="toggleTextarea" src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="22" alt="menu bar">
+
 			<div class="settings-bar" hidden>
 	   		 	<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
 	   		 	<form id="quitButton" method="GET" action="quit/">
@@ -28,16 +28,14 @@
 		</nav>
 	</div>
 
-
     <aside class="left-list">
 		<nav>
-			<p class="menu-link"><a href="/social_network/user/{{ nickname }}">My page</a></p>
+			<p class="menu-link"><a href="/social_network/user/{{ nickname }}">Homepage</a></p>
 			<p class="menu-link"><a href="">Messenger</a></p>
 			<p class="menu-link"><a href="/social_network/friends/{{ nickname }}">Friends</a></p>
 			<p class="menu-link"><a href="/social_network/news/{{ nickname }}" style="background-color: rgb(205,205,205);">News</a></p>
 		</nav>
 	</aside>
-
 
 	<div class="main-content">
 
@@ -66,7 +64,7 @@
 										read less
 									</button>
 								</div>
-								
+
 								<script>
 									$(document).ready(function() {
 										$(".show-hide-btn").click(function() {

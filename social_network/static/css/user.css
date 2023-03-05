@@ -40,6 +40,7 @@ textarea {
         margin-left: 80%;
     }
 
+
 #navigation {
     float: right;
     margin-top: 7px;
@@ -48,31 +49,33 @@ textarea {
     .menu-link:hover{
         background-color: rgb(220, 220, 220);
     }
-
-.settings-bar {
-    margin-top: 10px;
-    margin-left: -25px;
-    padding: 10px;
-    background-color: rgb(235,235,235);
-    border: 1px solid black;
-}
-    #backgroundColorChangeButton {
-        margin-bottom: 10px;
-    }
-
-    #quitButton {
-        margin-bottom: 20px;
-    }
-
-    .delete_account {
-        background-color: #f77373e2;
-    }
-    .delete_account:hover {
-        background-color: #f84747;
+    .menu_burger_icon:hover {
+        cursor: pointer;
     }
 
 
-
+    .settings-bar {
+        margin-top: 10px;
+        margin-left: -25px;
+        padding: 10px;
+        background-color: rgb(235,235,235);
+        border: 1px solid black;
+    }
+        #backgroundColorChangeButton {
+            margin-bottom: 10px;
+        }
+    
+        #quitButton {
+            margin-bottom: 20px;
+        }
+    
+        .delete_account {
+            background-color: #f77373e2;
+        }
+        .delete_account:hover {
+            background-color: #f84747;
+        }
+    
 
 .left-list {
     height: 100%;
@@ -134,4 +137,9 @@ textarea {
     
 .delete_record:hover {
     background-color: #f77373e2;
+}
+
+
+.three_points:hover {
+    cursor: pointer;
 }

@@ -10,7 +10,6 @@ input:focus, input:hover {
     cursor: pointer;
 }
 
-
 #upper-div {
     margin-top: 100px;
     margin-bottom: 10px;
@@ -39,6 +38,9 @@ input:focus, input:hover {
 }
     .menu-link:hover{
         background-color: rgb(220, 220, 220);
+    }
+    .menu_burger_icon:hover {
+        cursor: pointer;
     }
     
 .settings-bar {
