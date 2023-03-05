@@ -10,11 +10,14 @@ input:focus, input:hover {
     cursor: pointer;
 }
 
-
 textarea {
+    max-width: 322px;
+    min-width: 322px;
+    min-height: 106px;
     background-color: rgb(250, 244, 244);
     font-family: sans-serif;
 }
+
 
 #upper-div {
     margin-top: 100px;

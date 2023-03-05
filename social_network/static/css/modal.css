@@ -27,14 +27,11 @@
   height: 50px;
 }
 #close_modal:hover {
-  stroke: red;
-  fill: red;
-  color: aqua;
-  background-color: bisque;
+  background-color: rgb(250, 244, 244);
 }
 .modal_txt {
   box-shadow: 0 4px 12px rgba(0,0,0,0.2), 0 16px 20px rgba(0,0,0,0.2);
-  background: #FFF;
+  background: rgb(250, 244, 244);
   padding: 30px;
   margin: 100px auto;
   max-width: 800px;
