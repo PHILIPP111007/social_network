@@ -8,8 +8,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{{ global_name }} {{ global_surname }}</title>
 	<link rel="stylesheet" href='{% static "css/user.css" %}'>
+	<link rel="stylesheet" href='{% static "css/modal.css" %}'>
 </head>
 <body>
+
 	<div id="upper-div"></div>
 	
 	<div class="upper-line">
@@ -21,15 +23,21 @@
        		 	<form id="quitButton" method="GET" action="quit/">
 					<input type="submit" value="Quit">
 				</form>
-				<form id="deleteAccountButton" method="GET" action="delete_account/">
-					<input class="delete_account" type="submit" value="Delete account">
-				</form>
+				<button class="open_modal">Удалить аккаунт</button>
     		</div>
     	</nav>
 	</div>
 
-	
-	
+	<div id="modal" class="modal bounceIn">
+		<div id="close_modal">+</div>
+		<div class="modal_txt">
+			<h3>Are you sure? </h3>
+			<form id="deleteAccountButton" method="GET" action="delete_account/">
+				<input class="delete_account" type="submit" value="Delete account">
+			</form>
+		</div>
+	</div>
+
 	<aside class="left-list">
 		<nav>
 			<p class="menu-link"><a href="/social_network/user/{{ global_nickname }}" style="background-color: rgb(205,205,205);">My page</a></p>
@@ -97,7 +105,9 @@
 	</div>
 
     <div id="upper-div"></div>
-	
+
 	<script src="{% static 'js/user.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+	<script src="{% static 'js/modal.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+
 </body>
 </html>
