@@ -1,6 +1,7 @@
 .modal {
   display: none;
   background: #59595992;
+  backdrop-filter: blur(5px);
   position: fixed;
   top: 0;
   left: 0;
@@ -16,27 +17,20 @@
   margin-right: 17px;
 }
 #close_modal {
-  color: #000000;
-  font-size: 40px;
-  font-weight: bold;
-  font-family: Times, sans-serif;
-  border-radius: 50%;
-  border: 4px solid #000000;
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
-  text-align: center;
   margin: 20px;
   cursor: pointer;
   position: absolute;
   right: 0;
-  transform: rotate(45deg);
-  transition: all 0.2s;
   box-sizing: content-box;
+  border-radius: 8px;
+  width: 50px;
+  height: 50px;
 }
 #close_modal:hover {
-  color: #000000;
-  transform: rotate(135deg);
+  stroke: red;
+  fill: red;
+  color: aqua;
+  background-color: bisque;
 }
 .modal_txt {
   box-shadow: 0 4px 12px rgba(0,0,0,0.2), 0 16px 20px rgba(0,0,0,0.2);

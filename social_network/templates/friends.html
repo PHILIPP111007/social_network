@@ -15,7 +15,9 @@
 	<div class="upper-line">
 		<h5>{{ first_name }} {{ last_name }}</h5>
 		<nav id="navigation">
-			<button id="toggleTextarea" aria-expanded="false">Settings</button>
+			<button id="toggleTextarea" aria-expanded="false">
+				<img src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="16" alt="menu bar">
+			</button>
 			<div class="settings-bar" hidden>
 	   		 	<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
 	   		 	<form id="quitButton" method="GET" action="quit/">
@@ -25,8 +27,6 @@
 		</nav>
 	</div>
 
-	
-	
 	<aside class="left-list">
 		<nav>
 			<p class="menu-link"><a href="/social_network/user/{{ username }}">My page</a></p>
@@ -56,7 +56,6 @@
 			</form>
 		</div>
 
-		
 		<div class="find-users">
 			{% if find_users %}
 			{% for user in find_users %}
@@ -65,7 +64,6 @@
 					<h4>{{ user.first_name }} {{ user.last_name }}</h4>
 					<h4 style="color:gray; font-size: 13px">@{{ user.username }}</h4>
 				</a>
-				
 				<form method="POST" action="add_friend/{{ user.username }}/">
 					{% csrf_token %}
 					<input class="add_friend" type="submit" value="Add to friends">
@@ -74,7 +72,6 @@
 			{% endfor %}
 			{% endif %}
 		</div>
-
 
 		<div class="friends-section">
 
@@ -101,7 +98,6 @@
 				{% endif %}
 			</div>
 
-
 			<div class="my_friends">
 				{% if subscriptions %}
 					<h3>Subscriptions</h3>
@@ -124,7 +120,6 @@
 					<h3 style="color:gray;">You are not yet subscribed to anyone</h3>
 				{% endif %}
 			</div>
-
 
 			<div class="my_friends">
 				{% if subscribers %}
@@ -153,9 +148,7 @@
 					<h3 style="color:gray;">No one has subscribed to you yet</h3>
 				{% endif %}
 			</div>
-		
 		</div>
-
 	</div>
 
 	<div id="upper-div"></div>

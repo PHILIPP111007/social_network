@@ -17,7 +17,9 @@
 	<div class="upper-line">
 		<h5>{{ global_name }} {{ global_surname }}</h5>
 		<nav id="navigation">
-			<button id="toggleTextarea" aria-expanded="false">Settings</button>
+			<button id="toggleTextarea" aria-expanded="false">
+				<img src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="16" alt="menu bar">
+			</button>
 			<div class="settings-bar" hidden>
        		 	<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
        		 	<form id="quitButton" method="GET" action="quit/">
@@ -29,7 +31,7 @@
 	</div>
 
 	<div id="modal" class="modal bounceIn">
-		<div id="close_modal">+</div>
+		<img id="close_modal" src="{% static 'images/005close1_99908.svg' %}" alt="cross black circular button">
 		<div class="modal_txt">
 			<h3>Are you sure?</h3>
 			<form id="deleteAccountButton" method="POST" action="delete_account/">

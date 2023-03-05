@@ -17,7 +17,9 @@
 	<div class="upper-line">
 		<h5>{{ name }} {{ surname }}</h5>
 		<nav id="navigation">
-			<button id="toggleTextarea" aria-expanded="false">Settings</button>
+			<button id="toggleTextarea" aria-expanded="false">
+				<img src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="16" alt="menu bar">
+			</button>
 			<div class="settings-bar" hidden>
 	   		 	<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
 	   		 	<form id="quitButton" method="GET" action="quit/">
