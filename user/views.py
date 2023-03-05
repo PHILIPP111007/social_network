@@ -62,7 +62,7 @@ def quit(request, username):
 
 def delete_account(request, username):
 
-	if request.method == 'GET' and request.user.is_authenticated:
+	if request.method == 'POST' and request.user.is_authenticated:
 		User.objects.get(username=request.user.username).delete()
 		Subscriber.objects.filter(subscriber=request.user.username).delete()
 

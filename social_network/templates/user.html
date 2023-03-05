@@ -23,7 +23,7 @@
        		 	<form id="quitButton" method="GET" action="quit/">
 					<input type="submit" value="Quit">
 				</form>
-				<button class="open_modal">Удалить аккаунт</button>
+				<button class="open_modal">Delete account</button>
     		</div>
     	</nav>
 	</div>
@@ -31,8 +31,9 @@
 	<div id="modal" class="modal bounceIn">
 		<div id="close_modal">+</div>
 		<div class="modal_txt">
-			<h3>Are you sure? </h3>
-			<form id="deleteAccountButton" method="GET" action="delete_account/">
+			<h3>Are you sure?</h3>
+			<form id="deleteAccountButton" method="POST" action="delete_account/">
+				{% csrf_token %}
 				<input class="delete_account" type="submit" value="Delete account">
 			</form>
 		</div>
