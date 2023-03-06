@@ -18,7 +18,7 @@
 		<h5>{{ global_name }} {{ global_surname }}</h5>
 		<nav id="navigation">
 			
-			<img class="menu_burger_icon" aria-expanded="false" id="toggleTextarea" src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="22" alt="menu bar">
+			<img id="toggleTextarea" class="menu_burger_icon" aria-expanded="false" src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="22" alt="menu bar">
 
 			<div class="settings-bar" hidden>
        		 	<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
@@ -100,9 +100,9 @@
 
 						{% if is_my_page %}
 
-							<img class="three_points" id="toggleTextarea" aria-expanded="false" src="{% static 'images/three_points.svg' %}" width="20" height="20" alt="three points">
+							<img class="three_points" src="{% static 'images/three_points.svg' %}" width="20" height="20" alt="three points">
 
-							<div class="record-bar" hidden>
+							<div class="record-bar">
 								<div id="change-record">
 									<div>
 										<form method="POST" action="change_record/{{ record.id }}/">
@@ -117,6 +117,7 @@
 									<input class="delete_record" type="submit" value="Delete record">
 								</form>
 							</div>
+
 						{% endif %}
 					</div>
 				{% endfor %}
@@ -131,16 +132,6 @@
 
 	<script src="{% static 'js/user.js' %}" type="text/javascript" charset="utf-8" async defer></script>
 	<script src="{% static 'js/modal.js' %}" type="text/javascript" charset="utf-8" async defer></script>
-
-
-
-
-	
-
-
-
-
-
 
 </body>
 </html>

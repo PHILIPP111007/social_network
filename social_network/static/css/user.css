@@ -139,12 +139,18 @@ textarea {
     .record h6 {
         color: #ada7a7;
     }
+    .record-bar {
+        height: 0;
+        overflow: hidden;
+        transition: height 0.3s;
+    }
+    .active {
+        height: auto;
+    }
 
-    
 .delete_record:hover {
     background-color: #f77373e2;
 }
-
 
 .three_points:hover {
     cursor: pointer;
