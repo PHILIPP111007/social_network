@@ -11,12 +11,19 @@ input:focus, input:hover {
 }
 
 textarea {
+    font-family: inherit; /* 1 */
+    font-size: inherit; /* 1 */
+    line-height: inherit; /* 1 */
     max-width: 322px;
     min-width: 322px;
-    min-height: 106px;
+    min-height: 26px;
     background-color: rgb(250, 244, 244);
-    font-family: sans-serif;
+    outline: none;
+	border: 1px solid #999;
+    border-radius: 5px;
+    resize: none;
 }
+
 
 
 #upper-div {

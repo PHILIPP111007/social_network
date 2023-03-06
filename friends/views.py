@@ -60,6 +60,7 @@ def quit(request, username):
 def find_user(request):
 
     username = request.POST.get('username')
+    find_users = ''
 
     if username != '':
         find_users = User.objects.filter(username=username)

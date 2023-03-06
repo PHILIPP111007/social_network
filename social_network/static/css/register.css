@@ -3,6 +3,24 @@ body {
     background-color: rgb(250, 244, 244);
 }
 
+input[type="text"], input[type="email"], input[type="password"] {
+    font-family: inherit; /* 1 */
+    font-size: inherit; /* 1 */
+    line-height: inherit; /* 1 */
+    margin: 0; /* 2 */
+    margin-bottom: 1rem;
+    display: block;
+    width: 200px;
+    border-radius: 0.25rem;
+    background-clip: padding-box;
+    border: 1px solid #bdbdbd;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    background-color: rgb(250, 244, 244);
+}
+
+
+
 #hello {
     font-size: 30px;
     text-align: center;

@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class Blog(models.Model):
 	user = models.ForeignKey(User, to_field='username', db_column='username', on_delete=models.CASCADE)  # !!!!!
 	date_time = models.DateTimeField(auto_now_add=True)
-	content = models.TextField()
+	content = models.TextField(max_length=2500)
 	is_changed = models.BooleanField(default=False)
 
 	def __str__(self):

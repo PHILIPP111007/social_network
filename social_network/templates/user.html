@@ -51,7 +51,7 @@
 	</aside>
 
 	<div class="main-content">
-
+		
 		<div class="user">
 			{% if is_my_page %}
 				<h3>Homepage</h3>
@@ -65,7 +65,7 @@
 			{% if is_my_page %}
 				<form class="add_record" method="POST" action="create_record/">
 					{% csrf_token %}
-					<textarea name="my_textarea" placeholder="How are you doing?" wrap="soft" rows="6" cols="45" name="text" oninput="this.style.height = (this.scrollHeight - 4) + 'px';"></textarea>
+					<textarea name="my_textarea" maxlength="2500" placeholder="How are you doing?"></textarea>
 					<input type="submit" name="sms" value="Add record">
 				</form>
 			{% endif %}
@@ -107,7 +107,7 @@
 									<div>
 										<form method="POST" action="change_record/{{ record.id }}/">
 											{% csrf_token %}
-											<textarea name="my_textarea" wrap="soft" rows="6" cols="45" name="text" oninput="this.style.height = (this.scrollHeight - 4) + 'px';"></textarea>
+											<textarea name="my_textarea" maxlength="2500" placeholder="How are you doing?"></textarea>
 											<input type="submit" name="sms" value="Edit record">
 										</form>
 									</div>
@@ -131,6 +131,16 @@
 
 	<script src="{% static 'js/user.js' %}" type="text/javascript" charset="utf-8" async defer></script>
 	<script src="{% static 'js/modal.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+
+
+
+
+	
+
+
+
+
+
 
 </body>
 </html>
