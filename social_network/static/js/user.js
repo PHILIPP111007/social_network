@@ -23,12 +23,11 @@ recordButton.forEach(function (i) {
 	i.addEventListener('click', function() {
 		let id = this.id
 		let visibleDiv = i.closest('div')?.id
+		document.getElementById(visibleDiv).style.display = 'none';
 		if (visibleDiv === `half-${id}`) {
-			document.getElementById(visibleDiv).style.display = 'none';
 			document.getElementById(`full-${id}`).style.display = '';
 		} else {
-			document.getElementById(visibleDiv).style.display = 'none';
 			document.getElementById(`half-${id}`).style.display = '';
-		};
+		}
 	});
 });
