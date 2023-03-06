@@ -39,52 +39,52 @@
 
 	<div class="main-content">
 
-			<div class="blog">
-				{% if friends_records %}
-					{% for record in friends_records %}
-						<div class="record">
-							<a class="profile-link" href="/social_network/user/{{ record.user_id }}">
-								<h3>{{ record.user.first_name }} {{ record.user.last_name }}</h3>
-								<h6>@{{ record.user_id }}</h6>
-								<h6>Record from the {{ record.date_time }} {% if record.is_changed %}&#91;&#10000; Modified&#93;{% endif %}</h6>
-							</a>
+		<div class="blog">
+			{% if friends_records %}
+				{% for record in friends_records %}
+					<div class="record">
+						<a class="profile-link" href="/social_network/user/{{ record.user_id }}">
+							<h3>{{ record.user.first_name }} {{ record.user.last_name }}</h3>
+							<h6>@{{ record.user_id }}</h6>
+							<h6>Record from the {{ record.date_time }} {% if record.is_changed %}&#91;&#10000; Modified&#93;{% endif %}</h6>
+						</a>
 
-							{% if record.content|wordcount > 50 %}
-								<div class="half-content" id="half-{{record.id}}">
-									{{ record.content | linebreaks | urlize | truncatewords:100 }}
-									<br/>
-									<br/>
-									<button data-id="{{record.id}}" href="javascript:void();" class="show-hide-btn">
-										read more
-									</button>
-								</div>
-								<div class="full-content" id="full-{{record.id}}" style="display: none;">
-									{{ record.content | linebreaks | urlize }}
-									<button data-id="{{record.id}}" href="javascript:void();" class="show-hide-btn">
-										read less
-									</button>
-								</div>
+						{% if record.content|wordcount > 50 %}
+							<div class="half-content" id="half-{{record.id}}">
+								{{ record.content | linebreaks | urlize | truncatewords:100 }}
+								<br/>
+								<br/>
+								<button data-id="{{record.id}}" href="javascript:void();" class="show-hide-btn">
+									read more
+								</button>
+							</div>
+							<div class="full-content" id="full-{{record.id}}" style="display: none;">
+								{{ record.content | linebreaks | urlize }}
+								<button data-id="{{record.id}}" href="javascript:void();" class="show-hide-btn">
+									read less
+								</button>
+							</div>
 
-								<script>
-									$(document).ready(function() {
-										$(".show-hide-btn").click(function() {
-											var id = $(this).data("id");
-											$("#half-" + id).toggle();  // hide/show..
-											$("#full-" + id).toggle();
-										})
+							<script>
+								$(document).ready(function() {
+									$(".show-hide-btn").click(function() {
+										var id = $(this).data("id");
+										$("#half-" + id).toggle();  // hide/show..
+										$("#full-" + id).toggle();
 									})
-								</script>
-								<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+								})
+							</script>
+							<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 
-							{% else %}
-								<div>{{ record.content | linebreaks | urlize }}</div>
-							{% endif %}
-						</div>
-                	{% endfor %}
-				{% else %}
-					<h3>When you have friends, you can see their news!</h3>
-				{% endif %}
-			</div>
+						{% else %}
+							<div>{{ record.content | linebreaks | urlize }}</div>
+						{% endif %}
+					</div>
+                {% endfor %}
+			{% else %}
+				<h3>When you have friends, you can see their news!</h3>
+			{% endif %}
+		</div>
     </div>
 
     <div id="upper-div"></div>

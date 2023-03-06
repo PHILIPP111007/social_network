@@ -76,8 +76,36 @@
 					
 						<h6>Record from the {{ record.date_time }} {% if record.is_changed %}&#91;&#10000; Modified&#93;{% endif %}</h6>
 							
-						<p>{{ record.content | linebreaks | urlize  }}</p>
-
+						{% if record.content|wordcount > 50 %}
+							<div class="half-content" id="half-{{record.id}}">
+								{{ record.content | linebreaks | urlize | truncatewords:100 }}
+								<br/>
+								<br/>
+								<button data-id="{{record.id}}" href="javascript:void();" class="show-hide-btn">
+									read more
+								</button>
+							</div>
+							<div class="full-content" id="full-{{record.id}}" style="display: none;">
+								{{ record.content | linebreaks | urlize }}
+								<button data-id="{{record.id}}" href="javascript:void();" class="show-hide-btn">
+									read less
+								</button>
+							</div>
+							<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+							<script>
+								$(document).ready(function() {
+									$(".show-hide-btn").click(function() {
+										var id = $(this).data("id");
+										$("#half-" + id).toggle();  // hide/show..
+										$("#full-" + id).toggle();
+									})
+								})
+							</script>
+							
+						{% else %}
+							<div>{{ record.content | linebreaks | urlize }}</div>
+						{% endif %}
+						
 						{% if is_my_page %}
 
 							<img class="three_points" id="toggleTextarea" aria-expanded="false" src="{% static 'images/three_points.svg' %}" width="20" height="20" alt="three points">
@@ -98,7 +126,6 @@
 								</form>
 							</div>
 						{% endif %}
-
 					</div>
 				{% endfor %}
 			{% else %}
