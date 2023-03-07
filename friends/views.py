@@ -30,9 +30,7 @@ def make_content(request, find_users=None):
     friends, subscriptions, subscribers = obj.get_friends(username=request.user.username)
 
     result_dict = {
-		'first_name': user.first_name,
-		'last_name': user.last_name,
-		'username': user.username,
+        'user': user,
         'find_user_form': FindUser(),
         'find_users': find_users,
         'friends': friends,

@@ -16,7 +16,7 @@
   overflow: hidden;
   margin-right: 17px;
 }
-#close_modal {
+.close_modal {
   margin: 20px;
   cursor: pointer;
   position: absolute;
@@ -26,7 +26,7 @@
   width: 50px;
   height: 50px;
 }
-#close_modal:hover {
+.close_modal:hover {
   background-color: rgb(250, 244, 244);
 }
 .modal_txt {

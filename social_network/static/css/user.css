@@ -6,7 +6,7 @@ body {
 button:focus, button:hover {
     cursor: pointer;
 }
-input:focus, input:hover {
+input[type="submit"]:focus, input[type="submit"]:hover {
     cursor: pointer;
 }
 
@@ -24,6 +24,22 @@ textarea {
     resize: none;
 }
 
+
+input[type="text"], input[type="email"], input[type="password"] {
+    font-family: inherit; /* 1 */
+    font-size: inherit; /* 1 */
+    line-height: inherit; /* 1 */
+    margin: 0; /* 2 */
+    margin-bottom: 1rem;
+    display: block;
+    width: 200px;
+    border-radius: 0.25rem;
+    background-clip: padding-box;
+    border: 1px solid #bdbdbd;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    background-color: rgb(250, 244, 244);
+}
 
 
 #upper-div {
@@ -49,9 +65,9 @@ textarea {
 
 
 #navigation {
-    float: right;
     margin-top: 7px;
     margin-left: 20px;
+    margin-right: 20px;
 }
     .menu-link:hover{
         background-color: rgb(220, 220, 220);
@@ -59,7 +75,6 @@ textarea {
     .menu_burger_icon:hover {
         cursor: pointer;
     }
-
 
     .settings-bar {
         margin-top: 10px;
@@ -71,18 +86,22 @@ textarea {
         #backgroundColorChangeButton {
             margin-bottom: 10px;
         }
-    
-        #quitButton {
-            margin-bottom: 20px;
+
+        .open_modal {
+            margin-bottom: 10px;
         }
     
+        #quitButton {
+            margin-bottom: 25px;
+        }
+
         .delete_account {
             background-color: #f77373e2;
         }
         .delete_account:hover {
             background-color: #f84747;
         }
-    
+
 
 .left-list {
     height: 100%;

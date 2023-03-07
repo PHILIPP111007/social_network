@@ -1,16 +1,23 @@
-let open_modal = document.querySelectorAll('.open_modal');
-let close_modal = document.getElementById('close_modal');
-let modal = document.getElementById('modal');
+let openModalButton = document.querySelectorAll('.open_modal');
+let closeModalButton = document.querySelectorAll('.close_modal');
 let body = document.getElementsByTagName('body')[0];
-for (let i = 0; i < open_modal.length; i++) {
-    open_modal[i].onclick = function() { // клик на открытие
+let modal = ''
+
+openModalButton.forEach(function (i) {
+    i.addEventListener('click', function() {
+
+        modal = document.getElementById(`modal_${this.id}`);
+
         modal.classList.add('modal_vis'); // добавляем видимость окна
         modal.classList.remove('bounceOutDown'); // удаляем эффект закрытия
         body.classList.add('body_block'); // убираем прокрутку
-    };
-}
-close_modal.onclick = function() { // клик на закрытие
-    modal.classList.add('bounceOutDown'); // добавляем эффект закрытия
-    modal.classList.remove('modal_vis');
-    body.classList.remove('body_block');
-};
+	});
+});
+
+closeModalButton.forEach(function (i) {
+    i.addEventListener('click', function() {
+        modal.classList.add('bounceOutDown'); // добавляем эффект закрытия
+        modal.classList.remove('modal_vis');
+        body.classList.remove('body_block');
+	});
+});

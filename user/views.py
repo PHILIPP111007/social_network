@@ -30,14 +30,10 @@ def make_content(request, username):
 
 	result_dict = {
 		'is_my_page': True,
-		'global_name': global_user.first_name,
-		'global_surname': global_user.last_name,
-		'global_nickname': global_user.username,
-		'name': user.first_name,
-		'surname': user.last_name,
-		'nickname': user.username,
+		'global_user': global_user,
+		'user': user,
 		'blog': blog,
-		'friends_count': friends_count
+		'friends_count': friends_count,
 	}
 
 	# If I am on another user's page:
@@ -108,5 +104,20 @@ def delete_record(request, username, id):
 			return HttpResponseRedirect(f'/social_network/user/{username}')
 		except Blog.DoesNotExist:
 			pass
+	else:
+		return HttpResponseRedirect('/social_network/auth')
+
+
+
+def update_user_info(request, username):
+	if request.method == 'POST' and request.user.is_authenticated:
+		
+		user = User.objects.get(username=request.user.username)
+		user.first_name = str(request.POST.get('fname')).strip()
+		user.last_name = str(request.POST.get('lname')).strip()
+		user.email = request.POST.get('email')
+		user.save()
+
+		return HttpResponseRedirect(f'/social_network/user/{username}')
 	else:
 		return HttpResponseRedirect('/social_network/auth')

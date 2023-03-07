@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{{ name }} {{ surname }}</title>
+	<title>{{ user.first_name }} {{ user.last_name }}</title>
 	<link rel="stylesheet" href='{% static "css/user.css" %}'>
 	<link rel="stylesheet" href='{% static "css/modal.css" %}'>
 </head>
@@ -15,23 +15,50 @@
 	<div id="upper-div"></div>
 	
 	<div class="upper-line">
-		<h5>{{ global_name }} {{ global_surname }}</h5>
+		
+		<h5>{{ global_user.first_name }}</h5>
+		
 		<nav id="navigation">
 			
 			<img id="toggleTextarea" class="menu_burger_icon" aria-expanded="false" src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="22" alt="menu bar">
 
 			<div class="settings-bar" hidden>
        		 	<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
+
+				<button id="1" class="open_modal">Settings</button>
+
        		 	<form id="quitButton" method="GET" action="quit/">
 					<input type="submit" value="Quit">
 				</form>
-				<button class="open_modal">Delete account</button>
+
+				<button id="2" class="open_modal">Delete account</button>
     		</div>
     	</nav>
 	</div>
 
-	<div id="modal" class="modal bounceIn">
-		<img id="close_modal" src="{% static 'images/005close1_99908.svg' %}" alt="cross black circular button">
+	<div id="modal_1" class="modal bounceIn">
+		<img class="close_modal" src="{% static 'images/005close1_99908.svg' %}" alt="cross black circular button">
+		<div class="modal_txt">
+			<h1>Settings</h1>
+			<h4>To change personal info</h4>
+
+			<form method="POST" action="update_user_info/">
+				{% csrf_token %}
+				<label for="fname">First name:</label><br>
+				<input type="text" id="fname" name="fname" value="{{ global_user.first_name }}" minlength="1" maxlength="20"><br>
+				<label for="lname">Last name:</label><br>
+				<input type="text" id="lname" name="lname" value="{{ global_user.last_name }}" minlength="1" maxlength="20"><br>
+				<label for="email">Email:</label><br>
+				<input type="email" id="email" name="email" value="{{ global_user.email }}" maxlength="254"><br><br>
+				<input type="submit" value="Submit">
+				<input type="reset">
+			</form>
+
+		</div>
+	</div>
+
+	<div id="modal_2" class="modal bounceIn">
+		<img class="close_modal" src="{% static 'images/005close1_99908.svg' %}" alt="cross black circular button">
 		<div class="modal_txt">
 			<h3>Are you sure?</h3>
 			<form id="deleteAccountButton" method="POST" action="delete_account/">
@@ -43,10 +70,10 @@
 
 	<aside class="left-list">
 		<nav>
-			<p class="menu-link"><a href="/social_network/user/{{ global_nickname }}" style="background-color: rgb(205,205,205);">Homepage</a></p>
+			<p class="menu-link"><a href="/social_network/user/{{ global_user.username }}" style="background-color: rgb(205,205,205);">Homepage</a></p>
 			<p class="menu-link"><a href="">Messenger</a></p>
-			<p class="menu-link"><a href="/social_network/friends/{{ global_nickname }}">Friends</a></p>
-			<p class="menu-link"><a href="/social_network/news/{{ global_nickname }}">News</a></p>
+			<p class="menu-link"><a href="/social_network/friends/{{ global_user.username }}">Friends</a></p>
+			<p class="menu-link"><a href="/social_network/news/{{ global_user.username }}">News</a></p>
 		</nav>
 	</aside>
 
@@ -56,8 +83,8 @@
 			{% if is_my_page %}
 				<h3>Homepage</h3>
 			{% endif %}
-			<p>{{ name }} {{ surname }}</p>
-			<p>@{{ nickname }}</p>
+			<p>{{ user.first_name }} {{ user.last_name }}</p>
+			<p>@{{ user.username }}</p>
 			<p>&#91; friends: {{ friends_count }} &#93;</p>
 		</div>
 
@@ -65,7 +92,7 @@
 			{% if is_my_page %}
 				<form class="add_record" method="POST" action="create_record/">
 					{% csrf_token %}
-					<textarea name="my_textarea" maxlength="2500" placeholder="How are you doing?"></textarea>
+					<textarea name="my_textarea" maxlength="5000" placeholder="How are you doing?"></textarea>
 					<input type="submit" name="sms" value="Add record">
 				</form>
 			{% endif %}
@@ -74,20 +101,20 @@
 				{% for record in blog %}
 					<div class="record">
 					
-						<h6>Record from the {{ record.date_time }} {% if record.is_changed %}&#91;&#10000; Modified&#93;{% endif %}</h6>
+						<h6>{{ record.date_time }} {% if record.is_changed %}&#91;&#10000; Modified&#93;{% endif %}</h6>
 						
-						{% if record.content|wordcount > 50 %}
+						{% if record.content|length > 500 %}
 							<div class="half-content" id="half-{{record.id}}">
-								{{ record.content | linebreaks | urlize | truncatewords:100 }}
-								<br/>
-								<br/>
+								{{ record.content|truncatechars:500|linebreaks|urlize }}
 								<button id="{{record.id}}" href="javascript:void();" class="show-hide-btn">
 									read more
 								</button>
+								<br/>
+								<br/>
 							</div>
 							
 							<div class="full-content" id="full-{{record.id}}" style="display: none;">
-								{{ record.content | linebreaks | urlize }}
+								{{ record.content|linebreaks|urlize }}
 								<button id="{{record.id}}" class="show-hide-btn">
 									read less
 								</button>
@@ -95,7 +122,7 @@
 								<br/>
 							</div>
 						{% else %}
-							<div>{{ record.content | linebreaks | urlize }}</div>
+							<div>{{ record.content|linebreaks|urlize }}</div>
 						{% endif %}
 
 						{% if is_my_page %}
@@ -107,7 +134,7 @@
 									<div>
 										<form method="POST" action="change_record/{{ record.id }}/">
 											{% csrf_token %}
-											<textarea name="my_textarea" maxlength="2500" placeholder="How are you doing?"></textarea>
+											<textarea name="my_textarea" maxlength="5000" placeholder="How are you doing?"></textarea>
 											<input type="submit" name="sms" value="Edit record">
 										</form>
 									</div>

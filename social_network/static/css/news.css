@@ -35,6 +35,7 @@ input:focus, input:hover {
     float: right;
     margin-top: 7px;
     margin-left: 20px;
+    margin-right: 20px;
 }
     .menu-link:hover{
         background-color: rgb(220, 220, 220);

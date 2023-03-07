@@ -6,14 +6,14 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{{ first_name }} {{ last_name }}</title>
+	<title>{{ user.first_name }} {{ user.last_name }}</title>
 	<link rel="stylesheet" href='{% static "css/friends.css" %}'>
 </head>
 <body>
 	<div id="upper-div"></div>
 
 	<div class="upper-line">
-		<h5>{{ first_name }} {{ last_name }}</h5>
+		<h5>{{ user.first_name }}</h5>
 		<nav id="navigation">
 
 			<img class="menu_burger_icon" aria-expanded="false" id="toggleTextarea" src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="22" alt="menu bar">
@@ -29,10 +29,10 @@
 
 	<aside class="left-list">
 		<nav>
-			<p class="menu-link"><a href="/social_network/user/{{ username }}">Homepage</a></p>
+			<p class="menu-link"><a href="/social_network/user/{{ user.username }}">Homepage</a></p>
 			<p class="menu-link"><a href="">Messenger</a></p>
-			<p class="menu-link"><a href="/social_network/friends/{{ username }}" style="background-color: rgb(205,205,205);">Friends</a></p>
-			<p class="menu-link"><a href="/social_network/news/{{ username }}">News</a></p>
+			<p class="menu-link"><a href="/social_network/friends/{{ user.username }}" style="background-color: rgb(205,205,205);">Friends</a></p>
+			<p class="menu-link"><a href="/social_network/news/{{ user.username }}">News</a></p>
 		</nav>
 	</aside>
 
@@ -40,7 +40,7 @@
 
 		<div class="user">
 			<h3>Friends</h3>
-			<p>{{ first_name }} {{ last_name }}</p>
+			<p>{{ user.first_name }} {{ user.last_name }}</p>
 			<p>@{{ username }}</p>
 			<p>&#91; friends: {{ friends.count }} &#93; &#91; subscriptions: {{ subscriptions.count }} &#93; &#91; subscribers: {{ subscribers.count }} &#93;</p>
 		</div>
@@ -58,18 +58,18 @@
 
 		<div class="find-users">
 			{% if find_users %}
-			{% for user in find_users %}
-			<div class="user-card">
-				<a class="profile-link" href="/social_network/user/{{ user.username }}">
-					<h4>{{ user.first_name }} {{ user.last_name }}</h4>
-					<h4 style="color:gray; font-size: 13px">@{{ user.username }}</h4>
-				</a>
-				<form method="POST" action="add_friend/{{ user.username }}/">
-					{% csrf_token %}
-					<input class="add_friend" type="submit" value="Add to friends">
-				</form>
-			</div>
-			{% endfor %}
+				{% for u in find_users %}
+				<div class="user-card">
+					<a class="profile-link" href="/social_network/user/{{ u.username }}">
+						<h4>{{ u.first_name }} {{ u.last_name }}</h4>
+						<h4 style="color:gray; font-size: 13px">@{{ u.username }}</h4>
+					</a>
+					<form method="POST" action="add_friend/{{ u.username }}/">
+						{% csrf_token %}
+						<input class="add_friend" type="submit" value="Add to friends">
+					</form>
+				</div>
+				{% endfor %}
 			{% endif %}
 		</div>
 
