@@ -77,13 +77,16 @@ input[type="text"], input[type="email"], input[type="password"] {
         cursor: pointer;
     }
 
+
     .settings-bar {
-        margin-top: 10px;
-        margin-left: -25px;
+        margin-top: -164px;
+        margin-left: -200px;
+        transition: margin-top 0.3s;
         padding: 10px;
         background-color: rgb(235,235,235);
         border: 1px solid black;
     }
+
         #backgroundColorChangeButton {
             margin-bottom: 10px;
         }

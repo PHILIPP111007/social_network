@@ -16,11 +16,11 @@
 		<h5>{{ user.first_name }}</h5>
 		<nav id="navigation">
 
-			<img class="menu_burger_icon" aria-expanded="false" id="toggleTextarea" src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="22" alt="menu bar">
+			<img id="toggleTextarea" class="menu_burger_icon" src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="22" alt="menu bar">
 
-			<div class="settings-bar" hidden>
-	   		 	<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
-	   		 	<form id="quitButton" method="GET" action="quit/">
+			<div class="settings-bar">
+				<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
+				<form id="quitButton" method="GET" action="quit/">
 					<input type="submit" value="Quit">
 				</form>
 			</div>
@@ -153,7 +153,7 @@
 
 	<div id="upper-div"></div>
 	
-	<script src="{% static 'js/user.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+	<script src="{% static 'js/friends.js' %}" type="text/javascript" charset="utf-8" async defer></script>
 
 </body>
 </html>

@@ -9,6 +9,8 @@ function OnInput() {
   this.style.height = (this.scrollHeight) + "px";
 };
 
+
+/*
 // For settings button (menu burger icon)
 let btns = document.querySelectorAll('#toggleTextarea');
 btns.forEach(function (i) {
@@ -17,6 +19,24 @@ btns.forEach(function (i) {
 	  this.setAttribute('aria-expanded', !expanded);
 	  let menu = this.nextElementSibling;
 	  menu.hidden = !menu.hidden;
+	});
+});
+*/
+
+// For settings button (menu burger icon)
+let btn = document.querySelectorAll('#toggleTextarea');
+btn.forEach(function (i) {
+	i.addEventListener('click', function() {
+		
+		var elem = this.nextElementSibling;
+		let marTop = getComputedStyle(elem).marginTop;
+
+		if (marTop === "-164px") {
+			elem.style.marginTop = "10px"
+		} else if (marTop === "10px") {
+			elem.style.marginTop = "-164px"
+			setTimeout(function () { elem.style.marginTop = '-164px' }, 300);
+		};
 	});
 });
 
@@ -67,7 +87,7 @@ threePoints.forEach(function (i) {
 			  elem.style.height = '0';
 			  getComputedStyle(elem).height; // reflow
 			  elem.style.height = h;
-			  setTimeout(function () { elem.style.height = '' }, 1000);
+			  setTimeout(function () { elem.style.height = '' }, 300);
 			}
 		  }
 	});
