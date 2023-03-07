@@ -18,7 +18,7 @@ def index(request, username):
             result_dict = make_content(request, find_users=find_users)
             return render(request, 'friends.html', result_dict)
     else:
-        return HttpResponseRedirect('/social_network/auth')
+        return HttpResponseRedirect('/social_network')
 
 
 
@@ -51,7 +51,7 @@ def quit(request, username):
 
     if request.method == 'GET' and request.user.is_authenticated and request.user.username == username:
         logout(request)
-        return HttpResponseRedirect('/social_network/auth')
+        return HttpResponseRedirect('/social_network')
 
 
 
@@ -92,7 +92,7 @@ def add_friend(request, username):
             
             return HttpResponseRedirect(f'/social_network/friends/{request.user.username}')
         else:
-            return HttpResponseRedirect('/social_network/auth')
+            return HttpResponseRedirect('/social_network')
 
 
 
@@ -108,7 +108,7 @@ def delete_friend(request, username):
 
             return HttpResponseRedirect(f'/social_network/friends/{request.user.username}')
         else:
-            return HttpResponseRedirect('/social_network/auth')
+            return HttpResponseRedirect('/social_network')
 
     
 
@@ -124,4 +124,4 @@ def delete_subscriber(request, username):
 
             return HttpResponseRedirect(f'/social_network/friends/{request.user.username}')
         else:
-            return HttpResponseRedirect('/social_network/auth')
+            return HttpResponseRedirect('/social_network')

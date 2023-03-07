@@ -7,7 +7,7 @@ from .models import Blog, Subscriber
 
 def index(request, username):
 	if not request.user.is_authenticated:
-		return HttpResponseRedirect('/social_network/auth')
+		return HttpResponseRedirect('/social_network')
 
 	result_dict = make_content(request, username)
 	return render(request, 'user.html', result_dict)
@@ -52,7 +52,7 @@ def quit(request, username):
 
 	if request.method == 'GET' and request.user.is_authenticated:
 		logout(request)
-		return HttpResponseRedirect('/social_network/auth')
+		return HttpResponseRedirect('/social_network')
 	
 
 
@@ -62,7 +62,7 @@ def delete_account(request, username):
 		User.objects.get(username=request.user.username).delete()
 		Subscriber.objects.filter(subscriber=request.user.username).delete()
 
-	return HttpResponseRedirect('/social_network/auth')
+	return HttpResponseRedirect('/social_network')
 
 
 
@@ -75,7 +75,7 @@ def create_record(request, username):
 
 		return HttpResponseRedirect(f'/social_network/user/{username}')
 	else:
-		return HttpResponseRedirect('/social_network/auth')
+		return HttpResponseRedirect('/social_network')
 
 
 
@@ -90,7 +90,7 @@ def change_record(request, username, id):
 			record.save()
 		return HttpResponseRedirect(f'/social_network/user/{username}')
 	else:
-		return HttpResponseRedirect('/social_network/auth')
+		return HttpResponseRedirect('/social_network')
 
 
 
@@ -105,7 +105,7 @@ def delete_record(request, username, id):
 		except Blog.DoesNotExist:
 			pass
 	else:
-		return HttpResponseRedirect('/social_network/auth')
+		return HttpResponseRedirect('/social_network')
 
 
 
@@ -120,4 +120,4 @@ def update_user_info(request, username):
 
 		return HttpResponseRedirect(f'/social_network/user/{username}')
 	else:
-		return HttpResponseRedirect('/social_network/auth')
+		return HttpResponseRedirect('/social_network')

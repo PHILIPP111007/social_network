@@ -6,7 +6,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Welcome</title>
-	<link rel="stylesheet" href='{% static "css/register.css" %}'>
+	<link rel="stylesheet" href='{% static "css/login.css" %}'>
 </head>
 <body>
 	<p id="hello">Welcome to social_network!</p>
@@ -20,20 +20,20 @@
     		</ul>
 		</div>
 	{% endif %}
-	
-	<div class="register">
-		<h3>Registration</h3>
-		<form method="POST" action="">
-			<table class="form">
-				{% csrf_token %}
-				{{ registerform }}
-			</table>
-			<input type="submit" value="Register">
-		</form>
 
-		<p class="menu-link"><a href="/social_network/login">Log in</a></p>
+    <div class="enter">
+        <h3>Log in</h3>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <table class="form">
+                {{ loginform }}
+            </table>
+            <input type="submit" value="Login">
+        </form>
 
-	</div>
+        <p class="menu-link"><a href="/social_network/register">Register</a></p>
+    
+    </div>
 
 </body>
 </html>

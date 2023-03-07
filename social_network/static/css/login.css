@@ -43,26 +43,22 @@ input {
 }
 
 .messages {
-    width: 500;
+    width: 300px;
     padding: 10px;
     border: 2px solid black;
-    background: rgb(235,235,235);
     text-align: left;
+    color:aliceblue;
+    background: rgb(36, 164, 49);
 }
 
-.register {
+.enter {
     position: fixed;
-    left: calc(50% - 250px);
-    width: 500px;
+    left: calc(50% - 200px);
+    width: 400px;
     padding: 10px;
     border: 2px solid black;
     background: rgb(235,235,235);
 }
-    .register input {
+    .enter input {
         margin-top: 20px;
     }
-    .register span {
-        font-size: small;
-        color: rgb(153, 150, 145);
-    }
-

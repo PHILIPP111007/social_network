@@ -10,7 +10,7 @@ def index(request, username):
         result_dict = make_content(request)
         return render(request, 'news.html', result_dict)
     else:
-        return HttpResponseRedirect('/social_network/auth')
+        return HttpResponseRedirect('/social_network')
 
 
 def make_content(request):
@@ -31,4 +31,4 @@ def make_content(request):
 def quit(request, username):
     if request.method == 'GET' and request.user.is_authenticated:
         logout(request)
-        return HttpResponseRedirect('/social_network/auth')
+        return HttpResponseRedirect('/social_network')
