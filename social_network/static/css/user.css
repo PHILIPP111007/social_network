@@ -14,14 +14,15 @@ textarea {
     font-family: inherit; /* 1 */
     font-size: inherit; /* 1 */
     line-height: inherit; /* 1 */
+    height: 30px;
+    min-height: 30px;
     max-width: 322px;
     min-width: 322px;
-    min-height: 26px;
+    resize: none;
     background-color: rgb(250, 244, 244);
     outline: none;
 	border: 1px solid #999;
     border-radius: 5px;
-    resize: none;
 }
 
 

@@ -45,11 +45,11 @@
 			<form method="POST" action="update_user_info/">
 				{% csrf_token %}
 				<label for="fname">First name:</label><br>
-				<input type="text" id="fname" name="fname" value="{{ global_user.first_name }}" minlength="1" maxlength="20"><br>
+				<input type="text" id="fname" name="fname" value="{{ global_user.first_name }}" maxlength="20" required><br>
 				<label for="lname">Last name:</label><br>
-				<input type="text" id="lname" name="lname" value="{{ global_user.last_name }}" minlength="1" maxlength="20"><br>
+				<input type="text" id="lname" name="lname" value="{{ global_user.last_name }}" maxlength="20" required><br>
 				<label for="email">Email:</label><br>
-				<input type="email" id="email" name="email" value="{{ global_user.email }}" maxlength="254"><br><br>
+				<input type="email" id="email" name="email" value="{{ global_user.email }}" maxlength="254" required><br><br>
 				<input type="submit" value="Submit">
 				<input type="reset">
 			</form>
