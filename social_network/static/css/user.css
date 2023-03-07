@@ -53,10 +53,11 @@ input[type="text"], input[type="email"], input[type="password"] {
     display: inline-flex;
     right: 0%;
     top: 0%;
-    left: 0%;
+    left: 160px;
     bottom: 99%;
     padding-bottom: 35px;
-    background: rgb(235,235,235);
+    background: rgb(235,235,235,0.8);
+    backdrop-filter: blur(5px);
 }
     .upper-line h5 {
         float: right;
@@ -79,26 +80,26 @@ input[type="text"], input[type="email"], input[type="password"] {
 
 
     .settings-bar {
-        margin-top: -164px;
-        margin-left: -200px;
-        transition: margin-top 0.3s;
+        position: fixed;
+        right: calc(0% + 200px);
+        top: 0%;
+        margin-top: -134px;
         padding: 10px;
-        background-color: rgb(235,235,235);
-        border: 1px solid black;
+        backdrop-filter: blur(5px);
+        background: rgb(235,235,235,0.8);
+        border: 2px solid #cac3c3;
+        border-radius: 5px;
+        transition: margin-top ease-out 0.3s;
     }
-
         #backgroundColorChangeButton {
             margin-bottom: 10px;
         }
-
         .open_modal {
             margin-bottom: 10px;
         }
-    
         #quitButton {
             margin-bottom: 25px;
         }
-
         .delete_account {
             background-color: #f77373e2;
         }
@@ -114,7 +115,7 @@ input[type="text"], input[type="email"], input[type="password"] {
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: rgb(235,235,235);
+    background: rgb(235,235,235,0.8);
     overflow-x: hidden;
     padding-top: 20px;
   }
@@ -165,7 +166,7 @@ input[type="text"], input[type="email"], input[type="password"] {
     .record-bar {
         height: 0;
         overflow: hidden;
-        transition: height 0.3s;
+        transition: height ease-out 0.3s;
     }
     .active {
         height: auto;

@@ -9,54 +9,37 @@
 	<title>{{ user.first_name }} {{ user.last_name }}</title>
 	<link rel="stylesheet" href='{% static "css/user.css" %}'>
 	<link rel="stylesheet" href='{% static "css/modal.css" %}'>
+
+	{% if not is_my_page %}
+		<style>
+			.user {
+				border-radius: 15px 15px 15px 15px;
+			}
+		</style>
+	{% endif %}
+
 </head>
 <body>
 
 	<div id="upper-div"></div>
 	
 	<div class="upper-line">
-		
 		<h5>{{ global_user.first_name }}</h5>
-		
 		<nav id="navigation">
-			
-			<!--
-			<img id="toggleTextarea" class="menu_burger_icon" aria-expanded="false" src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="22" alt="menu bar">
-
-			<div class="settings-bar" hidden>
-       		 	<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
-
-				<button id="1" class="open_modal">Settings</button>
-
-       		 	<form id="quitButton" method="GET" action="quit/">
-					<input type="submit" value="Quit">
-				</form>
-
-				<button id="2" class="open_modal">Delete account</button>
-    		</div>
-			-->
-
-
 			<img id="toggleTextarea" class="menu_burger_icon" src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="22" alt="menu bar">
-
-
-			<div class="settings-bar">
-				<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
-
-				<button id="1" class="open_modal">Settings</button>
-
-				<form id="quitButton" method="GET" action="quit/">
-					<input type="submit" value="Quit">
-				</form>
-
-				<button id="2" class="open_modal">Delete account</button>
-			</div>
-
-
-
-
-
     	</nav>
+	</div>
+
+	<div class="settings-bar">
+		<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
+
+		<button id="1" class="open_modal">Settings</button>
+
+		<form id="quitButton" method="GET" action="quit/">
+			<input type="submit" value="Quit">
+		</form>
+
+		<button id="2" class="open_modal">Delete account</button>
 	</div>
 
 	<div id="modal_1" class="modal bounceIn">
@@ -67,11 +50,11 @@
 
 			<form method="POST" action="update_user_info/">
 				{% csrf_token %}
-				<label for="fname">First name:</label><br>
+				<label for="fname">First name</label><br>
 				<input type="text" id="fname" name="fname" value="{{ global_user.first_name }}" maxlength="20" required><br>
-				<label for="lname">Last name:</label><br>
+				<label for="lname">Last name</label><br>
 				<input type="text" id="lname" name="lname" value="{{ global_user.last_name }}" maxlength="20" required><br>
-				<label for="email">Email:</label><br>
+				<label for="email">Email</label><br>
 				<input type="email" id="email" name="email" value="{{ global_user.email }}" maxlength="254" required><br><br>
 				<input type="submit" value="Submit">
 				<input type="reset">
