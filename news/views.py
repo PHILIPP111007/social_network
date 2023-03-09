@@ -2,15 +2,14 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from user.models import Blog, Subscriber
 
 
+@login_required
 def index(request, username):
-    if request.user.is_authenticated:
-        result_dict = make_content(request)
-        return render(request, 'news.html', result_dict)
-    else:
-        return HttpResponseRedirect('/social_network')
+    result_dict = make_content(request)
+    return render(request, 'news.html', result_dict)
 
 
 def make_content(request):
@@ -29,6 +28,5 @@ def make_content(request):
 
 
 def quit(request, username):
-    if request.method == 'GET' and request.user.is_authenticated:
-        logout(request)
-        return HttpResponseRedirect('/social_network')
+    logout(request)
+    return HttpResponseRedirect('/social_network')

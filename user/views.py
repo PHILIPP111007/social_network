@@ -2,13 +2,12 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from .models import Blog, Subscriber
 
 
+@login_required
 def index(request, username):
-	if not request.user.is_authenticated:
-		return HttpResponseRedirect('/social_network')
-
 	result_dict = make_content(request, username)
 	return render(request, 'user.html', result_dict)
 
@@ -18,28 +17,30 @@ def make_content(request, username):
 
 	global_user = User.objects.get(username=request.user.username)
 
-	try:
-		user = User.objects.get(username=username)
-	except User.DoesNotExist:
-		return HttpResponseRedirect(f'/social_network/user/{request.user.username}')
-
+	# If I am on other persons's page:
+	if username != request.user.username:
+		try:
+			user = User.objects.get(username=username)
+		except User.DoesNotExist:
+			return HttpResponseRedirect(f'/social_network/user/{request.user.username}')
+		is_my_page = False
+	else:
+		is_my_page = True
+		user = global_user
+	
 	blog = Blog.objects.filter(user_id=username).order_by('-date_time')
-
 	obj = Subscriber()
 	friends_count = obj.get_friends(username=username)[0].count()
 
 	result_dict = {
-		'is_my_page': True,
+		'is_my_page': is_my_page,
 		'global_user': global_user,
 		'user': user,
-		'blog': blog,
 		'friends_count': friends_count,
+		'blog': blog
 	}
 
-	# If I am on another user's page:
-	if username != request.user.username:
-		result_dict['is_my_page'] = False
-
+	if not is_my_page:
 		# If we are friends, I can see his blog
 		if Subscriber.objects.filter(user=request.user.username, subscriber=username) and Subscriber.objects.filter(user=username, subscriber=request.user.username):
 			result_dict['is_my_friend'] = True
@@ -47,77 +48,60 @@ def make_content(request, username):
 	return result_dict
 
 
-
 def quit(request, username):
-
-	if request.method == 'GET' and request.user.is_authenticated:
-		logout(request)
-		return HttpResponseRedirect('/social_network')
+	logout(request)
+	return HttpResponseRedirect('/social_network')
 	
 
-
+@login_required
 def delete_account(request, username):
-
-	if request.method == 'POST' and request.user.is_authenticated:
+	if request.method == 'POST':
 		User.objects.get(username=request.user.username).delete()
 		Subscriber.objects.filter(subscriber=request.user.username).delete()
 
 	return HttpResponseRedirect('/social_network')
 
 
-
-
+@login_required
 def create_record(request, username):
-
-	if request.method == 'POST' and request.user.is_authenticated and request.user.username == username:
+	if request.method == 'POST':
 		if request.POST.get('my_textarea'):
-			Blog.objects.create(user_id=username, content=request.POST.get('my_textarea'))
+			Blog.objects.create(user_id=request.user.username, content=request.POST.get('my_textarea'))
 
-		return HttpResponseRedirect(f'/social_network/user/{username}')
-	else:
-		return HttpResponseRedirect('/social_network')
+	return HttpResponseRedirect(f'/social_network/user/{request.user.username}')
 
 
-
-
+@login_required
 def change_record(request, username, id):
-
-	if request.method == 'POST' and request.user.is_authenticated and request.user.username == username:
-		if request.POST.get('my_textarea'):
-			record = Blog.objects.get(user_id=username, id=id)
+	if request.method == 'POST':
+		if request.POST.get('my_textarea', ''):
+			record = Blog.objects.get(user_id=request.user.username, id=id)
 			record.content=request.POST.get('my_textarea')
 			record.is_changed = True
 			record.save()
-		return HttpResponseRedirect(f'/social_network/user/{username}')
-	else:
-		return HttpResponseRedirect('/social_network')
+
+	return HttpResponseRedirect(f'/social_network/user/{username}')
 
 
-
-
+@login_required
 def delete_record(request, username, id):
-
-	if request.method == 'POST' and request.user.is_authenticated and request.user.username == username:
+	if request.method == 'POST':
 		try:
-			record = Blog.objects.get(user_id=username, id=id)
+			record = Blog.objects.get(user_id=request.user.username, id=id)
 			record.delete()
-			return HttpResponseRedirect(f'/social_network/user/{username}')
 		except Blog.DoesNotExist:
 			pass
-	else:
-		return HttpResponseRedirect('/social_network')
+
+	return HttpResponseRedirect(f'/social_network/user/{request.user.username}')
 
 
-
+@login_required
 def update_user_info(request, username):
-	if request.method == 'POST' and request.user.is_authenticated:
-		
+	if request.method == 'POST':
 		user = User.objects.get(username=request.user.username)
 		user.first_name = str(request.POST.get('fname')).strip()
 		user.last_name = str(request.POST.get('lname')).strip()
 		user.email = request.POST.get('email')
 		user.save()
-
 		return HttpResponseRedirect(f'/social_network/user/{username}')
-	else:
-		return HttpResponseRedirect('/social_network')
+

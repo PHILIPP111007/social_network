@@ -2,30 +2,24 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from user.models import Subscriber
 from .forms import FindUser
 
 
+@login_required
 def index(request, username):
-    
-    if request.user.is_authenticated:
-        if request.method == 'GET':
-            result_dict = make_content(request)
-            return render(request, 'friends.html', result_dict)
-        
-        elif request.method == 'POST':
-            find_users = find_user(request)
-            result_dict = make_content(request, find_users=find_users)
-            return render(request, 'friends.html', result_dict)
-    else:
-        return HttpResponseRedirect('/social_network')
-
+    if request.method == 'GET':
+        result_dict = make_content(request)
+        return render(request, 'friends.html', result_dict)
+    elif request.method == 'POST':
+        find_users = find_user(request)
+        result_dict = make_content(request, find_users=find_users)
+        return render(request, 'friends.html', result_dict)
 
 
 def make_content(request, find_users=None):
-
     user = User.objects.get(username=request.user.username)
-
     obj = Subscriber()
     friends, subscriptions, subscribers = obj.get_friends(username=request.user.username)
 
@@ -46,13 +40,9 @@ def make_content(request, find_users=None):
     return result_dict
 
 
-
 def quit(request, username):
-
-    if request.method == 'GET' and request.user.is_authenticated and request.user.username == username:
-        logout(request)
-        return HttpResponseRedirect('/social_network')
-
+    logout(request)
+    return HttpResponseRedirect('/social_network')
 
 
 def find_user(request):
@@ -82,46 +72,34 @@ def find_user(request):
         return find_users
 
 
-
+@login_required
 def add_friend(request, username):
     if request.method == 'POST':
-        if request.user.is_authenticated:
-
-            if not Subscriber.objects.filter(subscriber=username, user_id=request.user.username):
-                Subscriber.objects.create(subscriber=username, user_id=request.user.username)
+        if not Subscriber.objects.filter(subscriber=username, user_id=request.user.username):
+            Subscriber.objects.create(subscriber=username, user_id=request.user.username)
             
-            return HttpResponseRedirect(f'/social_network/friends/{request.user.username}')
-        else:
-            return HttpResponseRedirect('/social_network')
+        return HttpResponseRedirect(f'/social_network/friends/{request.user.username}')
 
 
-
+@login_required
 def delete_friend(request, username):
     if request.method == 'POST':
-        if request.user.is_authenticated:
-            
-            try:
-                subscriber = Subscriber.objects.get(subscriber=username, user_id=request.user.username)
-                subscriber.delete()
-            except Exception:
-                pass
+        try:
+            subscriber = Subscriber.objects.get(subscriber=username, user_id=request.user.username)
+            subscriber.delete()
+        except Exception:
+            pass
 
-            return HttpResponseRedirect(f'/social_network/friends/{request.user.username}')
-        else:
-            return HttpResponseRedirect('/social_network')
+        return HttpResponseRedirect(f'/social_network/friends/{request.user.username}')
 
-    
 
+@login_required
 def delete_subscriber(request, username):
     if request.method == 'POST':
-        if request.user.is_authenticated:
-            
-            try:
-                subscriber = Subscriber.objects.get(subscriber=request.user.username, user_id=username)
-                subscriber.delete()
-            except Exception:
-                pass
+        try:
+            subscriber = Subscriber.objects.get(subscriber=request.user.username, user_id=username)
+            subscriber.delete()
+        except Exception:
+            pass
 
-            return HttpResponseRedirect(f'/social_network/friends/{request.user.username}')
-        else:
-            return HttpResponseRedirect('/social_network')
+        return HttpResponseRedirect(f'/social_network/friends/{request.user.username}')

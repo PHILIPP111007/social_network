@@ -10,9 +10,7 @@ def user_login(request):
 	if request.method == 'POST':
 		form = LoginForm(request.POST)
 		if form.is_valid():
-			user_auth(request)
-			username = request.POST.get('username')
-			return HttpResponseRedirect(f'/social_network/user/{username}')
+			return user_auth(request)
 		else:
 			messages.error(request, 'Incorrect login or password')
 	else:
@@ -25,15 +23,9 @@ def user_register(request):
 		form = CustomUserCreationForm(request.POST)
 		if form.is_valid():
 			form.save()
-			user_auth(request)
 			messages.success(request, 'Account created successfully')
-				
-			username = request.POST.get('username')
-			first_name = request.POST.get('first_name')
-			last_name = request.POST.get('last_name')
-			Blog.objects.create(user_id=username, content=f'Hi, I\'m {first_name} {last_name} and this is my first post!')
-
-			return HttpResponseRedirect(f'/social_network/user/{username}')
+			create_first_post(request)
+			return user_auth(request)
 	else:
 		form = CustomUserCreationForm()
 	return render(request, 'register.html', {'registerform': form})
@@ -45,5 +37,13 @@ def user_auth(request):
 	user = authenticate(request, username=username, password=password)
 	if user is not None:
 		login(request, user)
+		return HttpResponseRedirect(f'/social_network/user/{username}')
 	else:
-		return render(request, 'login.html', {'loginform': LoginForm()}) 
+		return HttpResponseRedirect(f'/social_network/user/{username}')
+
+
+def create_first_post(request):
+	username = request.POST.get('username')
+	first_name = request.POST.get('first_name')
+	last_name = request.POST.get('last_name')
+	Blog.objects.create(user_id=username, content=f'Hi, I\'m {first_name} {last_name} and this is my first post!')
