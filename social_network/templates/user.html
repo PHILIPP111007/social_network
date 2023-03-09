@@ -115,8 +115,6 @@
 								<button id="{{record.id}}" href="javascript:void();" class="show-hide-btn">
 									read more
 								</button>
-								<br/>
-								<br/>
 							</div>
 							
 							<div class="full-content" id="full-{{record.id}}" style="display: none;">
@@ -124,8 +122,6 @@
 								<button id="{{record.id}}" class="show-hide-btn">
 									read less
 								</button>
-								<br/>
-								<br/>
 							</div>
 						{% else %}
 							<div>{{ record.content|linebreaks|urlize }}</div>
@@ -133,7 +129,9 @@
 
 						{% if is_my_page %}
 
-							<img class="three_points" src="{% static 'images/three_points.svg' %}" width="20" height="20" alt="three points">
+							<p class="three_points">
+								<img src="{% static 'images/three_points.svg' %}" width="20" height="20" alt="three points">
+							</p>
 
 							<div class="record-bar">
 								<div id="change-record">
@@ -165,6 +163,7 @@
 
 	<script src="{% static 'js/user.js' %}" type="text/javascript" charset="utf-8" async defer></script>
 	<script src="{% static 'js/modal.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+	<script src="{% static 'js/youtubeAPI.js' %}" type="text/javascript" charset="utf-8" async defer></script>
 
 </body>
 </html>

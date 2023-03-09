@@ -104,4 +104,3 @@ def update_user_info(request, username):
 		user.email = request.POST.get('email')
 		user.save()
 		return HttpResponseRedirect(f'/social_network/user/{username}')
-
