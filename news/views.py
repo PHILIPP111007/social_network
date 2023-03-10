@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from user.models import Blog, Subscriber
+from user.models import Blog, Subscriber, UserSettings
 
 
 @login_required
@@ -18,11 +18,13 @@ def make_content(request):
     obj = Subscriber()
     friends = obj.get_friends(username=request.user.username)[0]
     friends_records = Blog.objects.filter(user_id__in=friends).order_by('-date_time')
+    settings = UserSettings.objects.get(user_id=request.user.username)
 
     result_dict = {
 		'is_my_page': True,
         'user': user,
-        'friends_records': friends_records
+        'friends_records': friends_records,
+        'settings': settings
 	}
     return result_dict
 
