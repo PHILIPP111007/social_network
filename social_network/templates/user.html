@@ -46,20 +46,37 @@
 		<img class="close_modal" src="{% static 'images/005close1_99908.svg' %}" alt="cross black circular button">
 		<div class="modal_txt">
 			<h1>Settings</h1>
-			<h4>To change personal info</h4>
-
-			<form method="POST" action="update_user_info/">
-				{% csrf_token %}
-				<label for="fname">First name</label><br>
-				<input type="text" id="fname" name="fname" value="{{ global_user.first_name }}" maxlength="20" required><br>
-				<label for="lname">Last name</label><br>
-				<input type="text" id="lname" name="lname" value="{{ global_user.last_name }}" maxlength="20" required><br>
-				<label for="email">Email</label><br>
-				<input type="email" id="email" name="email" value="{{ global_user.email }}" maxlength="254" required><br><br>
-				<input type="submit" value="Submit">
-				<input type="reset">
-			</form>
-
+			<br/>
+			<div>
+				<form method="POST" action="update_user_info/">
+					<h4>To change personal info</h4>
+					{% csrf_token %}
+					<label for="fname">First name</label><br>
+					<input type="text" id="fname" name="fname" value="{{ global_user.first_name }}" maxlength="20" required><br>
+					<label for="lname">Last name</label><br>
+					<input type="text" id="lname" name="lname" value="{{ global_user.last_name }}" maxlength="20" required><br>
+					<label for="email">Email</label><br>
+					<input type="email" id="email" name="email" value="{{ global_user.email }}" maxlength="254" required><br>
+					<input type="submit" value="Submit">
+					<input type="reset">
+				</form>
+			</div>
+			<div>
+				<form method="POST" action="update_user_settings/">
+					<h4>User settings</h4>
+					{% csrf_token %}
+					<input 
+						type="checkbox" 
+						id="low_power_mode" 
+						name="low_power_mode" 
+						{% if not settings.low_power_mode %}
+							checked
+						{% endif %}
+					>
+					<label for="low_power_mode">Low power mode</label><br><br>
+					<input type="submit" value="Submit">
+				</form>
+			</div>
 		</div>
 	</div>
 
@@ -84,7 +101,7 @@
 	</aside>
 
 	<div class="main-content">
-		
+
 		<div class="user">
 			{% if is_my_page %}
 				<h3>Homepage</h3>
@@ -129,9 +146,7 @@
 
 						{% if is_my_page %}
 
-							<p class="three_points">
-								<img src="{% static 'images/three_points.svg' %}" width="20" height="20" alt="three points">
-							</p>
+							<img class="three_points" src="{% static 'images/three_points.svg' %}" width="20" height="20" alt="three points">
 
 							<div class="record-bar">
 								<div id="change-record">
@@ -163,7 +178,9 @@
 
 	<script src="{% static 'js/user.js' %}" type="text/javascript" charset="utf-8" async defer></script>
 	<script src="{% static 'js/modal.js' %}" type="text/javascript" charset="utf-8" async defer></script>
-	<script src="{% static 'js/youtubeAPI.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+	{% if settings.low_power_mode %}
+		<script src="{% static 'js/youtubeAPI.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+	{% endif %}
 
 </body>
 </html>

@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, CustomUserCreationForm
-from user.models import Blog
+from user.models import Blog, UserSettings
 
 
 def user_login(request):
@@ -47,3 +47,5 @@ def create_first_post(request):
 	first_name = request.POST.get('first_name')
 	last_name = request.POST.get('last_name')
 	Blog.objects.create(user_id=username, content=f'Hi, I\'m {first_name} {last_name} and this is my first post!')
+
+	UserSettings.objects.create(user_id=username)

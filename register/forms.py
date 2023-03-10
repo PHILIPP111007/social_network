@@ -4,9 +4,6 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 class CustomUserCreationForm(UserCreationForm):
-	first_name = forms.CharField(required=True, strip=True)
-	last_name = forms.CharField(required=True, strip=True)
-	email = forms.EmailField(required=True)
 
 	class Meta:
 		model = User

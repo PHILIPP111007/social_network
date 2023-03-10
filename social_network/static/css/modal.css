@@ -29,10 +29,11 @@
 .close_modal:hover {
   background-color: rgb(250, 244, 244);
 }
+
 .modal_txt {
   box-shadow: 0 4px 12px rgba(0,0,0,0.2), 0 16px 20px rgba(0,0,0,0.2);
   background: rgb(250, 244, 244);
-  padding: 30px;
   margin: 100px auto;
   max-width: 800px;
+  padding: 30px;
 }

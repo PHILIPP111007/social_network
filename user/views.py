@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from .models import Blog, Subscriber
+from .models import Blog, Subscriber, UserSettings
 
 
 @login_required
@@ -31,13 +31,15 @@ def make_content(request, username):
 	blog = Blog.objects.filter(user_id=username).order_by('-date_time')
 	obj = Subscriber()
 	friends_count = obj.get_friends(username=username)[0].count()
+	settings = UserSettings.objects.get(user_id=request.user.username)
 
 	result_dict = {
 		'is_my_page': is_my_page,
 		'global_user': global_user,
 		'user': user,
 		'friends_count': friends_count,
-		'blog': blog
+		'blog': blog,
+		'settings': settings
 	}
 
 	if not is_my_page:
@@ -102,5 +104,30 @@ def update_user_info(request, username):
 		user.first_name = str(request.POST.get('fname')).strip()
 		user.last_name = str(request.POST.get('lname')).strip()
 		user.email = request.POST.get('email')
+
+
+		low_power_mode = request.POST.get('low_power_mode')
+		if low_power_mode:
+			user.low_power_mode = True
+		else:
+			user.low_power_mode = False
+
+
+
 		user.save()
+		return HttpResponseRedirect(f'/social_network/user/{username}')
+
+
+@login_required
+def update_user_settings(request, username):
+	if request.method == 'POST':
+		settings = UserSettings.objects.get(user_id=request.user.username)
+		
+		if 'low_power_mode' in request.POST: 
+			settings.low_power_mode = False
+		else:
+			settings.low_power_mode = True
+
+		settings.save()
+
 		return HttpResponseRedirect(f'/social_network/user/{username}')

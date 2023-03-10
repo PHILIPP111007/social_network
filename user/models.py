@@ -2,9 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-
 class Blog(models.Model):
-	user = models.ForeignKey(User, to_field='username', db_column='username', on_delete=models.CASCADE)  # !!!!!
+	user = models.ForeignKey(User, to_field='username', db_column='username', on_delete=models.CASCADE)
 	date_time = models.DateTimeField(auto_now_add=True)
 	content = models.TextField(max_length=5000)
 	is_changed = models.BooleanField(default=False)
@@ -13,14 +12,12 @@ class Blog(models.Model):
 		return self.user.username
 
 
-
 class Subscriber(models.Model):
 	user = models.ForeignKey(User, to_field='username', db_column='username', on_delete=models.CASCADE)
 	subscriber = models.CharField(max_length=20)
 
 	def __str__(self):
 		return self.user.username
-
 
 	def get_friends(self, username):
 
@@ -37,3 +34,12 @@ class Subscriber(models.Model):
 		subscribers = User.objects.filter(username__in=subscribers_set)
 
 		return friends, subscriptions, subscribers
+
+
+class UserSettings(models.Model):
+	user = models.OneToOneField(User, to_field='username', db_column='username', on_delete=models.CASCADE, primary_key=True)
+	low_power_mode = models.BooleanField(default=False)
+
+	def __str__(self):
+		return self.user.username
+	

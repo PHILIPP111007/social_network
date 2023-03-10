@@ -179,3 +179,10 @@ input[type="text"], input[type="email"], input[type="password"] {
 .three_points:hover {
     cursor: pointer;
 }
+
+#modal_1 .modal_txt {
+    display: flex;
+}
+#modal_1 .modal_txt div {
+    padding: 30px;
+}
