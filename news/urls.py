@@ -3,6 +3,6 @@ from news import views
 
 
 urlpatterns = [
-	path('', views.index),
+	path('', views.index, name='news'),
 	path('quit/', views.quit),
 ]

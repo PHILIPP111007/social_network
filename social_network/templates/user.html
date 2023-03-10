@@ -93,10 +93,10 @@
 
 	<aside class="left-list">
 		<nav>
-			<p class="menu-link"><a href="/social_network/user/{{ global_user.username }}" style="background-color: rgb(205,205,205);">Homepage</a></p>
+			<p class="menu-link"><a href="{% url 'user' global_user.username %}" style="background-color: rgb(205,205,205);">Homepage</a></p>
 			<p class="menu-link"><a href="">Messenger</a></p>
-			<p class="menu-link"><a href="/social_network/friends/{{ global_user.username }}">Friends</a></p>
-			<p class="menu-link"><a href="/social_network/news/{{ global_user.username }}">News</a></p>
+			<p class="menu-link"><a href="{% url 'friends' global_user.username %}">Friends</a></p>
+			<p class="menu-link"><a href="{% url 'news' global_user.username %}">News</a></p>
 		</nav>
 	</aside>
 

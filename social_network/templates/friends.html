@@ -28,10 +28,10 @@
 
 	<aside class="left-list">
 		<nav>
-			<p class="menu-link"><a href="/social_network/user/{{ user.username }}">Homepage</a></p>
+			<p class="menu-link"><a href="{% url 'user' user.username %}">Homepage</a></p>
 			<p class="menu-link"><a href="">Messenger</a></p>
-			<p class="menu-link"><a href="/social_network/friends/{{ user.username }}" style="background-color: rgb(205,205,205);">Friends</a></p>
-			<p class="menu-link"><a href="/social_network/news/{{ user.username }}">News</a></p>
+			<p class="menu-link"><a href="{% url 'friends' user.username %}" style="background-color: rgb(205,205,205);">Friends</a></p>
+			<p class="menu-link"><a href="{% url 'news' user.username %}" >News</a></p>
 		</nav>
 	</aside>
 
@@ -59,7 +59,7 @@
 			{% if find_users %}
 				{% for u in find_users %}
 				<div class="user-card">
-					<a class="profile-link" href="/social_network/user/{{ u.username }}">
+					<a class="profile-link" href="{% url 'user' u.username %}">
 						<h4>{{ u.first_name }} {{ u.last_name }}</h4>
 						<h4 style="color:gray; font-size: 13px">@{{ u.username }}</h4>
 					</a>
@@ -80,7 +80,7 @@
 					<div>
 						{% for friend in friends %}
 							<div class="user-card">
-								<a class="profile-link" href="/social_network/user/{{ friend.username }}">
+								<a class="profile-link" href="{% url 'user' friend.username %}">
 									<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
 									<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
 								</a>
@@ -103,7 +103,7 @@
 					<div>
 						{% for friend in subscriptions %}
 							<div class="user-card">
-								<a class="profile-link" href="/social_network/user/{{ friend.username }}">
+								<a class="profile-link" href="{% url 'user' friend.username %}">
 									<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
 									<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
 								</a>
@@ -126,7 +126,7 @@
 					<div>
 						{% for friend in subscribers %}
 							<div class="user-card">
-								<a class="profile-link" href="/social_network/user/{{ friend.username }}">
+								<a class="profile-link" href="{% url 'user' friend.username %}">
 									<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
 									<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
 								</a>

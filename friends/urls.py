@@ -3,7 +3,7 @@ from friends import views
 
 
 urlpatterns = [
-	path('', views.index),
+	path('', views.index, name='friends'),
 	path('quit/', views.quit),
 	path('add_friend/<str:username>/', views.add_friend),
 	path('delete_friend/<str:username>/', views.delete_friend),
