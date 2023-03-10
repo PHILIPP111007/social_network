@@ -12,7 +12,6 @@ def index(request, username):
 	return render(request, 'user.html', result_dict)
 
 
-
 def make_content(request, username):
 
 	global_user = User.objects.get(username=request.user.username)
@@ -41,7 +40,6 @@ def make_content(request, username):
 		'blog': blog,
 		'settings': settings
 	}
-
 	if not is_my_page:
 		# If we are friends, I can see his blog
 		if Subscriber.objects.filter(user=request.user.username, subscriber=username) and Subscriber.objects.filter(user=username, subscriber=request.user.username):
@@ -82,7 +80,7 @@ def change_record(request, username, id):
 			record.is_changed = True
 			record.save()
 
-	return HttpResponseRedirect(f'/social_network/user/{username}')
+	return HttpResponseRedirect(f'/social_network/user/{request.user.username}')
 
 
 @login_required
@@ -104,16 +102,6 @@ def update_user_info(request, username):
 		user.first_name = str(request.POST.get('fname')).strip()
 		user.last_name = str(request.POST.get('lname')).strip()
 		user.email = request.POST.get('email')
-
-
-		low_power_mode = request.POST.get('low_power_mode')
-		if low_power_mode:
-			user.low_power_mode = True
-		else:
-			user.low_power_mode = False
-
-
-
 		user.save()
 		return HttpResponseRedirect(f'/social_network/user/{username}')
 
@@ -122,12 +110,10 @@ def update_user_info(request, username):
 def update_user_settings(request, username):
 	if request.method == 'POST':
 		settings = UserSettings.objects.get(user_id=request.user.username)
-		
 		if 'low_power_mode' in request.POST: 
 			settings.low_power_mode = False
 		else:
 			settings.low_power_mode = True
 
 		settings.save()
-
 		return HttpResponseRedirect(f'/social_network/user/{username}')

@@ -31,7 +31,6 @@ def make_content(request, find_users=None):
         'subscriptions': subscriptions,
         'subscribers': subscribers,
 	}
-
     if find_users:
         result_dict['find_users'] = result_dict['find_users'].exclude(username__in=friends.values_list('username'))
         result_dict['find_users'] = result_dict['find_users'].exclude(username__in=subscriptions.values_list('username'))
@@ -46,7 +45,6 @@ def quit(request, username):
 
 
 def find_user(request):
-
     username = request.POST.get('username')
     find_users = ''
 
@@ -62,7 +60,6 @@ def find_user(request):
         last_name = request.POST.get('last_name')
         if last_name != '':
             result_str += f'.filter(last_name="{last_name}")'
-
 
         if result_str != 'User.objects':
             find_users = eval(result_str)
