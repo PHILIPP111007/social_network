@@ -14,15 +14,15 @@ class Blog(models.Model):
 
 class Subscriber(models.Model):
 	user = models.ForeignKey(User, to_field='username', db_column='username', on_delete=models.CASCADE)
-	subscriber = models.CharField(max_length=20)
+	subscribe = models.CharField(max_length=20)
 
 	def __str__(self):
 		return self.user.username
 
 	def get_friends(self, username):
 
-		set_1 = set(self.__class__.objects.filter(user_id=username).values_list('subscriber', flat=True))
-		set_2 = set(self.__class__.objects.filter(subscriber=username).values_list('user', flat=True))
+		set_1 = set(self.__class__.objects.filter(user_id=username).values_list('subscribe', flat=True))
+		set_2 = set(self.__class__.objects.filter(subscribe=username).values_list('user', flat=True))
 
 		friends_set = set_1 & set_2
 		friends = User.objects.filter(username__in=friends_set)

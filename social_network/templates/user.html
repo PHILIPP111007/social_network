@@ -109,6 +109,33 @@
 			<p>{{ user.first_name }} {{ user.last_name }}</p>
 			<p>@{{ user.username }}</p>
 			<p>&#91; friends: {{ friends_count }} &#93;</p>
+			{% if not is_my_page %}
+				{% if is_my_friend %}
+					<form method="POST" action="delete_friend/{{ user.username }}/">
+						{% csrf_token %}
+						<input class="remove_subscribe" type="submit" value="Remove from friends">
+					</form>
+				{% elif i_am_subscriber %}
+					<form method="POST" action="delete_friend/{{ user.username }}/">
+						{% csrf_token %}
+						<input class="remove_subscribe" type="submit" value="Remove subscription">
+					</form>
+				{% elif he_is_subscriber %}
+					<form method="POST" action="add_friend/{{ user.username }}/">
+						{% csrf_token %}
+						<input class="add_friend" type="submit" value="Add to friends">
+					</form>
+					<form method="POST" action="delete_subscriber/{{ user.username }}/">
+						{% csrf_token %}
+						<input class="remove_subscribe" type="submit" value="Delete his subscription">
+					</form>
+				{% else %}
+					<form method="POST" action="add_friend/{{ user.username }}/">
+						{% csrf_token %}
+						<input class="add_friend" type="submit" value="Add to friends">
+					</form>
+				{% endif %}
+			{% endif %}
 		</div>
 
 		<div class="blog">

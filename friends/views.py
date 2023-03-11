@@ -72,8 +72,8 @@ def find_user(request):
 @login_required
 def add_friend(request, username):
     if request.method == 'POST':
-        if not Subscriber.objects.filter(subscriber=username, user_id=request.user.username):
-            Subscriber.objects.create(subscriber=username, user_id=request.user.username)
+        if not Subscriber.objects.filter(subscribe=username, user_id=request.user.username):
+            Subscriber.objects.create(subscribe=username, user_id=request.user.username)
             
         return HttpResponseRedirect(f'/social_network/friends/{request.user.username}')
 
@@ -82,8 +82,8 @@ def add_friend(request, username):
 def delete_friend(request, username):
     if request.method == 'POST':
         try:
-            subscriber = Subscriber.objects.get(subscriber=username, user_id=request.user.username)
-            subscriber.delete()
+            subscribe = Subscriber.objects.get(subscribe=username, user_id=request.user.username)
+            subscribe.delete()
         except Exception:
             pass
 
@@ -94,8 +94,8 @@ def delete_friend(request, username):
 def delete_subscriber(request, username):
     if request.method == 'POST':
         try:
-            subscriber = Subscriber.objects.get(subscriber=request.user.username, user_id=username)
-            subscriber.delete()
+            subscribe = Subscriber.objects.get(subscribe=request.user.username, user_id=username)
+            subscribe.delete()
         except Exception:
             pass
 

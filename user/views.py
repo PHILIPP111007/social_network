@@ -40,10 +40,26 @@ def make_content(request, username):
 		'blog': blog,
 		'settings': settings
 	}
+
+	"""
 	if not is_my_page:
 		# If we are friends, I can see his blog
 		if Subscriber.objects.filter(user=request.user.username, subscriber=username) and Subscriber.objects.filter(user=username, subscriber=request.user.username):
 			result_dict['is_my_friend'] = True
+	"""
+
+	if not is_my_page:
+
+		user_1 = Subscriber.objects.filter(user=request.user.username, subscribe=username)
+		user_2 = Subscriber.objects.filter(user=username, subscribe=request.user.username)
+
+		# If we are friends, I can see his blog
+		if user_1 and user_2:
+			result_dict['is_my_friend'] = True
+		elif user_1:
+			result_dict['i_am_subscriber'] = True
+		elif user_2:
+			result_dict['he_is_subscriber'] = True
 
 	return result_dict
 
@@ -57,7 +73,7 @@ def quit(request, username):
 def delete_account(request, username):
 	if request.method == 'POST':
 		User.objects.get(username=request.user.username).delete()
-		Subscriber.objects.filter(subscriber=request.user.username).delete()
+		Subscriber.objects.filter(subscribe=request.user.username).delete()
 
 	return HttpResponseRedirect('/social_network')
 
@@ -117,3 +133,36 @@ def update_user_settings(request, username):
 
 		settings.save()
 		return HttpResponseRedirect(f'/social_network/user/{username}')
+
+
+@login_required
+def add_friend(request, username):
+    if request.method == 'POST':
+        if not Subscriber.objects.filter(subscribe=username, user_id=request.user.username):
+            Subscriber.objects.create(subscribe=username, user_id=request.user.username)
+            
+        return HttpResponseRedirect(f'/social_network/user/{username}')
+
+
+@login_required
+def delete_friend(request, username):
+    if request.method == 'POST':
+        try:
+            subscribe = Subscriber.objects.get(subscribe=username, user_id=request.user.username)
+            subscribe.delete()
+        except Exception:
+            pass
+
+        return HttpResponseRedirect(f'/social_network/user/{username}')
+
+
+@login_required
+def delete_subscriber(request, username):
+    if request.method == 'POST':
+        try:
+            subscribe = Subscriber.objects.get(subscribe=request.user.username, user_id=username)
+            subscribe.delete()
+        except Exception:
+            pass
+
+        return HttpResponseRedirect(f'/social_network/user/{username}')
