@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -41,18 +41,9 @@ def make_content(request, username):
 		'settings': settings
 	}
 
-	"""
 	if not is_my_page:
-		# If we are friends, I can see his blog
-		if Subscriber.objects.filter(user=request.user.username, subscriber=username) and Subscriber.objects.filter(user=username, subscriber=request.user.username):
-			result_dict['is_my_friend'] = True
-	"""
-
-	if not is_my_page:
-
 		user_1 = Subscriber.objects.filter(user=request.user.username, subscribe=username)
 		user_2 = Subscriber.objects.filter(user=username, subscribe=request.user.username)
-
 		# If we are friends, I can see his blog
 		if user_1 and user_2:
 			result_dict['is_my_friend'] = True
