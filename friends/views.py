@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from user.models import Subscriber
-from .forms import FindUser
 
 
 @login_required
@@ -25,7 +24,6 @@ def make_content(request, find_users=None):
 
     result_dict = {
         'user': user,
-        'find_user_form': FindUser(),
         'find_users': find_users,
         'friends': friends,
         'subscriptions': subscriptions,

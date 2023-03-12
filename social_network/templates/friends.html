@@ -48,9 +48,9 @@
 			<caption>Find people!</caption>
 			<form method="POST" action="">
 				{% csrf_token %}
-				<table class="form">
-					{{ find_user_form }}
-				</table>
+				<input type="text" id="username" name="username" placeholder="Username"><br>
+				<input type="text" id="first_name" name="first_name" placeholder="First name"><br>
+				<input type="text" id="last_name" name="last_name" placeholder="Last name"><br>
 				<input type="submit" value="Find">
 			</form>
 		</div>
