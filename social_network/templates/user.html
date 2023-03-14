@@ -164,6 +164,8 @@
 								<button id="{{record.id}}" href="javascript:void();" class="show-hide-btn">
 									read more
 								</button>
+								<br>
+								<br>
 							</div>
 							
 							<div class="full-content" id="full-{{record.id}}" style="display: none;">
@@ -171,6 +173,8 @@
 								<button id="{{record.id}}" class="show-hide-btn">
 									read less
 								</button>
+								<br>
+								<br>
 							</div>
 						{% else %}
 							<div>{{ record.content|linebreaks|urlize }}</div>
