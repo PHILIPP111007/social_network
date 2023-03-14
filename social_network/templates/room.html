@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{ global_user.first_name }} {{ global_user.last_name }}</title>
+	<link rel="stylesheet" href='{% static "css/room.css" %}'>
+	<style>
+		.{{ global_user.username }} {
+			background-color: rgb(121, 202, 39);
+		}
+		.{{ user_name }} {
+			background-color: rgb(173, 173, 173);
+		}
+	</style>
+</head>
+<body>
+	<div id="upper-div"></div>
+
+	<div class="upper-line">
+		<h5>{{ global_user.first_name }}</h5>
+		<nav id="navigation">
+			<img id="toggleTextarea" class="menu_burger_icon" src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="22" alt="menu bar">
+		</nav>
+	</div>
+
+	<div class="settings-bar">
+		<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
+		<form id="quitButton" method="GET" action="quit/">
+			<input type="submit" value="Quit">
+		</form>
+	</div>
+
+	<aside class="left-list">
+		<nav>
+			<p class="menu-link"><a href="{% url 'user' global_user.username %}">Homepage</a></p>
+			<p class="menu-link"><a href="{% url 'dialogs' global_user.username %}" style="background-color: rgb(205,205,205);">Messenger</a></p>
+			<p class="menu-link"><a href="{% url 'friends' global_user.username %}">Friends</a></p>
+			<p class="menu-link"><a href="{% url 'news' global_user.username %}">News</a></p>
+		</nav>
+	</aside>
+
+	<div class="main-content">
+
+		<div class="chat" align="center">
+			<div class="container_Scrollbottom" id="containerScroll">
+				<div class="chat_item_container" id="id_chat_item_container"></div>
+				<div class="wrapper_Scrollbottom"></div>
+			</div>
+		
+			<div class="input-zone" align="center">
+				<input type="text" id="id_message_send_input" name="{{ global_user.username }}"/>
+				<button type="submit" id="id_message_send_button">Send Message</button>
+			</div>
+		</div>
+
+		<script>
+			function lastMessageScroll(b) {
+				var e = document.querySelector('.wrapper_Scrollbottom');
+				if (!e) return ;
+			
+				e.scrollIntoView({
+					behavior: b || 'auto',
+					block: 'end',
+				});
+			};
+		</script>
+
+
+		{{ room_name|json_script:"room-name" }}
+		{{ global_user.username|json_script:"global-user" }}
+
+
+		<script>
+			const roomName = JSON.parse(document.getElementById('room-name').textContent);
+			const chatSocket = new WebSocket(
+				'ws://'
+				+ window.location.host
+				+ '/ws/chat/'
+				+ roomName
+				+ '/'
+			);
+
+
+			chatSocket.onopen = function (e) {
+				console.log("The connection was setup successfully !");
+			};
+			chatSocket.onclose = function (e) {
+				console.log("Something unexpected happened !");
+			};
+
+
+			document.querySelector("#id_message_send_input").focus();
+			document.querySelector("#id_message_send_input").onkeyup = function (e) {
+				if (e.keyCode == 13) {
+					document.querySelector("#id_message_send_button").click();
+				}
+			};
+			document.querySelector("#id_message_send_button").onclick = function (e) {
+				
+				var messageInput = document.querySelector(
+					"#id_message_send_input"
+				).value;
+				var username = document.querySelector(
+					"#id_message_send_input"
+				).name;
+
+				if (messageInput) {
+					chatSocket.send(JSON.stringify({ message: messageInput, username: username}));
+				};
+
+			};
+			chatSocket.onmessage = function (e) {
+				const data = JSON.parse(e.data);
+				
+				var div = document.createElement('div');
+				var userP = document.createElement('h5');
+				var messageDiv = document.createElement('div');
+				
+				userP.innerHTML = data.username;
+				messageDiv.innerHTML = data.message;
+
+				div.className = data.username;
+				messageDiv.className = 'text';
+
+				div.appendChild(userP)
+				div.appendChild(messageDiv)
+
+				document.querySelector("#id_message_send_input").value = "";
+				document.querySelector("#id_chat_item_container").appendChild(div);
+		
+				// Запускаем функцию скролла (если убрать "smooth", то скролл будет мгновенным)
+				lastMessageScroll("smooth");
+			};
+		</script>
+	</div>
+
+	<script src="{% static 'js/room.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+body {
+    font-family: sans-serif;
+    background-color: rgb(250, 244, 244);
+}
+
+button:focus, button:hover {
+    cursor: pointer;
+}
+input:focus, input:hover {
+    cursor: pointer;
+}
+
+#upper-div {
+    margin-top: 100px;
+    margin-bottom: 10px;
+}
+
+.upper-line {
+    position: fixed;
+    display: inline-flex;
+    right: 0%;
+    top: 0%;
+    left: 160px;
+    bottom: 99%;
+    padding-bottom: 35px;
+    background: rgb(235,235,235,0.8);
+    backdrop-filter: blur(5px);
+}
+    .upper-line h5 {
+        float: right;
+        margin-top: 9px;
+        margin-left: 80%;
+    }
+
+#navigation {
+    margin-top: 7px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+    .menu-link:hover{
+        background-color: rgb(220, 220, 220);
+    }
+    .menu_burger_icon:hover {
+        cursor: pointer;
+    }
+    
+.settings-bar {
+    position: fixed;
+    right: calc(0% + 200px);
+    top: 0%;
+    margin-top: -77px;
+    padding: 10px;
+    backdrop-filter: blur(5px);
+    background: rgb(235,235,235,0.8);
+    border: 2px solid #cac3c3;
+    border-radius: 5px;
+    transition: margin-top ease-out 0.3s;
+}
+    #backgroundColorChangeButton {
+        margin-bottom: 10px;
+    }
+
+
+.left-list {
+    height: 100%;
+    width: 160px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background: rgb(235,235,235,0.8);
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+
+    .left-list a {
+        padding: 10px 8px 6px 12px;
+        text-decoration: none;
+        font-size: 17px;
+        color: #818181;
+        display: block;
+    }
+
+
+.main-content {
+    margin-left: 160px;
+    padding: 0px 10px;
+}
+
+
+.profile-link {
+    text-decoration:none;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+}

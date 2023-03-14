@@ -94,7 +94,7 @@
 	<aside class="left-list">
 		<nav>
 			<p class="menu-link"><a href="{% url 'user' global_user.username %}" style="background-color: rgb(205,205,205);">Homepage</a></p>
-			<p class="menu-link"><a href="">Messenger</a></p>
+			<p class="menu-link"><a href="{% url 'dialogs' user.username %}">Messenger</a></p>
 			<p class="menu-link"><a href="{% url 'friends' global_user.username %}">Friends</a></p>
 			<p class="menu-link"><a href="{% url 'news' global_user.username %}">News</a></p>
 		</nav>
@@ -114,6 +114,11 @@
 					<form method="POST" action="delete_friend/{{ user.username }}/">
 						{% csrf_token %}
 						<input class="remove_subscribe" type="submit" value="Remove from friends">
+					</form>
+
+					<form method="POST" action="make_chat/{{ user.username }}/">
+						{% csrf_token %}
+						<input class="make_chat" type="submit" value="Chat">
 					</form>
 				{% elif i_am_subscriber %}
 					<form method="POST" action="delete_friend/{{ user.username }}/">

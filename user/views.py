@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from .models import Blog, Subscriber, UserSettings
+from chat.models import Room
 
 
 @login_required
@@ -28,8 +29,7 @@ def make_content(request, username):
 		user = global_user
 	
 	blog = Blog.objects.filter(user_id=username).order_by('-date_time')
-	obj = Subscriber()
-	friends_count = obj.get_friends(username=username)[0].count()
+	friends_count = Subscriber().get_friends(username=username)[0].count()
 	settings = UserSettings.objects.get(user_id=request.user.username)
 
 	result_dict = {
@@ -157,3 +157,10 @@ def delete_subscriber(request, username):
             pass
 
         return HttpResponseRedirect(f'/social_network/user/{username}')
+
+
+@login_required
+def make_chat(request, username):
+	if request.method == 'POST':
+		Room().create_chat([username, request.user.username])
+		return HttpResponseRedirect(f'/social_network/dialogs/{request.user.username}')

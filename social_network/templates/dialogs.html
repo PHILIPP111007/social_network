@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+<head>
+    <meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ global_user.first_name }} {{ global_user.last_name }}</title>
+    <link rel="stylesheet" href='{% static "css/dialogs.css" %}'>
+</head>
+<body>
+    <div id="upper-div"></div>
+
+	<div class="upper-line">
+		<h5>{{ global_user.first_name }}</h5>
+		<nav id="navigation">
+			<img id="toggleTextarea" class="menu_burger_icon" src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="22" alt="menu bar">
+		</nav>
+	</div>
+
+	<div class="settings-bar">
+		<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
+		<form id="quitButton" method="GET" action="quit/">
+			<input type="submit" value="Quit">
+		</form>
+	</div>
+
+	<aside class="left-list">
+		<nav>
+			<p class="menu-link"><a href="{% url 'user' global_user.username %}">Homepage</a></p>
+			<p class="menu-link"><a href="{% url 'dialogs' global_user.username %}" style="background-color: rgb(205,205,205);">Messenger</a></p>
+			<p class="menu-link"><a href="{% url 'friends' global_user.username %}">Friends</a></p>
+			<p class="menu-link"><a href="{% url 'news' global_user.username %}">News</a></p>
+		</nav>
+	</aside>
+
+	<div class="main-content">
+
+		{% if dialogs %}
+        	<h3>What chat room would you like to enter?</h3><br>
+			{% for room_name, user_name in dialogs %}
+				<button id="room-name-button" value="{{ room_name }}">{{ user_name }}</button><br>
+			{% endfor %}
+
+			{{ global_user.username|json_script:"global-user" }}
+
+		{% else %}
+			<h3>No chats</h3>
+		{% endif %}
+
+    </div>
+
+    <div id="upper-div"></div>
+
+	<script src="{% static 'js/dialogs.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+
+</body>
+</html>
