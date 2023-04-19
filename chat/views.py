@@ -11,17 +11,19 @@ def dialogs(request, username):
 	result_dict = make_content(request)
 	chats = Room().find_all_chats(username=request.user.username)
 
-	a = chats[0]
-	if username == a.user_1:
-		user_list = chats.values_list('user_2', flat=True)
-	else:
-		user_list = chats.values_list('user_1', flat=True)
-	
-	dialogs = []
-	for i, j in zip(chats.values_list('room_name', flat=True), user_list):
-		dialogs.append([i, j])
-	
-	result_dict['dialogs'] = dialogs
+
+	if chats:
+		a = chats[0]
+		if username == a.user_1:
+			user_list = chats.values_list('user_2', flat=True)
+		else:
+			user_list = chats.values_list('user_1', flat=True)
+		
+		dialogs = []
+		for i, j in zip(chats.values_list('room_name', flat=True), user_list):
+			dialogs.append([i, j])
+		
+		result_dict['dialogs'] = dialogs
 	
 	return render(request, 'dialogs.html', result_dict)
 

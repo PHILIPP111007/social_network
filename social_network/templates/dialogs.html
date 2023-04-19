@@ -40,7 +40,10 @@
 		{% if dialogs %}
         	<h3>What chat room would you like to enter?</h3><br>
 			{% for room_name, user_name in dialogs %}
-				<button id="room-name-button" value="{{ room_name }}">{{ user_name }}</button><br>
+				<div class="chat-id">
+					{{ user_name }}
+					<button id="room-name-button" value="{{ room_name }}">{{ user_name }}</button><br>
+				</div>
 			{% endfor %}
 
 			{{ global_user.username|json_script:"global-user" }}

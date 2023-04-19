@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from user.models import Subscriber
+from chat.models import Room
 
 
 @login_required
@@ -98,3 +99,10 @@ def delete_subscriber(request, username):
             pass
 
         return HttpResponseRedirect(f'/social_network/friends/{request.user.username}')
+
+
+@login_required
+def make_chat(request, username):
+	if request.method == 'POST':
+		Room().create_chat([username, request.user.username])
+		return HttpResponseRedirect(f'/social_network/dialogs/{request.user.username}')
