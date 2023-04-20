@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Room(models.Model):
@@ -30,13 +31,12 @@ class Room(models.Model):
 		"""
 		return chats
 
-"""
+
 class Message(models.Model):
-	user = models.ForeignKey(to=User, on_delete=models.CASCADE)
-	room = models.ForeignKey(to=Room, on_delete=models.CASCADE)
-	content = models.CharField(max_length=512)
+	room = models.ForeignKey(Room, to_field='room_name', db_column='room_name', on_delete=models.CASCADE)
+	sender = models.ForeignKey(User, to_field='username', db_column='username', on_delete=models.DO_NOTHING)
+	message = models.CharField(max_length=1000)
 	timestamp = models.DateTimeField(auto_now_add=True)
 
 	def __str__(self):
-		return f'{self.user.username}: {self.content} [{self.timestamp}]'
-"""
+		return f'{self.sender}: {self.message} [{self.timestamp}]'

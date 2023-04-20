@@ -107,7 +107,6 @@ input:focus, input:hover {
     font-size: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
 }
     .container_Scrollbottom {
         padding: 0 10px;

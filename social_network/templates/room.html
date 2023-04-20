@@ -44,12 +44,19 @@
 
 		<div class="chat" align="center">
 			<div class="container_Scrollbottom" id="containerScroll">
-				<div class="chat_item_container" id="id_chat_item_container"></div>
+				<div class="chat_item_container" id="id_chat_item_container">
+					{% for msg in messages %}
+						<div class="{{ msg.sender }}">
+							<h5>{{ msg.sender }}</h5>
+							<div class="text">{{ msg.message|urlize }}</div>
+						</div>
+					{% endfor %}
+				</div>
 				<div class="wrapper_Scrollbottom"></div>
 			</div>
 		
 			<div class="input-zone" align="center">
-				<input type="text" id="id_message_send_input" name="{{ global_user.username }}"/>
+				<input type="text" id="id_message_send_input" name="{{ global_user.username }}" maxlength="1000">
 				<button type="submit" id="id_message_send_button">Send Message</button>
 			</div>
 		</div>
@@ -84,6 +91,7 @@
 
 			chatSocket.onopen = function (e) {
 				console.log("The connection was setup successfully !");
+				lastMessageScroll();
 			};
 			chatSocket.onclose = function (e) {
 				console.log("Something unexpected happened !");

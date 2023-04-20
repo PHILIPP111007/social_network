@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from .models import Room
+from .models import Room, Message
 
 
 @login_required
@@ -32,8 +32,16 @@ def dialogs(request, username):
 def room(request, username, room_name):
 	if Room.objects.filter(room_name=room_name):
 		result_dict = make_content(request)
-		result_dict["room_name"] =  room_name
+		result_dict["room_name"] = room_name
 		result_dict["user_name"] = username
+
+		try:
+			messages = Message.objects.filter(room_id=room_name).order_by('timestamp')
+			if messages:
+				result_dict["messages"] = messages
+		except Exception:
+			pass
+
 		return render(request, "room.html", result_dict)
 	else:
 		return HttpResponseRedirect(f'/social_network/dialogs/{request.user.username}')
