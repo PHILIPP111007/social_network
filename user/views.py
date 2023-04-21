@@ -164,7 +164,7 @@ def make_chat(request, username):
 	if request.method == 'POST':
 		try:
 			if Subscriber.objects.get(user_id=request.user.username, subscribe=username) and Subscriber.objects.get(user_id=username, subscribe=request.user.username):
-				Room().create_chat([username, request.user.username])
+				Room().create_chat(request_user=request.user.username, friend=username)
 		except Exception:
 			pass
 	

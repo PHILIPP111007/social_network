@@ -12,16 +12,19 @@ class Room(models.Model):
 	def __str__(self):
 		return self.room_name
 
-	def create_chat(self, *args):
-		a = min(*args)
-		b = max(*args)
+	def create_chat(self, request_user, friend):
+		a = min(request_user, friend)
+		b = max(request_user, friend)
+		room_name = f'{a}_{b}'
 
-		self.room_name = f'{a}_{b}'
-		self.user_1 = a
-		self.user_2 = b
-		self.delete_user_1 = '0'
-		self.delete_user_2 = '0'
-		self.save()
+		room = self.__class__.objects.get(room_name=room_name, user_1=a, user_2=b)
+
+		if a == request_user and room.delete_user_1 != '0':
+			room.delete_user_1 = '0'
+		elif b == request_user and room.delete_user_2 != '0':
+			room.delete_user_2 = '0'
+
+		room.save()
 
 
 class Message(models.Model):
