@@ -8,7 +8,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 	@database_sync_to_async
 	def create_message(self, room_name, sender, message):
-		return Message.objects.create(room_id=room_name, sender_id=sender, message=message)
+		return Message.objects.create(room_name_id=room_name, sender_id=sender, message=message)
 
 	async def connect(self):
 		self.room_name = self.scope["url_route"]["kwargs"]["room_name"]

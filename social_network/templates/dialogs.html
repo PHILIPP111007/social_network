@@ -39,11 +39,21 @@
 
 		{% if dialogs %}
         	<h3>What chat room would you like to enter?</h3><br>
-			{% for room_name, user_name in dialogs %}
-				<div class="chat-id">
-					{{ user_name }}
-					<button id="room-name-button" value="{{ room_name }}">{{ user_name }}</button><br>
-				</div>
+			{% for room_name, user in dialogs %}
+
+					<div class="chat-block">
+						<a class="chat-href" href="/social_network/dialogs/{{ user.username }}/chat/{{ room_name }}/">
+							{{ user.first_name }}
+							{{ user.last_name }}
+							@{{ user.username }}
+						</a>
+						<form method="POST" action="remove_chat/{{ room_name }}/">
+							{% csrf_token %}
+							<input class="remove_chat" type="submit" value="delete">
+						</form>
+
+					</div>
+
 			{% endfor %}
 
 			{{ global_user.username|json_script:"global-user" }}

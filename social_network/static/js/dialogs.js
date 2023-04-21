@@ -26,12 +26,3 @@ function backgroundColorChange() {
 		document.body.style.backgroundColor = "rgb(250, 244, 244)";
 	};
 };
-
-let button = document.querySelectorAll('#room-name-button');
-button.forEach(function (i) {
-	i.addEventListener('click', function() {
-		const username = i.textContent
-		var roomName = i.value;
-		window.location.pathname = `/social_network/dialogs/${username}/chat/${roomName}/`;
-	});
-})

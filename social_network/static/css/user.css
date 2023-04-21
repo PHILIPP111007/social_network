@@ -118,6 +118,7 @@ input[type="text"], input[type="email"], input[type="password"] {
     background: rgb(235,235,235,0.8);
     overflow-x: hidden;
     padding-top: 20px;
+    backdrop-filter: blur(5px);
   }
     .left-list a {
         padding: 10px 8px 6px 12px;

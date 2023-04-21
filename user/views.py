@@ -110,7 +110,7 @@ def update_user_info(request, username):
 		user.last_name = str(request.POST.get('lname')).strip()
 		user.email = request.POST.get('email')
 		user.save()
-		return HttpResponseRedirect(f'/social_network/user/{username}')
+	return HttpResponseRedirect(f'/social_network/user/{username}')
 
 
 @login_required
@@ -123,7 +123,7 @@ def update_user_settings(request, username):
 			settings.low_power_mode = True
 
 		settings.save()
-		return HttpResponseRedirect(f'/social_network/user/{username}')
+	return HttpResponseRedirect(f'/social_network/user/{username}')
 
 
 @login_required
@@ -132,7 +132,7 @@ def add_friend(request, username):
         if not Subscriber.objects.filter(subscribe=username, user_id=request.user.username):
             Subscriber.objects.create(subscribe=username, user_id=request.user.username)
             
-        return HttpResponseRedirect(f'/social_network/user/{username}')
+    return HttpResponseRedirect(f'/social_network/user/{username}')
 
 
 @login_required
@@ -144,7 +144,7 @@ def delete_friend(request, username):
         except Exception:
             pass
 
-        return HttpResponseRedirect(f'/social_network/user/{username}')
+    return HttpResponseRedirect(f'/social_network/user/{username}')
 
 
 @login_required
@@ -156,11 +156,16 @@ def delete_subscriber(request, username):
         except Exception:
             pass
 
-        return HttpResponseRedirect(f'/social_network/user/{username}')
+    return HttpResponseRedirect(f'/social_network/user/{username}')
 
 
 @login_required
 def make_chat(request, username):
 	if request.method == 'POST':
-		Room().create_chat([username, request.user.username])
-		return HttpResponseRedirect(f'/social_network/dialogs/{request.user.username}')
+		try:
+			if Subscriber.objects.get(user_id=request.user.username, subscribe=username) and Subscriber.objects.get(user_id=username, subscribe=request.user.username):
+				Room().create_chat([username, request.user.username])
+		except Exception:
+			pass
+	
+	return HttpResponseRedirect(f'/social_network/dialogs/{request.user.username}')

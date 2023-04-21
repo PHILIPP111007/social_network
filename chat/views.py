@@ -9,20 +9,28 @@ from .models import Room, Message
 @login_required
 def dialogs(request, username):
 	result_dict = make_content(request)
-	chats = Room().find_all_chats(username=request.user.username)
-
+	chats = Room.objects.filter(room_name__contains=request.user.username)
 
 	if chats:
-		a = chats[0]
-		if username == a.user_1:
-			user_list = chats.values_list('user_2', flat=True)
-		else:
-			user_list = chats.values_list('user_1', flat=True)
-		
 		dialogs = []
-		for i, j in zip(chats.values_list('room_name', flat=True), user_list):
-			dialogs.append([i, j])
-		
+		for item in chats:
+			if request.user.username == item.delete_user_1 or request.user.username == item.delete_user_2:
+				continue
+			elif request.user.username == item.user_1:
+				dialogs.append(
+					(
+						item.room_name,
+						User.objects.get(username=item.user_2)
+					)
+				)
+			else:
+				dialogs.append(
+					(
+						item.room_name,
+						User.objects.get(username=item.user_1)
+					)
+				)
+	
 		result_dict['dialogs'] = dialogs
 	
 	return render(request, 'dialogs.html', result_dict)
@@ -35,12 +43,9 @@ def room(request, username, room_name):
 		result_dict["room_name"] = room_name
 		result_dict["user_name"] = username
 
-		try:
-			messages = Message.objects.filter(room_id=room_name).order_by('timestamp')
-			if messages:
-				result_dict["messages"] = messages
-		except Exception:
-			pass
+		messages = Message.objects.filter(room_name_id=room_name).order_by('timestamp')
+		if messages:
+			result_dict["messages"] = messages
 
 		return render(request, "room.html", result_dict)
 	else:
@@ -54,6 +59,23 @@ def make_content(request):
 		'global_user': global_user
 	}
 	return result_dict
+
+
+@login_required
+def remove_chat(request, username, room_name):
+	if request.method == 'POST':
+		dialog = Room.objects.get(room_name=room_name)
+
+		if dialog.user_1 == request.user.username:
+			dialog.delete_user_1 = request.user.username
+		elif dialog.user_2 == request.user.username:
+			dialog.delete_user_2 = request.user.username
+		dialog.save()
+
+		if dialog.delete_user_1 != '0' and dialog.delete_user_2 != '0':
+			dialog.delete()
+
+	return HttpResponseRedirect(f'/social_network/dialogs/{request.user.username}')
 
 
 def quit(request, username):
