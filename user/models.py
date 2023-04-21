@@ -38,7 +38,7 @@ class Subscriber(models.Model):
 
 class UserSettings(models.Model):
 	user = models.OneToOneField(User, to_field='username', db_column='username', on_delete=models.CASCADE, primary_key=True)
-	low_power_mode = models.BooleanField(default=False)
+	low_power_mode = models.BooleanField(default=True)
 
 	def __str__(self):
 		return self.user.username

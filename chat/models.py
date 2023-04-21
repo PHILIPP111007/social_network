@@ -15,12 +15,13 @@ class Room(models.Model):
 	def create_chat(self, *args):
 		a = min(*args)
 		b = max(*args)
-		room_name = f'{a}_{b}'
-		if not self.__class__.objects.filter(room_name=room_name):
-			self.room_name = room_name
-			self.user_1 = a
-			self.user_2 = b
-			self.save()
+
+		self.room_name = f'{a}_{b}'
+		self.user_1 = a
+		self.user_2 = b
+		self.delete_user_1 = '0'
+		self.delete_user_2 = '0'
+		self.save()
 
 
 class Message(models.Model):
