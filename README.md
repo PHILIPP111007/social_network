@@ -34,7 +34,7 @@ pip install channels
 ```
 
 ### 2) hypercorn
--- ASGI server
+-- ASGI and WSGI web server
 ```console
 pip install hypercorn
 ```
