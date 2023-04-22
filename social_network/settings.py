@@ -13,14 +13,13 @@ SECRET_KEY = 'django-insecure-^oc(lsgukc4la85pjg52@r74wfrw$x5+#ajp4ka&rc2&t6dd(2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.88.20', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-	'daphne',
-	'chat',
+	'hypercorn',  # hypercorn social_network.asgi:application
 
 	'django.contrib.admin',
 	'django.contrib.auth',
@@ -32,6 +31,7 @@ INSTALLED_APPS = [
 	'user',
 	'friends',
 	'news',
+    'chat'
 ]
 
 MIDDLEWARE = [
@@ -42,6 +42,8 @@ MIDDLEWARE = [
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+	'whitenoise.middleware.WhiteNoiseMiddleware' # !!!
 ]
 
 ROOT_URLCONF = 'social_network.urls'
@@ -49,7 +51,7 @@ ROOT_URLCONF = 'social_network.urls'
 TEMPLATES = [
 	{
 		'BACKEND': 'django.template.backends.django.DjangoTemplates',
-		'DIRS': ['social_network/templates/'],
+		'DIRS': [ BASE_DIR / 'social_network/templates' ],
 		'APP_DIRS': True,
 		'OPTIONS': {
 			'context_processors': [
@@ -122,7 +124,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-	'social_network/static'
+	BASE_DIR / 'social_network/static'
 ]
 
 
