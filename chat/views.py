@@ -49,7 +49,7 @@ def room(request, username, room_name):
 
 		return render(request, "room.html", result_dict)
 	else:
-		return HttpResponseRedirect(f'/social_network/dialogs/{request.user.username}')
+		return HttpResponseRedirect(f'/dialogs/{request.user.username}')
 
 
 def make_content(request):
@@ -75,9 +75,9 @@ def remove_chat(request, username, room_name):
 		if dialog.delete_user_1 != '0' and dialog.delete_user_2 != '0':
 			dialog.delete()
 
-	return HttpResponseRedirect(f'/social_network/dialogs/{request.user.username}')
+	return HttpResponseRedirect(f'/dialogs/{request.user.username}')
 
 
 def quit(request, username):
 	logout(request)
-	return HttpResponseRedirect('/social_network')
+	return HttpResponseRedirect('/')

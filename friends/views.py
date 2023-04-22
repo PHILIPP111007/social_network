@@ -40,7 +40,7 @@ def make_content(request, find_users=None):
 
 def quit(request, username):
     logout(request)
-    return HttpResponseRedirect('/social_network')
+    return HttpResponseRedirect('/')
 
 
 def find_user(request):
@@ -74,7 +74,7 @@ def add_friend(request, username):
         if not Subscriber.objects.filter(subscribe=username, user_id=request.user.username):
             Subscriber.objects.create(subscribe=username, user_id=request.user.username)
             
-        return HttpResponseRedirect(f'/social_network/friends/{request.user.username}')
+        return HttpResponseRedirect(f'/friends/{request.user.username}')
 
 
 @login_required
@@ -86,7 +86,7 @@ def delete_friend(request, username):
         except Exception:
             pass
 
-        return HttpResponseRedirect(f'/social_network/friends/{request.user.username}')
+        return HttpResponseRedirect(f'/friends/{request.user.username}')
 
 
 @login_required
@@ -98,20 +98,7 @@ def delete_subscriber(request, username):
         except Exception:
             pass
 
-        return HttpResponseRedirect(f'/social_network/friends/{request.user.username}')
-
-"""
-@login_required
-def make_chat(request, username):
-	if request.method == 'POST':
-		try:
-			if Subscriber.objects.get(user_id=request.user.username, subscribe=username) and Subscriber.objects.get(user_id=username, subscribe=request.user.username):
-				Room().create_chat([username, request.user.username])
-		except Exception:
-			pass
-	
-	return HttpResponseRedirect(f'/social_network/dialogs/{request.user.username}')
-"""
+        return HttpResponseRedirect(f'/friends/{request.user.username}')
 
 
 @login_required
@@ -123,4 +110,4 @@ def make_chat(request, username):
 		except Exception:
 			pass
 	
-	return HttpResponseRedirect(f'/social_network/dialogs/{request.user.username}')
+	return HttpResponseRedirect(f'/dialogs/{request.user.username}')

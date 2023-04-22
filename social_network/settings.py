@@ -42,7 +42,7 @@ MIDDLEWARE = [
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+
 	'whitenoise.middleware.WhiteNoiseMiddleware' # !!!
 ]
 
@@ -134,4 +134,4 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-LOGIN_URL = '/social_network/'  # !!!
+LOGIN_URL = '/'  # !!!

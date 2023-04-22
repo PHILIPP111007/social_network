@@ -22,7 +22,7 @@ def make_content(request, username):
 		try:
 			user = User.objects.get(username=username)
 		except User.DoesNotExist:
-			return HttpResponseRedirect(f'/social_network/user/{request.user.username}')
+			return HttpResponseRedirect(f'/user/{request.user.username}')
 		is_my_page = False
 	else:
 		is_my_page = True
@@ -57,7 +57,7 @@ def make_content(request, username):
 
 def quit(request, username):
 	logout(request)
-	return HttpResponseRedirect('/social_network')
+	return HttpResponseRedirect('/')
 	
 
 @login_required
@@ -66,7 +66,7 @@ def delete_account(request, username):
 		User.objects.get(username=request.user.username).delete()
 		Subscriber.objects.filter(subscribe=request.user.username).delete()
 
-	return HttpResponseRedirect('/social_network')
+	return HttpResponseRedirect('/')
 
 
 @login_required
@@ -75,7 +75,7 @@ def create_record(request, username):
 		if request.POST.get('my_textarea'):
 			Blog.objects.create(user_id=request.user.username, content=request.POST.get('my_textarea'))
 
-	return HttpResponseRedirect(f'/social_network/user/{request.user.username}')
+	return HttpResponseRedirect(f'/user/{request.user.username}')
 
 
 @login_required
@@ -87,7 +87,7 @@ def change_record(request, username, id):
 			record.is_changed = True
 			record.save()
 
-	return HttpResponseRedirect(f'/social_network/user/{request.user.username}')
+	return HttpResponseRedirect(f'/user/{request.user.username}')
 
 
 @login_required
@@ -99,7 +99,7 @@ def delete_record(request, username, id):
 		except Blog.DoesNotExist:
 			pass
 
-	return HttpResponseRedirect(f'/social_network/user/{request.user.username}')
+	return HttpResponseRedirect(f'/user/{request.user.username}')
 
 
 @login_required
@@ -110,7 +110,7 @@ def update_user_info(request, username):
 		user.last_name = str(request.POST.get('lname')).strip()
 		user.email = request.POST.get('email')
 		user.save()
-	return HttpResponseRedirect(f'/social_network/user/{username}')
+	return HttpResponseRedirect(f'/user/{username}')
 
 
 @login_required
@@ -123,7 +123,7 @@ def update_user_settings(request, username):
 			settings.low_power_mode = True
 
 		settings.save()
-	return HttpResponseRedirect(f'/social_network/user/{username}')
+	return HttpResponseRedirect(f'/user/{username}')
 
 
 @login_required
@@ -132,7 +132,7 @@ def add_friend(request, username):
         if not Subscriber.objects.filter(subscribe=username, user_id=request.user.username):
             Subscriber.objects.create(subscribe=username, user_id=request.user.username)
             
-    return HttpResponseRedirect(f'/social_network/user/{username}')
+    return HttpResponseRedirect(f'/user/{username}')
 
 
 @login_required
@@ -144,7 +144,7 @@ def delete_friend(request, username):
         except Exception:
             pass
 
-    return HttpResponseRedirect(f'/social_network/user/{username}')
+    return HttpResponseRedirect(f'/user/{username}')
 
 
 @login_required
@@ -156,7 +156,7 @@ def delete_subscriber(request, username):
         except Exception:
             pass
 
-    return HttpResponseRedirect(f'/social_network/user/{username}')
+    return HttpResponseRedirect(f'/user/{username}')
 
 
 @login_required
@@ -168,4 +168,4 @@ def make_chat(request, username):
 		except Exception:
 			pass
 	
-	return HttpResponseRedirect(f'/social_network/dialogs/{request.user.username}')
+	return HttpResponseRedirect(f'/dialogs/{request.user.username}')

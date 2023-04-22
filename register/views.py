@@ -37,9 +37,9 @@ def user_auth(request):
 	user = authenticate(request, username=username, password=password)
 	if user is not None:
 		login(request, user)
-		return HttpResponseRedirect(f'/social_network/user/{username}')
+		return HttpResponseRedirect(f'/user/{username}')
 	else:
-		return HttpResponseRedirect(f'/social_network/user/{username}')
+		return HttpResponseRedirect(f'/user/{username}')
 
 
 def create_first_post(request):

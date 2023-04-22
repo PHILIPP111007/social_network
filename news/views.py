@@ -31,4 +31,4 @@ def make_content(request):
 
 def quit(request, username):
     logout(request)
-    return HttpResponseRedirect('/social_network')
+    return HttpResponseRedirect('/')
