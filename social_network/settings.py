@@ -20,7 +20,6 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
 	'hypercorn',  # hypercorn social_network.asgi:application
-
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
@@ -42,7 +41,6 @@ MIDDLEWARE = [
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
 	'whitenoise.middleware.WhiteNoiseMiddleware' # !!!
 ]
 

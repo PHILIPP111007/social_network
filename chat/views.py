@@ -23,14 +23,14 @@ def dialogs(request, username):
 						User.objects.get(username=item.user_2)
 					)
 				)
-			else:
+			elif request.user.username == item.user_2:
 				dialogs.append(
 					(
 						item.room_name,
 						User.objects.get(username=item.user_1)
 					)
 				)
-	
+
 		result_dict['dialogs'] = dialogs
 	
 	return render(request, 'dialogs.html', result_dict)
@@ -41,7 +41,7 @@ def room(request, username, room_name):
 	if Room.objects.filter(room_name=room_name):
 		result_dict = make_content(request)
 		result_dict["room_name"] = room_name
-		result_dict["user_name"] = username
+		result_dict["friend"] = User.objects.get(username=username)
 
 		messages = Message.objects.filter(room_name_id=room_name).order_by('timestamp')
 		if messages:

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Blog(models.Model):
-	user = models.ForeignKey(User, to_field='username', db_column='username', on_delete=models.CASCADE)
+	user = models.ForeignKey(User, to_field='username', db_column='user', on_delete=models.CASCADE)
 	date_time = models.DateTimeField(auto_now_add=True)
 	content = models.TextField(max_length=5000)
 	is_changed = models.BooleanField(default=False)
@@ -13,15 +13,15 @@ class Blog(models.Model):
 
 
 class Subscriber(models.Model):
-	user = models.ForeignKey(User, to_field='username', db_column='username', on_delete=models.CASCADE)
-	subscribe = models.CharField(max_length=20)
+	user = models.ForeignKey(User, related_name='user_1', to_field='username', db_column='user', on_delete=models.CASCADE) # models.ForeignKey(User, related_name='user', db_column='username', on_delete=models.CASCADE)  # to_field='username', db_column='username',
+	subscribe = models.ForeignKey(User, related_name='user_2', to_field='username', db_column='subscribe', on_delete=models.CASCADE) # models.ForeignKey(User, related_name='subscribe', db_column='username', on_delete=models.CASCADE) # CharField(max_length=20)
 
 	def __str__(self):
 		return self.user.username
 
 	def get_friends(self, username):
 
-		set_1 = set(self.__class__.objects.filter(user_id=username).values_list('subscribe', flat=True))
+		set_1 = set(self.__class__.objects.filter(user=username).values_list('subscribe', flat=True))
 		set_2 = set(self.__class__.objects.filter(subscribe=username).values_list('user', flat=True))
 
 		friends_set = set_1 & set_2
@@ -37,7 +37,7 @@ class Subscriber(models.Model):
 
 
 class UserSettings(models.Model):
-	user = models.OneToOneField(User, to_field='username', db_column='username', on_delete=models.CASCADE, primary_key=True)
+	user = models.OneToOneField(User, to_field='username', db_column='user', on_delete=models.CASCADE, primary_key=True)
 	low_power_mode = models.BooleanField(default=True)
 
 	def __str__(self):

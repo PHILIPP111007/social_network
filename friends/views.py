@@ -70,18 +70,19 @@ def find_user(request):
 
 @login_required
 def add_friend(request, username):
-    if request.method == 'POST':
-        if not Subscriber.objects.filter(subscribe=username, user_id=request.user.username):
-            Subscriber.objects.create(subscribe=username, user_id=request.user.username)
+	if request.method == 'POST':
+		if not Subscriber.objects.filter(user=request.user.username, subscribe=username):
+			subscribe = User.objects.get(username=username)
+			Subscriber.objects.create(user=request.user, subscribe=subscribe)
             
-        return HttpResponseRedirect(f'/friends/{request.user.username}')
+	return HttpResponseRedirect(f'/user/{username}')
 
 
 @login_required
 def delete_friend(request, username):
     if request.method == 'POST':
         try:
-            subscribe = Subscriber.objects.get(subscribe=username, user_id=request.user.username)
+            subscribe = Subscriber.objects.get(subscribe=username, user=request.user.username)
             subscribe.delete()
         except Exception:
             pass
@@ -93,7 +94,7 @@ def delete_friend(request, username):
 def delete_subscriber(request, username):
     if request.method == 'POST':
         try:
-            subscribe = Subscriber.objects.get(subscribe=request.user.username, user_id=username)
+            subscribe = Subscriber.objects.get(subscribe=request.user.username, user=username)
             subscribe.delete()
         except Exception:
             pass
@@ -105,7 +106,7 @@ def delete_subscriber(request, username):
 def make_chat(request, username):
 	if request.method == 'POST':
 		try:
-			if Subscriber.objects.get(user_id=request.user.username, subscribe=username) and Subscriber.objects.get(user_id=username, subscribe=request.user.username):
+			if Subscriber.objects.get(user=request.user.username, subscribe=username) and Subscriber.objects.get(user=username, subscribe=request.user.username):
 				Room().create_chat(request_user=request.user.username, friend=username)
 		except Exception:
 			pass

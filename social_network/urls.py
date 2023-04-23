@@ -3,9 +3,7 @@ from django.urls import path, include
 
 
 urlpatterns = [
-	path('admin/', admin.site.urls),
-	# path('accounts/', include('django.contrib.auth.urls')),  # Add Django site authentication urls (for login, logout, password management)
-	
+	path('admin/', admin.site.urls),	
 	path('', include('register.urls'), name='home'),
 	path('user/<str:username>/', include('user.urls')),
 	path('friends/<str:username>/', include('friends.urls')),

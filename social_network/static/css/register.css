@@ -2,11 +2,15 @@ body {
     font-family: sans-serif;
     background-color: rgb(250, 244, 244);
 }
-
+h3 {
+    text-align: center;
+}
+input {
+    float: right;
+}
 input[type="submit"]:focus, input[type="submit"]:hover {
     cursor: pointer;
 }
-
 input[type="text"], input[type="email"], input[type="password"] {
     font-family: inherit; /* 1 */
     font-size: inherit; /* 1 */
@@ -22,26 +26,15 @@ input[type="text"], input[type="email"], input[type="password"] {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     background-color: rgb(250, 244, 244);
 }
-
 #hello {
     font-size: 30px;
     text-align: center;
 }
-
-h3 {
-    text-align: center;
-}
-
-input {
-    float: right;
-}
-
 .errorlist {
     color:aliceblue;
     background: rgb(207, 57, 57);
     border-radius: 5px;
 }
-
 .messages {
     width: 500;
     padding: 10px;
@@ -49,7 +42,6 @@ input {
     background: rgb(235,235,235);
     text-align: left;
 }
-
 .register {
     position: fixed;
     left: calc(50% - 250px);
@@ -65,4 +57,3 @@ input {
         font-size: small;
         color: rgb(153, 150, 145);
     }
-

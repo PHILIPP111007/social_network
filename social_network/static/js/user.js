@@ -9,20 +9,6 @@ function OnInput() {
   this.style.height = (this.scrollHeight) + "px";
 };
 
-
-/*
-// For settings button (menu burger icon)
-let btns = document.querySelectorAll('#toggleTextarea');
-btns.forEach(function (i) {
-	i.addEventListener('click', function() {
-	  let expanded = this.getAttribute('aria-expanded') === 'true' || false;
-	  this.setAttribute('aria-expanded', !expanded);
-	  let menu = this.nextElementSibling;
-	  menu.hidden = !menu.hidden;
-	});
-});
-*/
-
 // For settings button (menu burger icon)
 let btn = document.querySelectorAll('#toggleTextarea');
 btn.forEach(function (i) {

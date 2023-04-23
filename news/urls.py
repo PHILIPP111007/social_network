@@ -4,5 +4,5 @@ from news import views
 
 urlpatterns = [
 	path('', views.index, name='news'),
-	path('quit/', views.quit),
+	path('quit/', views.quit)
 ]
