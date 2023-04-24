@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q 
 from django.contrib.auth.models import User
 
 
@@ -21,17 +22,20 @@ class Subscriber(models.Model):
 
 	def get_friends(self, username):
 
-		set_1 = set(self.__class__.objects.filter(user=username).values_list('subscribe', flat=True))
-		set_2 = set(self.__class__.objects.filter(subscribe=username).values_list('user', flat=True))
+		set_1 = self.__class__.objects.filter(user=username).values_list('subscribe', flat=True)
+		set_2 = self.__class__.objects.filter(subscribe=username).values_list('user', flat=True)
 
-		friends_set = set_1 & set_2
-		friends = User.objects.filter(username__in=friends_set)
+		friends = User.objects.filter(
+			Q(username__in=set_1) & Q(username__in=set_2)
+		)
 
-		subscriptions_set = set_1 - set_2
-		subscriptions = User.objects.filter(username__in=subscriptions_set)
+		subscriptions = User.objects.filter(
+			Q(username__in=set_1) & ~Q(username__in=set_2)
+		)
 
-		subscribers_set = set_2 - set_1
-		subscribers = User.objects.filter(username__in=subscribers_set)
+		subscribers = User.objects.filter(
+			Q(username__in=set_2) & ~Q(username__in=set_1)
+		)
 
 		return friends, subscriptions, subscribers
 
@@ -42,4 +46,3 @@ class UserSettings(models.Model):
 
 	def __str__(self):
 		return self.user.username
-	
