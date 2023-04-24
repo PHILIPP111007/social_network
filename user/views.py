@@ -29,7 +29,7 @@ def make_content(request, username):
 		user = global_user
 	
 	blog = Blog.objects.filter(user_id=username).order_by('-date_time')
-	friends_count = Subscriber().get_friends(username=username)[0].count()
+	friends_count = Subscriber().get_friends(username=username).count()
 	settings = UserSettings.objects.get(user_id=request.user.username)
 
 	result_dict = {
@@ -166,7 +166,8 @@ def make_chat(request, username):
 	if request.method == 'POST':
 		try:
 			if Subscriber.objects.get(user=request.user.username, subscribe=username) and Subscriber.objects.get(user=username, subscribe=request.user.username):
-				Room().create_chat(request_user=request.user.username, friend=username)
+				room_name = Room().create_chat(request_user=request.user.username, friend=username)
+				return HttpResponseRedirect(f'/dialogs/{username}/chat/{room_name}/')
 		except Exception:
 			pass
 	

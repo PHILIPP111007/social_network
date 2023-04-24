@@ -21,7 +21,7 @@ def index(request, username):
 def make_content(request, find_users=None):
     user = User.objects.get(username=request.user.username)
     obj = Subscriber()
-    friends, subscriptions, subscribers = obj.get_friends(username=request.user.username)
+    friends, subscriptions, subscribers = obj.get_friends_subscriptions_subscribers(username=request.user.username)
 
     result_dict = {
         'user': user,
@@ -107,7 +107,8 @@ def make_chat(request, username):
 	if request.method == 'POST':
 		try:
 			if Subscriber.objects.get(user=request.user.username, subscribe=username) and Subscriber.objects.get(user=username, subscribe=request.user.username):
-				Room().create_chat(request_user=request.user.username, friend=username)
+				room_name = Room().create_chat(request_user=request.user.username, friend=username)
+				return HttpResponseRedirect(f'/dialogs/{username}/chat/{room_name}/')
 		except Exception:
 			pass
 	

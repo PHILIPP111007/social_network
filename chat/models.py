@@ -35,6 +35,8 @@ class Room(models.Model):
 			room.save()
 		else:
 			self.__class__.objects.create(room_name=room_name, user_1=a, user_2=b)
+		
+		return room_name
 
 
 class Message(models.Model):
