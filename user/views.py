@@ -56,7 +56,8 @@ def make_content(request, username):
 
 
 def quit(request, username):
-	logout(request)
+	if request.method == 'POST':
+		logout(request)
 	return HttpResponseRedirect('/')
 	
 
@@ -86,7 +87,7 @@ def change_record(request, username, id):
 			record = Blog.objects.get(user_id=request.user.username, id=id)
 			record.content=request.POST.get('my_textarea')
 			record.is_changed = True
-			record.save()
+			record.save(update_fields=['content', 'is_changed'])
 
 	return HttpResponseRedirect(f'/user/{request.user.username}')
 
@@ -110,7 +111,8 @@ def update_user_info(request, username):
 		user.first_name = str(request.POST.get('fname')).strip()
 		user.last_name = str(request.POST.get('lname')).strip()
 		user.email = request.POST.get('email')
-		user.save()
+		user.save(update_fields=['first_name', 'last_name', 'email'])
+
 	return HttpResponseRedirect(f'/user/{username}')
 
 
@@ -118,12 +120,12 @@ def update_user_info(request, username):
 def update_user_settings(request, username):
 	if request.method == 'POST':
 		settings = UserSettings.objects.get(user_id=request.user.username)
-		if 'low_power_mode' in request.POST: 
+		if 'low_power_mode' in request.POST:
 			settings.low_power_mode = False
 		else:
 			settings.low_power_mode = True
+		settings.save(update_fields=['low_power_mode'])
 
-		settings.save()
 	return HttpResponseRedirect(f'/user/{username}')
 
 

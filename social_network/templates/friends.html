@@ -14,10 +14,12 @@
 	<div id="upper-div"></div>
 
 	<div class="upper-line">
-		<h5>{{ user.first_name }}</h5>
-		<nav id="navigation">
-			<img id="toggleTextarea" class="menu_burger_icon" src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="22" alt="menu bar">
-		</nav>
+		<div>
+			<h5>{{ user.first_name }}</h5>
+			<nav id="navigation">
+				<img id="toggleTextarea" class="menu_burger_icon" src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="22" alt="menu bar">
+			</nav>
+		</div>
 	</div>
 
 	<div class="settings-bar">
@@ -42,7 +44,6 @@
 			<h3>Friends</h3>
 			<p>{{ user.first_name }} {{ user.last_name }}</p>
 			<p>@{{ user.username }}</p>
-			<p>&#91; friends: {{ friends.count }} &#93; &#91; subscriptions: {{ subscriptions.count }} &#93; &#91; subscribers: {{ subscribers.count }} &#93;</p>
 		</div>
 
 		<div class="find-form">
@@ -77,7 +78,7 @@
 
 			<div class="my_friends">
 				{% if friends %}
-					<h3>Friends</h3>
+					<h3>Friends &#40;{{ friends.count }}&#41;</h3>
 					<div>
 						{% for friend in friends %}
 							<div class="user-card">
@@ -99,13 +100,13 @@
 						{% endfor %}
 					</div>
 				{% else %}
-					<h3 style="color:gray;">You don't have any friends yet</h3>
+					<h3 style="color:gray;">No friends</h3>
 				{% endif %}
 			</div>
 
 			<div class="my_friends">
 				{% if subscriptions %}
-					<h3>Subscriptions</h3>
+					<h3>Subscriptions &#40;{{ subscriptions.count }}&#41;</h3>
 					<div>
 						{% for friend in subscriptions %}
 							<div class="user-card">
@@ -122,13 +123,13 @@
 						{% endfor %}
 					</div>
 				{% else %}
-					<h3 style="color:gray;">You are not yet subscribed to anyone</h3>
+					<h3 style="color:gray;">No subscriptions</h3>
 				{% endif %}
 			</div>
 
 			<div class="my_friends">
 				{% if subscribers %}
-					<h3>Subscribers</h3>
+					<h3>Subscribers &#40;{{ subscribers.count }}&#41;</h3>
 					<div>
 						{% for friend in subscribers %}
 							<div class="user-card">
@@ -150,7 +151,7 @@
 						{% endfor %}
 					</div>
 				{% else %}
-					<h3 style="color:gray;">No one has subscribed to you yet</h3>
+					<h3 style="color:gray;">No subscribers</h3>
 				{% endif %}
 			</div>
 		</div>

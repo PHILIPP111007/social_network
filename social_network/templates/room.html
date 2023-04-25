@@ -22,10 +22,12 @@
 	<div id="upper-div"></div>
 
 	<div class="upper-line">
-		<h5>{{ global_user.first_name }}</h5>
-		<nav id="navigation">
-			<img id="toggleTextarea" class="menu_burger_icon" src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="22" alt="menu bar">
-		</nav>
+		<div>
+			<h5>{{ global_user.first_name }}</h5>
+			<nav id="navigation">
+				<img id="toggleTextarea" class="menu_burger_icon" src="{% static 'images/lines_menu_burger_icon_123889.svg' %}" width="30" height="22" alt="menu bar">
+			</nav>
+		</div>
 	</div>
 
 	<div class="settings-bar">
@@ -57,7 +59,7 @@
 			</div>
 		
 			<div class="input-zone" align="center">
-				{{ friend.first_name }} {{ friend.last_name }} @{{ friend.username }}<br>
+				@{{ friend.username }}<br>
 				<input type="text" id="id_message_send_input" maxlength="1000">
 				<button type="submit" id="id_message_send_button">send</button>
 			</div>
@@ -78,6 +80,7 @@
 
 		{{ room_name|json_script:"room-name" }}
 		{{ global_user.username|json_script:"global-user" }}
+		{{ low_power_mode|json_script:"low-power-mode" }}
 
 
 		<script>
@@ -120,6 +123,7 @@
 			};
 			chatSocket.onmessage = function (e) {
 				const data = JSON.parse(e.data);
+				const lowPowerMode = JSON.parse(document.getElementById('low-power-mode').textContent)
 				
 				var div = document.createElement('div');
 				var userP = document.createElement('h5');
@@ -138,7 +142,11 @@
 				document.querySelector("#id_chat_item_container").appendChild(div);
 		
 				// Запускаем функцию скролла (если убрать "smooth", то скролл будет мгновенным)
-				lastMessageScroll("smooth");
+				if (!lowPowerMode) {
+					lastMessageScroll();
+				} else {
+					lastMessageScroll("smooth");
+				}
 			};
 		</script>
 	</div>

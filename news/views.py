@@ -30,5 +30,5 @@ def make_content(request):
 
 
 def quit(request, username):
-    logout(request)
-    return HttpResponseRedirect('/')
+	logout(request)
+	return HttpResponseRedirect('/')

@@ -39,8 +39,8 @@ def make_content(request, find_users=None):
 
 
 def quit(request, username):
-    logout(request)
-    return HttpResponseRedirect('/')
+	logout(request)
+	return HttpResponseRedirect('/')
 
 
 def find_user(request):
@@ -48,17 +48,17 @@ def find_user(request):
     find_users = ''
 
     if username != '':
-        find_users = User.objects.filter(username=username)
+        find_users = User.objects.filter(username__icontains=username)
     else:
         result_str = 'User.objects'
 
         first_name = request.POST.get('first_name')
         if first_name != '':
-            result_str += f'.filter(first_name="{first_name}")'
+            result_str += f'.filter(first_name__icontains="{first_name}")'
 
         last_name = request.POST.get('last_name')
         if last_name != '':
-            result_str += f'.filter(last_name="{last_name}")'
+            result_str += f'.filter(last_name__icontains="{last_name}")'
 
         if result_str != 'User.objects':
             find_users = eval(result_str)

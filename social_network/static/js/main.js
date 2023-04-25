@@ -10,7 +10,7 @@ btn.forEach(function (i) {
 			elem.style.marginTop = "50px"
 		} else if (marTop === "50px") {
 			elem.style.marginTop = "-77px"
-			setTimeout(function () { elem.style.marginTop = '-77px' }, 300);
+			setTimeout(function () { elem.style.marginTop = '-77px' });
 		};
 	});
 });

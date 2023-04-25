@@ -23,16 +23,18 @@ class Room(models.Model):
 			if a == request_user:
 				if room.delete_user_1 != '0':
 					room.delete_user_1 = '0'
+					room.save(update_fields=['delete_user_1'])
 				elif room.user_1 == '0':
 					room.user_1 = request_user
+					room.save(update_fields=['user_1'])
 
 			elif b == request_user:
 				if room.delete_user_2 != '0':
 					room.delete_user_2 = '0'
+					room.save(update_fields=['delete_user_2'])
 				elif room.user_2 == '0':
 					room.user_2 = request_user
-
-			room.save()
+					room.save(update_fields=['user_2'])
 		else:
 			self.__class__.objects.create(room_name=room_name, user_1=a, user_2=b)
 		

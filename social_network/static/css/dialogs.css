@@ -1,11 +1,13 @@
 .chat-block {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     display: flex;
 }
 .chat-href {
     margin-bottom: 20px;
     margin-right: 10px;
-    padding: 10px 100px;
+    padding: 20px 100px;
+    width: 200px;
+    word-wrap: break-word;
     text-decoration: none;
     color: black;
 }

@@ -1,5 +1,5 @@
 body {
-    font-family: sans-serif;
+    font-family: 'Calibri', sans-serif;
     background-color: rgb(250, 244, 244);
 }
 button:focus, button:hover {
@@ -14,24 +14,25 @@ input[type="submit"]:focus, input[type="submit"]:hover {
 }
 .upper-line {
     position: fixed;
-    display: inline-flex;
     right: 0%;
     top: 0%;
-    left: 160px;
+    left: 120px;
     bottom: 99%;
     padding-bottom: 35px;
     background: rgb(235,235,235,0.8);
     backdrop-filter: blur(5px);
 }
     .upper-line h5 {
-        float: right;
-        margin-top: 9px;
-        margin-left: 80%;
+        margin: 10px 0px 0px 0px;
+    }
+    .upper-line div {
+        display: flex;
+        position: fixed;
+        right: calc(0% + 200px);
     }
 #navigation {
     margin-top: 7px;
     margin-left: 20px;
-    margin-right: 20px;
 }
     .menu-link:hover{
         background-color: rgb(220, 220, 220);
@@ -56,7 +57,7 @@ input[type="submit"]:focus, input[type="submit"]:hover {
     }
 .left-list {
     height: 100%;
-    width: 160px;
+    width: 120px;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -74,7 +75,7 @@ input[type="submit"]:focus, input[type="submit"]:hover {
         display: block;
     }
 .main-content {
-    margin-left: 160px;
+    margin-left: 120px;
     padding: 0px 10px;
 }
 .profile-link {

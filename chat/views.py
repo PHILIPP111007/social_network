@@ -3,17 +3,18 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from user.models import UserSettings
 from .models import Room, Message
 
 
 @login_required
 def dialogs(request, username):
 	result_dict = make_content(request)
-	chats = Room.objects.filter(room_name__contains=request.user.username)
+	rooms = Room.objects.filter(room_name__contains=request.user.username)
 
-	if chats:
+	if rooms:
 		dialogs = []
-		for item in chats:
+		for item in rooms:
 			if request.user.username == item.delete_user_1 or request.user.username == item.delete_user_2:
 				continue
 			elif request.user.username == item.user_1:
@@ -40,6 +41,7 @@ def dialogs(request, username):
 def room(request, username, room_name):
 	if Room.objects.filter(room_name=room_name):
 		result_dict = make_content(request)
+		result_dict['low_power_mode'] = UserSettings.objects.get(user=request.user.username).low_power_mode
 		result_dict["room_name"] = room_name
 		result_dict["friend"] = User.objects.get(username=username)
 
@@ -64,16 +66,16 @@ def make_content(request):
 @login_required
 def remove_chat(request, username, room_name):
 	if request.method == 'POST':
-		dialog = Room.objects.get(room_name=room_name)
+		room = Room.objects.get(room_name=room_name)
 
-		if dialog.user_1 == request.user.username:
-			dialog.delete_user_1 = request.user.username
-		elif dialog.user_2 == request.user.username:
-			dialog.delete_user_2 = request.user.username
-		dialog.save()
+		if room.user_1 == request.user.username:
+			room.delete_user_1 = request.user.username
+		elif room.user_2 == request.user.username:
+			room.delete_user_2 = request.user.username
+		room.save(update_fields=['delete_user_1', 'delete_user_2'])
 
-		if dialog.delete_user_1 != '0' and dialog.delete_user_2 != '0':
-			dialog.delete()
+		if room.delete_user_1 != '0' and room.delete_user_2 != '0':
+			room.delete()
 
 	return HttpResponseRedirect(f'/dialogs/{request.user.username}')
 

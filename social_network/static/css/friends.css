@@ -14,8 +14,10 @@ input[type="text"], input[type="email"], input[type="password"] {
     background-color: rgb(250, 244, 244);
 }
 .user {
-    width: 1000px;
+    min-width: 560px;
+    max-width: 1000px;
     padding: 5px 10px;
+    word-wrap: break-word;
     border-radius: 15px 15px 15px 0px;
     background-color: #cac3c3;
     font-size: 25px;
@@ -25,7 +27,7 @@ input[type="text"], input[type="email"], input[type="password"] {
 }
 .find-form {
     display: inline-block;
-    padding: 10px;
+    padding: 20px;
     border-radius: 0px 0px 10px 10px;
     background-color: #cac3c3;
 }
@@ -37,15 +39,19 @@ input[type="text"], input[type="email"], input[type="password"] {
 }
     .my_friends {
         margin-left: 50px;
-        margin-right: 50px;
+        width: 300px;
     }
     .user-card {
+        margin-bottom: 10px;
         width: 180px;
-        margin: 10px 20px;
         padding: 10px 30px;
+        word-wrap: break-word;
         border-radius: 10px;
         background-color: #725c5c0e;
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
+    .user-card form {
+        padding-bottom: 10px;
     }
     .profile-link {
         text-decoration:none;
