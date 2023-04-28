@@ -132,7 +132,7 @@ def update_user_settings(request, username):
 @login_required
 def add_friend(request, username):
 	if request.method == 'POST':
-		if not Subscriber.objects.filter(user=request.user.username, subscribe=username):
+		if not Subscriber.objects.filter(user=request.user.username, subscribe=username).count():
 			subscribe = User.objects.get(username=username)
 			Subscriber.objects.create(user=request.user, subscribe=subscribe)
             
@@ -166,11 +166,8 @@ def delete_subscriber(request, username):
 @login_required
 def make_chat(request, username):
 	if request.method == 'POST':
-		try:
-			if Subscriber.objects.get(user=request.user.username, subscribe=username) and Subscriber.objects.get(user=username, subscribe=request.user.username):
-				room_name = Room().create_chat(request_user=request.user.username, friend=username)
-				return HttpResponseRedirect(f'/dialogs/{username}/chat/{room_name}/')
-		except Exception:
-			pass
-	
+		if Subscriber.objects.filter(user=username, subscribe=request.user.username).count():
+			room_name = Room().create_chat(request_user=request.user.username, friend=username)
+			return HttpResponseRedirect(f'/dialogs/{username}/chat/{room_name}/')
+
 	return HttpResponseRedirect(f'/dialogs/{request.user.username}')

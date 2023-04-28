@@ -58,11 +58,16 @@ input[type="submit"]:hover, input[type="reset"]:hover {
     background: rgb(158, 154, 154);
     color: #2c2a2a;
 }
-
 input[type="submit"]:active, input[type="reset"]:active {
     position: relative;
     top: 2px;
     background: rgb(158, 154, 154);
+}
+#addButton:hover {
+    background-color: rgb(124, 234, 120);
+}
+#delButton:hover {
+    background-color: rgb(250, 135, 135);
 }
 #upper-div {
     margin-top: 100px;

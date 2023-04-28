@@ -9,8 +9,6 @@
 	<link rel="stylesheet" href='{% static "css/login.css" %}'>
 </head>
 <body>
-	<p id="hello">Welcome to social_network!</p>
-
 	{% if messages %}
 		<div class="messages">
         	<ul>
@@ -21,18 +19,19 @@
 		</div>
 	{% endif %}
 
-    <div class="enter">
-        <h3>Log in</h3>
-        <form method="POST" action="">
-            {% csrf_token %}
-            <table class="form">
-                {{ loginform }}
-            </table>
-            <input type="submit" value="Login">
-        </form>
-
-        <p><a href="/register">Register</a></p>
-    
-    </div>
+	<div class="main">
+		<p id="hello">Welcome to social_network!</p>
+		<div class="enter">
+			<h3>Log in</h3>
+			<form method="POST" action="">
+				{% csrf_token %}
+				<table class="form">
+					{{ loginform }}
+				</table>
+				<input id="loginButton" type="submit" value="Login">
+			</form>
+			<p><a href="/register">Register</a></p>
+		</div>
+	</div>
 </body>
 </html>

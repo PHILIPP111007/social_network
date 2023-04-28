@@ -5,26 +5,53 @@ body {
 h3 {
     text-align: center;
 }
-input {
-    float: right;
-}
-input[type="submit"]:focus, input[type="submit"]:hover {
+input[type="submit"] {
+    all: unset;
     cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    outline: none;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    padding: 5px;
+    background-color: rgb(205, 205, 205);
+    color: #2c2a2a;
+}
+input[type="submit"]:after {
+    position: relative;
+    z-index: -1;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+input[type="submit"]:hover {
+    position: relative;
+    background: rgb(158, 154, 154);
+    color: #2c2a2a;
+}
+input[type="submit"]:active {
+    position: relative;
+    top: 2px;
+    background: rgb(158, 154, 154);
 }
 input[type="text"], input[type="email"], input[type="password"] {
-    font-family: inherit;
+    all: unset;
+    border: 1px solid black;
     font-size: inherit;
-    line-height: inherit;
-    margin: 0;
-    margin-bottom: 1rem;
-    display: block;
-    width: 200px;
-    border-radius: 0.25rem;
-    background-clip: padding-box;
-    border: 1px solid #bdbdbd;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    color: inherit;
+    background: none;
+    cursor: auto;
+    display: inline-block;
+    letter-spacing: 1px;
+    outline: none;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    padding: 5px;
     background-color: rgb(250, 244, 244);
+    width: 250px;
+    border-radius: 0.25rem;
 }
 #hello {
     font-size: 30px;
@@ -45,7 +72,7 @@ input[type="text"], input[type="email"], input[type="password"] {
 }
 .enter {
     position: fixed;
-    left: calc(50% - 200px);
+    left: calc(50% - 210px);
     width: 400px;
     padding: 10px;
     border: 2px solid black;

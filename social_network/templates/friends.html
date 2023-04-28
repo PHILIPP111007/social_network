@@ -67,7 +67,7 @@
 					</a>
 					<form method="POST" action="add_friend/{{ u.username }}/">
 						{% csrf_token %}
-						<input class="add_friend" type="submit" value="Add to friends">
+						<input id="addButton" class="add_friend" type="submit" value="add">
 					</form>
 				</div>
 				{% endfor %}
@@ -94,7 +94,7 @@
 						
 								<form method="POST" action="delete_friend/{{ friend.username }}/">
 									{% csrf_token %}
-									<input class="delete_friend" type="submit" value="Remove from friends">
+									<input id="delButton" class="delete_friend" type="submit" value="delete">
 								</form>
 							</div>
 						{% endfor %}
@@ -117,7 +117,7 @@
 					
 								<form method="POST" action="delete_friend/{{ friend.username }}/">
 									{% csrf_token %}
-									<input class="remove_subscribe" type="submit" value="Remove subscription">
+									<input id="delButton" class="remove_subscribe" type="submit" value="delete">
 								</form>
 							</div>
 						{% endfor %}
@@ -137,15 +137,20 @@
 									<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
 									<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
 								</a>
+
+								<form method="POST" action="make_chat/{{ friend.username }}/">
+									{% csrf_token %}
+									<input class="make_chat" type="submit" value="Chat">
+								</form>
 								
 								<form method="POST" action="add_friend/{{ friend.username }}/">
 									{% csrf_token %}
-									<input class="add_friend" type="submit" value="Add to friends">
+									<input id="addButton" class="add_friend" type="submit" value="add">
 								</form>
 
 								<form method="POST" action="delete_subscriber/{{ friend.username }}/">
 									{% csrf_token %}
-									<input class="remove_subscribe" type="submit" value="Delete his subscription">
+									<input id="delButton" class="remove_subscribe" type="submit" value="delete">
 								</form>
 							</div>
 						{% endfor %}

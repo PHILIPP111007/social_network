@@ -17,7 +17,7 @@ class Room(models.Model):
 		b = max(request_user, friend)
 		room_name = f'{a}_{b}'
 
-		if self.__class__.objects.filter(room_name=room_name, user_1=a, user_2=b):
+		if self.__class__.objects.filter(room_name=room_name, user_1=a, user_2=b).count():
 			room = self.__class__.objects.get(room_name=room_name, user_1=a, user_2=b)
 
 			if a == request_user:
