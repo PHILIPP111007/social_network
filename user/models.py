@@ -9,6 +9,9 @@ class Blog(models.Model):
 	content = models.TextField(max_length=5000)
 	is_changed = models.BooleanField(default=False)
 
+	class Meta:
+		ordering=['-date_time']
+
 	def __str__(self):
 		return self.user.username
 

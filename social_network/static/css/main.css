@@ -2,11 +2,67 @@ body {
     font-family: 'Calibri', sans-serif;
     background-color: rgb(250, 244, 244);
 }
-button:focus, button:hover {
+button {
+    border: none;
     cursor: pointer;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    outline: none;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    padding: 5px;
+    background-color: rgb(205, 205, 205);
+    color: #2c2a2a;
 }
-input[type="submit"]:focus, input[type="submit"]:hover {
+button:after {
+    z-index: -1;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+button:hover {
+    position: relative;
+    background: rgb(158, 154, 154);
+    color: #2c2a2a;
+}
+button:active {
+    position: relative;
+    top: 2px;
+    background: rgb(158, 154, 154);
+}
+input[type="submit"], input[type="reset"] {
+    all: unset;
     cursor: pointer;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    outline: none;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    padding: 5px;
+    background-color: rgb(205, 205, 205);
+    color: #2c2a2a;
+}
+input[type="submit"]:after, input[type="reset"]:after {
+    position: relative;
+    z-index: -1;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+input[type="submit"]:hover, input[type="reset"]:hover {
+    position: relative;
+    background: rgb(158, 154, 154);
+    color: #2c2a2a;
+}
+
+input[type="submit"]:active, input[type="reset"]:active {
+    position: relative;
+    top: 2px;
+    background: rgb(158, 154, 154);
 }
 #upper-div {
     margin-top: 100px;
@@ -44,7 +100,7 @@ input[type="submit"]:focus, input[type="submit"]:hover {
     position: fixed;
     right: calc(0% + 200px);
     top: 0%;
-    margin-top: -77px;
+    margin-top: -95px;
     padding: 10px;
     backdrop-filter: blur(5px);
     background: rgb(235,235,235,0.8);

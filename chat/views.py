@@ -45,7 +45,7 @@ def room(request, username, room_name):
 		result_dict["room_name"] = room_name
 		result_dict["friend"] = User.objects.get(username=username)
 
-		messages = Message.objects.filter(room_name_id=room_name).order_by('timestamp')
+		messages = Message.objects.filter(room_name_id=room_name)
 		if messages:
 			result_dict["messages"] = messages
 

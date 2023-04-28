@@ -50,17 +50,17 @@
 			<caption>Find people!</caption>
 			<form method="POST" action="">
 				{% csrf_token %}
-				<input type="text" id="username" name="username" placeholder="Username"><br>
-				<input type="text" id="first_name" name="first_name" placeholder="First name"><br>
-				<input type="text" id="last_name" name="last_name" placeholder="Last name"><br>
-				<input type="submit" value="Find">
+				<input id="form" type="text" id="username" name="username" placeholder="Username"><br>
+				<input id="form" type="text" id="first_name" name="first_name" placeholder="First name"><br>
+				<input id="form" type="text" id="last_name" name="last_name" placeholder="Last name"><br>
+				<input id="userButton" type="submit" value="Find">
 			</form>
 		</div>
 
 		<div class="find-users">
 			{% if find_users %}
 				{% for u in find_users %}
-				<div class="user-card">
+				<div id="find-card" class="user-card">
 					<a class="profile-link" href="{% url 'user' u.username %}">
 						<h4>{{ u.first_name }} {{ u.last_name }}</h4>
 						<h4 style="color:gray; font-size: 13px">@{{ u.username }}</h4>

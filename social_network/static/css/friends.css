@@ -1,17 +1,31 @@
-input[type="text"], input[type="email"], input[type="password"] {
-    font-family: inherit;
+input[type="text"], input[type="email"] {
+    all: unset;
+    border: 1px solid black;
     font-size: inherit;
-    line-height: inherit;
-    margin: 0;
-    margin-bottom: 1rem;
-    display: block;
-    width: 200px;
-    border-radius: 0.25rem;
-    background-clip: padding-box;
-    border: 1px solid #bdbdbd;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    color: inherit;
+    background: none;
+    cursor: auto;
+    display: inline-block;
+    letter-spacing: 1px;
+    outline: none;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    padding: 5px;
+    background: white;
+    width: 250px;
+}
+#form {
+    margin-bottom: 10px;
+    width: 250px;
     background-color: rgb(250, 244, 244);
+}
+#userButton {
+    font-size: 15px;
+    background-color: rgb(168, 162, 162);
+}
+#userButton:hover {
+    background-color: rgb(119, 114, 114);
 }
 .user {
     min-width: 560px;
@@ -32,7 +46,11 @@ input[type="text"], input[type="email"], input[type="password"] {
     background-color: #cac3c3;
 }
 .find-users {
-    display: flex;
+    display: grid;
+    grid-template-columns: 300px repeat(auto-fill, 300px) 300px;
+}
+#find-card {
+    margin: 10px;
 }
 .friends-section {
     display: flex;

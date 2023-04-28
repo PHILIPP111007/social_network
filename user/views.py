@@ -28,7 +28,7 @@ def make_content(request, username):
 		is_my_page = True
 		user = global_user
 	
-	blog = Blog.objects.filter(user_id=username).order_by('-date_time')
+	blog = Blog.objects.filter(user_id=username)
 	friends_count = Subscriber().get_friends(username=username).count()
 	settings = UserSettings.objects.get(user_id=request.user.username)
 

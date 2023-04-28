@@ -17,7 +17,7 @@ def make_content(request):
 
     obj = Subscriber()
     friends = obj.get_friends(username=request.user.username)
-    friends_records = Blog.objects.filter(user_id__in=friends).order_by('-date_time')
+    friends_records = Blog.objects.filter(user_id__in=friends) # .order_by('-date_time')
     settings = UserSettings.objects.get(user_id=request.user.username)
 
     result_dict = {

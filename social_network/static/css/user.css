@@ -12,23 +12,44 @@ textarea {
 	border: 1px solid #999;
     border-radius: 5px;
 }
-input[type="text"], input[type="email"], input[type="password"] {
-    font-family: inherit;
+input[type="text"], input[type="email"] {
+    all: unset;
+    border: 1px solid black;
     font-size: inherit;
-    line-height: inherit;
-    margin: 0; /* 2 */
-    margin-bottom: 1rem;
-    display: block;
-    width: 200px;
-    border-radius: 0.25rem;
-    background-clip: padding-box;
-    border: 1px solid #bdbdbd;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    color: inherit;
+    background: none;
+    cursor: auto;
+    display: inline-block;
+    letter-spacing: 1px;
+    outline: none;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    padding: 5px;
+    background-color: rgb(234, 227, 227);;
+    width: 250px;
+}
+#form {
+    margin-bottom: 10px;
+    width: 250px;
     background-color: rgb(250, 244, 244);
 }
+.userButton {
+    display: flex;
+}
+#userButton {
+    font-size: 15px;
+    background-color: rgb(168, 162, 162);
+    margin: 0px 10px 10px 20px;
+}
+#userButton:hover {
+    background-color: rgb(119, 114, 114);
+}
+#modalButton {
+    margin-top: 10px;
+}
 .settings-bar {
-    margin-top: -134px;
+    margin-top: -156px;
 }
     #backgroundColorChangeButton {
         margin-bottom: 10px;
@@ -39,11 +60,13 @@ input[type="text"], input[type="email"], input[type="password"] {
     #quitButton {
         margin-bottom: 25px;
     }
-    .delete_account {
-        background-color: #f77373e2;
+    #delete_account {
+        background: #f2abab;
+        color: #c00f0fe2;
     }
-    .delete_account:hover {
-        background-color: #f84747;
+    #delete_account:hover {
+        background: #f18282;
+        color: #c00f0fe2;
     }
 .user {
     min-width: 560px;
@@ -82,8 +105,9 @@ input[type="text"], input[type="email"], input[type="password"] {
     .active {
         height: auto;
     }
-.delete_record:hover {
-    background-color: #f77373e2;
+#delete_record:hover {
+    background: #f18282;
+        color: #c00f0fe2;
 }
 .three_points:hover {
     cursor: pointer;

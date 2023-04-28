@@ -6,11 +6,11 @@ btn.forEach(function (i) {
 		var elem = document.querySelector('.settings-bar');
 		let marTop = getComputedStyle(elem).marginTop;
 
-		if (marTop === "-77px") {
+		if (marTop === "-95px") {
 			elem.style.marginTop = "50px"
 		} else if (marTop === "50px") {
-			elem.style.marginTop = "-77px"
-			setTimeout(function () { elem.style.marginTop = '-77px' });
+			elem.style.marginTop = "-95px"
+			setTimeout(function () { elem.style.marginTop = '-95px' });
 		};
 	});
 });

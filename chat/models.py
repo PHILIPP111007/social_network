@@ -47,5 +47,8 @@ class Message(models.Model):
 	message = models.CharField(max_length=1000)
 	timestamp = models.DateTimeField(auto_now_add=True)
 
+	class Meta:
+		ordering=['timestamp']
+
 	def __str__(self):
 		return f'{self.sender}: {self.message} [{self.timestamp}]'

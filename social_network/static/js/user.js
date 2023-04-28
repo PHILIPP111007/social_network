@@ -4,7 +4,7 @@ for (let i = 0; i < tx.length; i++) {
   tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
   tx[i].addEventListener("input", OnInput, false);
 };
-function OnInput() {
+function OnInput(f) {
   this.style.height = 0;
   this.style.height = (this.scrollHeight) + "px";
 };
@@ -17,11 +17,11 @@ btn.forEach(function (i) {
 		var elem = document.querySelector('.settings-bar');
 		let marTop = getComputedStyle(elem).marginTop;
 
-		if (marTop === "-134px") {
+		if (marTop === "-156px") {
 			elem.style.marginTop = "50px"
 		} else if (marTop === "50px") {
-			elem.style.marginTop = "-134px"
-			setTimeout(function () { elem.style.marginTop = '-134px' });
+			elem.style.marginTop = "-156px"
+			setTimeout(function () { elem.style.marginTop = '-156px' });
 		};
 	});
 });
@@ -43,7 +43,7 @@ let recordButton = document.querySelectorAll('.show-hide-btn');
 recordButton.forEach(function (i) {
 	i.addEventListener('click', function() {
 		let id = this.id
-		let visibleDiv = i.closest('div')?.id
+		let visibleDiv = i.parentElement.parentElement.id;
 		document.getElementById(visibleDiv).style.display = 'none';
 		if (visibleDiv === `half-${id}`) {
 			document.getElementById(`full-${id}`).style.display = '';
@@ -63,18 +63,45 @@ threePoints.forEach(function (i) {
 		if (elem) {
 			
 			if (elem.classList.contains('active')) {
-			  elem.style.height = getComputedStyle(elem).height;
-			  elem.classList.remove('active');
-			  getComputedStyle(elem).height; // reflow
-			  elem.style.height = '';
+				elem.style.height = getComputedStyle(elem).height;
+				elem.classList.remove('active');
+				getComputedStyle(elem).height; // reflow
+				elem.style.height = '';
 			} else {
-			  elem.classList.add('active');
-			  var h = getComputedStyle(elem).height;
-			  elem.style.height = '0';
-			  getComputedStyle(elem).height; // reflow
-			  elem.style.height = h;
-			  setTimeout(function () { elem.style.height = '' }, 300);
-			}
-		  }
+
+			  	let record = this.closest('.record');
+				let textArea = elem.getElementsByTagName('textarea')[0];
+
+				if (!textArea.value) {
+					let textList = record.getElementsByTagName('div');
+					let string = '';
+
+					if (textList.length === 4 | textList.length === 5) {
+						text = textList[0];
+
+					} else if (textList.length === 9 | textList.length === 10) {
+						text = textList[3];
+						text = text.getElementsByTagName('div')[0];
+
+					}
+
+					text = text.getElementsByTagName('p');
+
+					for (let i = 0; i < text.length; i++) {
+						string += text[i].textContent + '\n\n';
+					}
+					string = string.trim()
+					textArea.value = string;
+					textArea.style.height = (textArea.scrollHeight) + "px";
+				}
+
+				elem.classList.add('active');
+				var h = getComputedStyle(elem).height;
+				elem.style.height = '0';
+				getComputedStyle(elem).height; // reflow
+				elem.style.height = h;
+				setTimeout(function () { elem.style.height = '' }, 300);
+		  	}
+		}
 	});
 });
