@@ -9,13 +9,20 @@
 	<link rel="stylesheet" href='{% static "css/login.css" %}'>
 </head>
 <body>
+
 	{% if messages %}
 		<div class="messages">
-        	<ul>
-        		{% for message in messages %}
-            		<li>{{ message }}</li>
-            	{% endfor %}
-    		</ul>
+        	{% for message in messages %}
+				{% if message.tags == "error" %}
+					<div class="alert-danger">
+						{{ message }}
+				  	</div>
+				{% else %}
+				  	<div class="alert-success">
+						{{ message }}
+				  	</div>
+				{% endif %}
+        	{% endfor %}
 		</div>
 	{% endif %}
 

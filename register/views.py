@@ -10,7 +10,7 @@ def user_login(request):
 	if request.method == 'POST':
 		form = LoginForm(request.POST)
 		if form.is_valid():
-			return user_auth(request)
+			return user_auth_login(request)
 		else:
 			messages.error(request, 'Incorrect login or password')
 	else:
@@ -25,13 +25,13 @@ def user_register(request):
 			form.save()
 			messages.success(request, 'Account created successfully')
 			create_first_post(request)
-			return user_auth(request)
+			return user_auth_register(request)
 	else:
 		form = CustomUserCreationForm()
 	return render(request, 'register.html', {'registerform': form})
 
 
-def user_auth(request):
+def user_auth_login(request):
 	username = request.POST.get('username')
 	password = request.POST.get('password')
 	user = authenticate(request, username=username, password=password)
@@ -39,7 +39,19 @@ def user_auth(request):
 		login(request, user)
 		return HttpResponseRedirect(f'/user/{username}')
 	else:
+		messages.error(request, 'Incorrect login or password')
+		return HttpResponseRedirect('/')
+
+
+def user_auth_register(request):
+	username = request.POST.get('username')
+	password = request.POST.get('password')
+	user = authenticate(request, username=username, password=password)
+	if user is not None:
+		login(request, user)
 		return HttpResponseRedirect(f'/user/{username}')
+	else:
+		return HttpResponseRedirect('/')
 
 
 def create_first_post(request):
