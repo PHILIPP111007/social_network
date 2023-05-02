@@ -56,7 +56,7 @@ def make_content(request, username):
 
 
 def quit(request, username):
-	if request.method == 'POST':
+	if request.method == 'GET':
 		logout(request)
 	return HttpResponseRedirect('/')
 	
@@ -73,9 +73,20 @@ def delete_account(request, username):
 
 @login_required
 def create_record(request, username):
-	if request.method == 'POST':
-		if request.POST.get('my_textarea'):
-			Blog.objects.create(user_id=request.user.username, content=request.POST.get('my_textarea'))
+	is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+	if is_ajax and request.method == 'POST':
+
+		if request.body:
+			body = request.body.decode('utf-8')
+
+			new_record = Blog.objects.create(user_id=request.user.username, content=body)
+
+			return JsonResponse({
+				'status': True,
+				'id': new_record.pk,
+				'datetime': new_record.date_time.strftime('%Y-%m-%d %H:%M')
+			})
+		return JsonResponse({'status': False})
 
 	return HttpResponseRedirect(f'/user/{request.user.username}')
 
@@ -94,12 +105,15 @@ def change_record(request, username, id):
 
 @login_required
 def delete_record(request, username, id):
-	if request.method == 'POST':
+	is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+	if is_ajax and request.method == 'POST':
 		try:
 			record = Blog.objects.get(user_id=request.user.username, id=id)
 			record.delete()
+
+			return JsonResponse({'status': True})
 		except Blog.DoesNotExist:
-			pass
+			return JsonResponse({'status': False})
 
 	return HttpResponseRedirect(f'/user/{request.user.username}')
 

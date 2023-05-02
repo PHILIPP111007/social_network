@@ -47,7 +47,7 @@
 						<a class="profile-link" href="{% url 'user' record.user_id %}">
 							<h3>{{ record.user.first_name }} {{ record.user.last_name }}</h3>
 							<h6>@{{ record.user_id }}</h6>
-							<h6>{{ record.date_time }} {% if record.is_changed %}&#91;&#10000; Modified&#93;{% endif %}</h6>
+							<h6>{{ record.date_time|date:'Y-m-d H:i' }} {% if record.is_changed %}&#91;&#10000; Modified&#93;{% endif %}</h6>
 						</a>
 
 						{% if record.content|length > 500 %}

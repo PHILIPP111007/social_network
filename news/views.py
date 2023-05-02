@@ -30,5 +30,6 @@ def make_content(request):
 
 
 def quit(request, username):
-	logout(request)
+	if request.method == 'GET':
+		logout(request)
 	return HttpResponseRedirect('/')

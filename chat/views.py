@@ -81,5 +81,6 @@ def remove_chat(request, username, room_name):
 
 
 def quit(request, username):
-	logout(request)
+	if request.method == 'GET':
+		logout(request)
 	return HttpResponseRedirect('/')

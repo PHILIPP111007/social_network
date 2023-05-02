@@ -18,19 +18,19 @@ recordButton.forEach(function (i) {
 let addFriendForms = document.querySelectorAll("#addFriendForm");
 function addFriend(addFriendForm) {
 	addFriendForm.addEventListener("submit", event => {
-        event.preventDefault();
+		event.preventDefault();
 
-		csrftoken = event.srcElement.csrfmiddlewaretoken.value;
-		url = event.srcElement.action;
+		let csrftoken = event.srcElement.csrfmiddlewaretoken.value;
+		let url = event.srcElement.action;
 
-        fetch(url, {
-            method: 'POST',
-            credentials: "same-origin",
+		fetch(url, {
+			method: 'POST',
+			credentials: "same-origin",
 			headers: {
 			"X-Requested-With": "XMLHttpRequest",
 			"X-CSRFToken": csrftoken,
 			},
-        })
+		})
 		.then(response => response.json())
 		.then(data => {
 
@@ -65,12 +65,13 @@ function addFriend(addFriendForm) {
 
 				addFriendForm.parentElement.remove();
 
-
 				// Вставка этой карточки в новый div друзей
 				let friendsHome = document.getElementById('friends');
+				let h = friendsHome.getElementsByTagName('h3')[0].nextElementSibling;
 
-
-				friendsHome.innerHTML += `<div class="user-card">
+				let placeholder = document.createElement("div");
+				placeholder.innerHTML = `
+				<div class="user-card">
 					<a class="profile-link" href="/user/${data.username}/">
 						<h4>${data.first_name} ${data.last_name}</h4>
 						<h4 style="color:gray; font-size: 13px">@${data.username}</h4>
@@ -85,15 +86,14 @@ function addFriend(addFriendForm) {
 						<input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
 						<input id="delButton" class="delete_friend" type="submit" value="delete">
 					</form>
-				</div>`
+				</div>`;
+				let node = placeholder.firstElementChild;
 
-				deleteFriendForms = document.querySelectorAll("#deleteFriendForm");
-				for (let i = 0; i < deleteFriendForms.length; i++) {
-					deleteFriend(deleteFriendForms[i]);
-				}
+				friendsHome.insertBefore(node, h);
+				deleteFriend(node.getElementsByTagName('form')[1]);
 			}
 		})
-    })
+	})
 };
 
 
@@ -101,19 +101,19 @@ function addFriend(addFriendForm) {
 let deleteFriendForms = document.querySelectorAll("#deleteFriendForm");
 function deleteFriend(deleteFriendForm) {
 	deleteFriendForm.addEventListener("submit", event => {
-        event.preventDefault();
+		event.preventDefault();
 
-		csrftoken = event.srcElement.csrfmiddlewaretoken.value;
-		url = event.srcElement.action;
+		let csrftoken = event.srcElement.csrfmiddlewaretoken.value;
+		let url = event.srcElement.action;
 
-        fetch(url, {
-            method: 'POST',
-            credentials: "same-origin",
+		fetch(url, {
+			method: 'POST',
+			credentials: "same-origin",
 			headers: {
 			"X-Requested-With": "XMLHttpRequest",
 			"X-CSRFToken": csrftoken,
 			},
-        })
+		})
 		.then(response => response.json())
 		.then(data => {
 
@@ -148,13 +148,14 @@ function deleteFriend(deleteFriendForm) {
 
 				deleteFriendForm.parentElement.remove();
 
-
 				// Вставка этой карточки в новый div подписчиков
 
 				let subscribersHome = document.getElementById('subscribers');
+				let h = subscribersHome.getElementsByTagName('h3')[0].nextElementSibling;
 
-
-				subscribersHome.innerHTML += `<div class="user-card">
+				let placeholder = document.createElement("div");
+				placeholder.innerHTML = `
+				<div class="user-card">
 					<a class="profile-link" href="/user/${data.username}/">
 						<h4>${data.first_name} ${data.last_name}</h4>
 						<h4 style="color:gray; font-size: 13px">@${data.username}</h4>
@@ -174,19 +175,16 @@ function deleteFriend(deleteFriendForm) {
 						<input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
 						<input id="delButton" class="remove_subscribe" type="submit" value="delete">
 					</form>
-				</div>`
+				</div>`;
+				let node = placeholder.firstElementChild;
 
-				addFriendForms = document.querySelectorAll("#addFriendForm");
-				for (let i = 0; i < addFriendForms.length; i++) {
-					addFriend(addFriendForms[i]);
-				}
-				deleteSubscriberForms = document.querySelectorAll("#deleteSubscriberForm");
-				for (let i = 0; i < deleteSubscriberForms.length; i++) {
-					deleteSubscriber(deleteSubscriberForms[i]);
-				}
+				subscribersHome.insertBefore(node, h);
+
+				addFriend(node.getElementsByTagName('form')[1]);
+				deleteSubscriber(node.getElementsByTagName('form')[2]);
 			}
 		})
-    })
+	})
 };
 
 
@@ -194,19 +192,19 @@ function deleteFriend(deleteFriendForm) {
 let deleteSubscriptionForms = document.querySelectorAll("#deleteSubscriptionForm");
 function deleteSubscription(deleteSubscriptionForm) {
 	deleteSubscriptionForm.addEventListener("submit", event => {
-        event.preventDefault();
+		event.preventDefault();
 
-		csrftoken = event.srcElement.csrfmiddlewaretoken.value;
-		url = event.srcElement.action;
+		let csrftoken = event.srcElement.csrfmiddlewaretoken.value;
+		let url = event.srcElement.action;
 
-        fetch(url, {
-            method: 'POST',
-            credentials: "same-origin",
+		fetch(url, {
+			method: 'POST',
+			credentials: "same-origin",
 			headers: {
 			"X-Requested-With": "XMLHttpRequest",
 			"X-CSRFToken": csrftoken,
 			},
-        })
+		})
 		.then(response => response.json())
 		.then(data => {
 
@@ -229,7 +227,7 @@ function deleteSubscription(deleteSubscriptionForm) {
 				deleteSubscriptionForm.parentElement.remove();
 			}
 		})
-    })
+	})
 };
 
 
@@ -237,19 +235,19 @@ function deleteSubscription(deleteSubscriptionForm) {
 let addSubscriptionForms = document.querySelectorAll("#addSubscriptionForm");
 function addSubscription(addSubscriptionForm) {
 	addSubscriptionForm.addEventListener("submit", event => {
-        event.preventDefault();
+		event.preventDefault();
 
-		csrftoken = event.srcElement.csrfmiddlewaretoken.value;
-		url = event.srcElement.action;
+		let csrftoken = event.srcElement.csrfmiddlewaretoken.value;
+		let url = event.srcElement.action;
 
-        fetch(url, {
-            method: 'POST',
-            credentials: "same-origin",
+		fetch(url, {
+			method: 'POST',
+			credentials: "same-origin",
 			headers: {
 			"X-Requested-With": "XMLHttpRequest",
 			"X-CSRFToken": csrftoken,
 			},
-        })
+		})
 		.then(response => response.json())
 		.then(data => {
 
@@ -272,7 +270,10 @@ function addSubscription(addSubscriptionForm) {
 				// Вставка этой карточки в новый div подписок
 				let subscriptionsHome = document.getElementById('subscriptions');
 
-				subscriptionsHome.innerHTML += `
+				let h = subscriptionsHome.getElementsByTagName('h3')[0].nextElementSibling;
+
+				let placeholder = document.createElement("div");
+				placeholder.innerHTML = `
 				<div class="user-card">
 					<a class="profile-link" href="/user/${data.username}/">
 						<h4>${data.first_name} ${data.last_name}</h4>
@@ -281,17 +282,16 @@ function addSubscription(addSubscriptionForm) {
 
 					<form id="deleteSubscriptionForm" method="POST" action="delete_friend/${data.username}/">
 						<input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
-						<input id="delButton" class="delete_friend" type="submit" value="delete">
+						<input id="delButton" class="remove_subscribe" type="submit" value="delete">
 					</form>
-				</div>`
+				</div>`;
+				let node = placeholder.firstElementChild;
 
-				deleteSubscriptionForms = document.querySelectorAll("#deleteSubscriptionForm");
-				for (let i = 0; i < deleteSubscriptionForms.length; i++) {
-					deleteSubscription(deleteSubscriptionForms[i]);
-				}
+				subscriptionsHome.insertBefore(node, h);
+				deleteSubscription(node.getElementsByTagName('form')[0]);
 			}
 		})
-    })
+	})
 };
 
 
@@ -299,19 +299,19 @@ function addSubscription(addSubscriptionForm) {
 let deleteSubscriberForms = document.querySelectorAll("#deleteSubscriberForm");
 function deleteSubscriber(deleteSubscriberForm) {
 	deleteSubscriberForm.addEventListener("submit", event => {
-        event.preventDefault();
+		event.preventDefault();
 
-		csrftoken = event.srcElement.csrfmiddlewaretoken.value;
-		url = event.srcElement.action;
+		let csrftoken = event.srcElement.csrfmiddlewaretoken.value;
+		let url = event.srcElement.action;
 
-        fetch(url, {
-            method: 'POST',
-            credentials: "same-origin",
+		fetch(url, {
+			method: 'POST',
+			credentials: "same-origin",
 			headers: {
 			"X-Requested-With": "XMLHttpRequest",
 			"X-CSRFToken": csrftoken,
 			},
-        })
+		})
 		.then(response => response.json())
 		.then(data => {
 
@@ -334,7 +334,7 @@ function deleteSubscriber(deleteSubscriberForm) {
 				deleteSubscriberForm.parentElement.remove();
 			}
 		})
-    })
+	})
 };
 
 
