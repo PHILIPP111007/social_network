@@ -60,101 +60,101 @@
 		<div class="find-users">
 			{% if find_users %}
 				{% for u in find_users %}
-				<div id="find-card" class="user-card">
-					<a class="profile-link" href="{% url 'user' u.username %}">
-						<h4>{{ u.first_name }} {{ u.last_name }}</h4>
-						<h4 style="color:gray; font-size: 13px">@{{ u.username }}</h4>
-					</a>
-					<form method="POST" action="add_friend/{{ u.username }}/">
-						{% csrf_token %}
-						<input id="addButton" class="add_friend" type="submit" value="add">
-					</form>
-				</div>
+					<div id="find-card" class="user-card">
+						<a class="profile-link" href="{% url 'user' u.username %}">
+							<h4>{{ u.first_name }} {{ u.last_name }}</h4>
+							<h4 style="color:gray; font-size: 13px">@{{ u.username }}</h4>
+						</a>
+						<form id="addSubscriptionForm" method="POST" action="add_friend/{{ u.username }}/">
+							{% csrf_token %}
+							<input id="addButton" class="add_friend" type="submit" value="add">
+						</form>
+					</div>
 				{% endfor %}
 			{% endif %}
 		</div>
 
 		<div class="friends-section">
 
-			<div class="my_friends">
+			<div id="friends" class="my_friends">
 				{% if friends %}
-					<h3>Friends &#40;{{ friends.count }}&#41;</h3>
-					<div>
-						{% for friend in friends %}
-							<div class="user-card">
-								<a class="profile-link" href="{% url 'user' friend.username %}">
-									<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
-									<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
-								</a>
+					<h3>Friends: {{ friends.count }}</h3>
 
-								<form method="POST" action="make_chat/{{ friend.username }}/">
-									{% csrf_token %}
-									<input class="make_chat" type="submit" value="Chat">
-								</form>
+					{% for friend in friends %}
+						<div class="user-card">
+							<a class="profile-link" href="{% url 'user' friend.username %}">
+								<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
+								<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
+							</a>
+
+							<form method="POST" action="make_chat/{{ friend.username }}/">
+								{% csrf_token %}
+								<input class="make_chat" type="submit" value="Chat">
+							</form>
 						
-								<form method="POST" action="delete_friend/{{ friend.username }}/">
-									{% csrf_token %}
-									<input id="delButton" class="delete_friend" type="submit" value="delete">
-								</form>
-							</div>
-						{% endfor %}
-					</div>
+							<form id="deleteFriendForm" method="POST" action="delete_friend/{{ friend.username }}/">
+								{% csrf_token %}
+								<input id="delButton" class="delete_friend" type="submit" value="delete">
+							</form>
+						</div>
+					{% endfor %}
+
 				{% else %}
 					<h3 style="color:gray;">No friends</h3>
 				{% endif %}
 			</div>
 
-			<div class="my_friends">
+			<div id="subscriptions" class="my_friends">
 				{% if subscriptions %}
-					<h3>Subscriptions &#40;{{ subscriptions.count }}&#41;</h3>
-					<div>
-						{% for friend in subscriptions %}
-							<div class="user-card">
-								<a class="profile-link" href="{% url 'user' friend.username %}">
-									<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
-									<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
-								</a>
-					
-								<form method="POST" action="delete_friend/{{ friend.username }}/">
-									{% csrf_token %}
-									<input id="delButton" class="remove_subscribe" type="submit" value="delete">
-								</form>
-							</div>
-						{% endfor %}
-					</div>
+					<h3>Subscriptions: {{ subscriptions.count }}</h3>
+
+					{% for friend in subscriptions %}
+						<div class="user-card">
+							<a class="profile-link" href="{% url 'user' friend.username %}">
+								<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
+								<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
+							</a>
+
+							<form id="deleteSubscriptionForm" method="POST" action="delete_friend/{{ friend.username }}/">
+								{% csrf_token %}
+								<input id="delButton" class="remove_subscribe" type="submit" value="delete">
+							</form>
+						</div>
+					{% endfor %}
+
 				{% else %}
 					<h3 style="color:gray;">No subscriptions</h3>
 				{% endif %}
 			</div>
 
-			<div class="my_friends">
+			<div id="subscribers" class="my_friends">
 				{% if subscribers %}
-					<h3>Subscribers &#40;{{ subscribers.count }}&#41;</h3>
-					<div>
-						{% for friend in subscribers %}
-							<div class="user-card">
-								<a class="profile-link" href="{% url 'user' friend.username %}">
-									<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
-									<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
-								</a>
+					<h3>Subscribers: {{ subscribers.count }}</h3>
 
-								<form method="POST" action="make_chat/{{ friend.username }}/">
-									{% csrf_token %}
-									<input class="make_chat" type="submit" value="Chat">
-								</form>
+					{% for friend in subscribers %}
+						<div class="user-card">
+							<a class="profile-link" href="{% url 'user' friend.username %}">
+								<h4>{{ friend.first_name }} {{ friend.last_name }}</h4>
+								<h4 style="color:gray; font-size: 13px">@{{ friend.username }}</h4>
+							</a>
+
+							<form method="POST" action="make_chat/{{ friend.username }}/">
+								{% csrf_token %}
+								<input class="make_chat" type="submit" value="Chat">
+							</form>
 								
-								<form method="POST" action="add_friend/{{ friend.username }}/">
-									{% csrf_token %}
-									<input id="addButton" class="add_friend" type="submit" value="add">
-								</form>
+							<form id="addFriendForm" method="POST" action="add_friend/{{ friend.username }}/" name="{{ friend.username }}">
+								{% csrf_token %}
+								<input id="addButton" class="add_friend" type="submit" value="add">
+							</form>
 
-								<form method="POST" action="delete_subscriber/{{ friend.username }}/">
-									{% csrf_token %}
-									<input id="delButton" class="remove_subscribe" type="submit" value="delete">
-								</form>
-							</div>
-						{% endfor %}
-					</div>
+							<form id="deleteSubscriberForm" method="POST" action="delete_subscriber/{{ friend.username }}/">
+								{% csrf_token %}
+								<input id="delButton" class="remove_subscribe" type="submit" value="delete">
+							</form>
+						</div>
+					{% endfor %}
+
 				{% else %}
 					<h3 style="color:gray;">No subscribers</h3>
 				{% endif %}

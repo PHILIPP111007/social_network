@@ -13,11 +13,17 @@
 
 	{% if messages %}
 		<div class="messages">
-        	<ul>
-        		{% for message in messages %}
-            		<li>{{ message }}</li>
-            	{% endfor %}
-    		</ul>
+        	{% for message in messages %}
+				{% if message.tags == "error" %}
+					<div class="alert-danger">
+						{{ message }}
+				  	</div>
+				{% else %}
+				  	<div class="alert-success">
+						{{ message }}
+				  	</div>
+				{% endif %}
+        	{% endfor %}
 		</div>
 	{% endif %}
 	
@@ -34,5 +40,8 @@
 		<p><a href="/login">Log in</a></p>
 
 	</div>
+
+	<script src="{% static 'js/register.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+
 </body>
 </html>

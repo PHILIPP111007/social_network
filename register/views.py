@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, CustomUserCreationForm
-from user.models import Blog, UserSettings
+from user.models import User, Blog, UserSettings
 
 
 def user_login(request):
@@ -26,6 +26,8 @@ def user_register(request):
 			messages.success(request, 'Account created successfully')
 			create_first_post(request)
 			return user_auth_register(request)
+		else:
+			messages.error(request, 'Error')
 	else:
 		form = CustomUserCreationForm()
 	return render(request, 'register.html', {'registerform': form})
@@ -60,3 +62,16 @@ def create_first_post(request):
 	last_name = request.POST.get('last_name')
 	Blog.objects.create(user_id=username, content=f'Hi, I\'m {first_name} {last_name} and this is my first post!')
 	UserSettings.objects.create(user_id=username)
+
+
+def is_username_new(request, username):
+	is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+	if is_ajax and request.method == 'GET':
+		try:
+			User.objects.get(username=username)
+			return JsonResponse({'status': False})
+		except User.DoesNotExist:
+			return JsonResponse({'status': True})
+
+	return HttpResponseRedirect('/')

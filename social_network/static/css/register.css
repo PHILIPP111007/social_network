@@ -57,17 +57,18 @@ input[type="text"], input[type="email"], input[type="password"] {
     font-size: 30px;
     text-align: center;
 }
-.errorlist {
-    color:aliceblue;
-    background: rgb(207, 57, 57);
-    border-radius: 5px;
-}
-.messages {
-    width: 500;
+.messages div {
+    width: 300px;
     padding: 10px;
-    border: 2px solid black;
-    background: rgb(235,235,235);
     text-align: left;
+}
+.messages .alert-danger {
+    background: rgb(233, 110, 110);
+    color:rgb(134, 0, 0) ;
+}
+.messages .alert-success {
+    background: rgb(145, 233, 110);
+    color:rgb(4, 134, 0) ;
 }
 .register {
     position: fixed;

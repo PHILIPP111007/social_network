@@ -17,8 +17,8 @@ class Blog(models.Model):
 
 
 class Subscriber(models.Model):
-	user = models.ForeignKey(User, related_name='user_1', to_field='username', db_column='user', on_delete=models.CASCADE) # models.ForeignKey(User, related_name='user', db_column='username', on_delete=models.CASCADE)  # to_field='username', db_column='username',
-	subscribe = models.ForeignKey(User, related_name='user_2', to_field='username', db_column='subscribe', on_delete=models.CASCADE) # models.ForeignKey(User, related_name='subscribe', db_column='username', on_delete=models.CASCADE) # CharField(max_length=20)
+	user = models.ForeignKey(User, related_name='user_1', to_field='username', db_column='user', on_delete=models.CASCADE)
+	subscribe = models.ForeignKey(User, related_name='user_2', to_field='username', db_column='subscribe', on_delete=models.CASCADE)
 
 	def __str__(self):
 		return self.user.username
