@@ -14,14 +14,14 @@ Have fun and if you want please leave feedback!
 
 ## Photos
 
-<img src="./images_for_README/image_1.png" alt="Alt text" title="Optional title" width="500">
-<img src="./images_for_README/image_2.png" alt="Alt text" title="Optional title" width="500">
-<img src="./images_for_README/image_3.png" alt="Alt text" title="Optional title" width="500">
-<img src="./images_for_README/image_4.png" alt="Alt text" title="Optional title" width="500">
-<img src="./images_for_README/image_5.png" alt="Alt text" title="Optional title" width="500">
-<img src="./images_for_README/image_6.png" alt="Alt text" title="Optional title" width="500">
-<img src="./images_for_README/image_7.png" alt="Alt text" title="Optional title" width="500">
-<img src="./images_for_README/image_8.png" alt="Alt text" title="Optional title" width="500">
+<img src="./images_for_README/img_1.png" alt="Alt text" title="Optional title" width="500">
+<img src="./images_for_README/img_2.png" alt="Alt text" title="Optional title" width="500">
+<img src="./images_for_README/img_3.png" alt="Alt text" title="Optional title" width="500">
+<img src="./images_for_README/img_4.png" alt="Alt text" title="Optional title" width="500">
+<img src="./images_for_README/img_5.png" alt="Alt text" title="Optional title" width="500">
+<img src="./images_for_README/img_6.png" alt="Alt text" title="Optional title" width="500">
+<img src="./images_for_README/img_7.png" alt="Alt text" title="Optional title" width="500">
+<img src="./images_for_README/img_8.png" alt="Alt text" title="Optional title" width="500">
 
 
 
