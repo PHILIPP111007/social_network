@@ -40,5 +40,6 @@ pip install hypercorn
 ```
 -- for running the server call `hypercorn social_network.asgi:application`
 
+### 3) AJAX
 
-### 3) See requirements.txt for more information
+### 4) See requirements.txt for more information
