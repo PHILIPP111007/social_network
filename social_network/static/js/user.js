@@ -53,6 +53,18 @@ function recordButtonFunc(i) {
 	});
 };
 
+// linebreaks records full content
+let fullContents = document.querySelectorAll(".full-content");
+fullContents.forEach(function (fullContent) {
+
+	let node = fullContent.firstElementChild;
+	let text = fullContent.firstElementChild.textContent;
+
+	node.textContent = '';
+	text = text.replace('\n\n', '\n\n<br/><br/>');
+	node.innerHTML += `<p>${text}</p>`;
+})
+
 // Animation for the post settings window
 let threePoints = document.querySelectorAll('.three_points');
 function threePointsFunc(i) {
@@ -183,7 +195,7 @@ createRecordForms.forEach(function (createRecordForm) {
 				
 					<div class="full-content" id="full-${data.id}" style="display: none;">
 						<div>
-							<p>${text.replace('\n\n', '<br/><br/>')}</p>
+							<p>${text.replace('\n\n', '\n\n<br/><br/>')}</p>
 						</div>
 						
 						<div>
