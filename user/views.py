@@ -88,8 +88,6 @@ def create_record(request, username):
 			})
 		return JsonResponse({'status': False})
 
-	return HttpResponseRedirect(f'/user/{request.user.username}')
-
 
 @login_required
 def change_record(request, username, id):
@@ -110,12 +108,10 @@ def delete_record(request, username, id):
 		try:
 			record = Blog.objects.get(user_id=request.user.username, id=id)
 			record.delete()
-
 			return JsonResponse({'status': True})
+
 		except Blog.DoesNotExist:
 			return JsonResponse({'status': False})
-
-	return HttpResponseRedirect(f'/user/{request.user.username}')
 
 
 @login_required
@@ -159,7 +155,7 @@ def delete_friend(request, username):
         try:
             subscribe = Subscriber.objects.get(subscribe=username, user=request.user.username)
             subscribe.delete()
-        except Exception:
+        except Subscriber.DoesNotExist:
             pass
 
     return HttpResponseRedirect(f'/user/{username}')
@@ -171,7 +167,7 @@ def delete_subscriber(request, username):
         try:
             subscribe = Subscriber.objects.get(subscribe=request.user.username, user=username)
             subscribe.delete()
-        except Exception:
+        except Subscriber.DoesNotExist:
             pass
 
     return HttpResponseRedirect(f'/user/{username}')
@@ -185,3 +181,19 @@ def make_chat(request, username):
 			return HttpResponseRedirect(f'/dialogs/{username}/chat/{room_name}/')
 
 	return HttpResponseRedirect(f'/dialogs/{request.user.username}')
+
+
+@login_required
+def background_color_change(request, username):
+	is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+	if is_ajax and request.method == 'POST' and request.body:
+
+		color = bool(int(request.body.decode('utf-8')))
+		try:
+			settings = UserSettings.objects.get(user_id=request.user.username)
+			settings.theme = color
+			settings.save(update_fields=['theme'])
+			return JsonResponse({'status': True})
+		except UserSettings.DoesNotExist:
+			return JsonResponse({'status': False})

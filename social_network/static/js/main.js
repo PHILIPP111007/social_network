@@ -16,13 +16,41 @@ btn.forEach(function (i) {
 });
 
 // Changing background color
-// (but now this style does not affect other pages and is not saved)
-function backgroundColorChange() {
-	var color = window.getComputedStyle(document.body, null).getPropertyValue('background-color');
+let backgroundColorChange = document.querySelectorAll("#backgroundColorChangeForm");
+backgroundColorChange.forEach(function (form) {
+	form.addEventListener("submit", event => {
+		event.preventDefault();
 
-	if (color === "rgb(250, 244, 244)") {
-		document.body.style.backgroundColor = "rgb(220, 244, 244)";
-	} else if (color === "rgb(220, 244, 244)") {
-		document.body.style.backgroundColor = "rgb(250, 244, 244)";
-	};
-};
+		var color = window.getComputedStyle(document.body, null).getPropertyValue('background-color');
+		let csrftoken = event.srcElement.csrfmiddlewaretoken.value;
+		let url = event.srcElement.action;
+		let color_id = Number();
+
+		if (color === "rgb(250, 244, 244)") {
+			color_id = 0;
+		} else if (color === "rgb(220, 244, 244)") {
+			color_id = 1;
+		};
+
+		fetch(url, {
+			method: 'POST',
+			credentials: "same-origin",
+			headers: {
+			"X-Requested-With": "XMLHttpRequest",
+			"X-CSRFToken": csrftoken,
+			},
+			body: color_id
+		})
+		.then(response => response.json())
+		.then(data => {
+			if (data.status) {
+
+				if (color_id === 0) {
+					document.body.style.backgroundColor = "rgb(220, 244, 244)";
+				} else if (color_id === 1) {
+					document.body.style.backgroundColor = "rgb(250, 244, 244)";
+				};
+			}
+		})
+	})
+});

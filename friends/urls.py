@@ -8,5 +8,6 @@ urlpatterns = [
 	path('add_friend/<str:username>/', views.add_friend),
 	path('delete_friend/<str:username>/', views.delete_friend),
 	path('delete_subscriber/<str:username>/', views.delete_subscriber),
-	path('make_chat/<str:username>/', views.make_chat)
+	path('make_chat/<str:username>/', views.make_chat),
+	path('background_color_change/', views.background_color_change)
 ]

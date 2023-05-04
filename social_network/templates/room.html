@@ -10,6 +10,15 @@
 	<link rel="stylesheet" href='{% static "css/main.css" %}'>
 	<link rel="stylesheet" href='{% static "css/room.css" %}'>
 	<style>
+		{% if settings.theme %}
+			body {
+				background-color: rgb(250, 244, 244);
+			}
+		{% else %}
+			body {
+				background-color: rgb(220, 244, 244);
+			}
+		{% endif %}
 		.{{ global_user.username }} {
 			background-color: rgb(121, 202, 39);
 		}
@@ -31,7 +40,10 @@
 	</div>
 
 	<div class="settings-bar">
-		<button id="backgroundColorChangeButton" onclick="backgroundColorChange()">Change theme</button>
+		<form id="backgroundColorChangeForm" method="POST" action="background_color_change/">
+			{% csrf_token %}
+			<input type="submit" value="Change theme">
+		</form>
 	</div>
 
 	<aside class="left-list">

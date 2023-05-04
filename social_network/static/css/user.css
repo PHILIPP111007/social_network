@@ -1,3 +1,6 @@
+body {
+    font-family: 'Calibri', sans-serif;
+}
 textarea {
     font-family: inherit;
     font-size: inherit;
@@ -89,9 +92,9 @@ input[type="text"], input[type="email"] {
     margin-top: 10px;
 }
 .settings-bar {
-    margin-top: -156px;
+    margin-top: -190px;
 }
-    #backgroundColorChangeButton {
+    #backgroundColorChangeForm {
         margin-bottom: 10px;
     }
     .open_modal {

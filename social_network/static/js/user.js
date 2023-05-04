@@ -17,26 +17,54 @@ btn.forEach(function (i) {
 		var elem = document.querySelector('.settings-bar');
 		let marTop = getComputedStyle(elem).marginTop;
 
-		if (marTop === "-156px") {
+		if (marTop === "-190px") {
 			elem.style.marginTop = "50px"
 		} else if (marTop === "50px") {
-			elem.style.marginTop = "-156px"
-			setTimeout(function () { elem.style.marginTop = '-156px' });
+			elem.style.marginTop = "-190px"
+			setTimeout(function () { elem.style.marginTop = '-190px' });
 		};
 	});
 });
 
 // Changing background color
-// (but now this style does not affect other pages and is not saved)
-function backgroundColorChange() {
-	var color = window.getComputedStyle(document.body, null).getPropertyValue('background-color');
+let backgroundColorChange = document.querySelectorAll("#backgroundColorChangeForm");
+backgroundColorChange.forEach(function (form) {
+	form.addEventListener("submit", event => {
+		event.preventDefault();
 
-	if (color === "rgb(250, 244, 244)") {
-		document.body.style.backgroundColor = "rgb(220, 244, 244)";
-	} else if (color === "rgb(220, 244, 244)") {
-		document.body.style.backgroundColor = "rgb(250, 244, 244)";
-	};
-};
+		var color = window.getComputedStyle(document.body, null).getPropertyValue('background-color');
+		let csrftoken = event.srcElement.csrfmiddlewaretoken.value;
+		let url = event.srcElement.action;
+		let color_id = Number();
+
+		if (color === "rgb(250, 244, 244)") {
+			color_id = 0;
+		} else if (color === "rgb(220, 244, 244)") {
+			color_id = 1;
+		};
+
+		fetch(url, {
+			method: 'POST',
+			credentials: "same-origin",
+			headers: {
+			"X-Requested-With": "XMLHttpRequest",
+			"X-CSRFToken": csrftoken,
+			},
+			body: color_id
+		})
+		.then(response => response.json())
+		.then(data => {
+			if (data.status) {
+
+				if (color_id === 0) {
+					document.body.style.backgroundColor = "rgb(220, 244, 244)";
+				} else if (color_id === 1) {
+					document.body.style.backgroundColor = "rgb(250, 244, 244)";
+				};
+			}
+		})
+	})
+});
 
 // For read-more / read-less buttons
 let recordButton = document.querySelectorAll('.show-hide-btn');
