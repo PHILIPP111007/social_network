@@ -1,47 +1,41 @@
 .chat {
+    min-width: 255px;
     max-width: 450px;
-    font-size: 20px;
-    display: flex;
-    flex-direction: column;
 }
     .container_Scrollbottom {
-        padding: 0 10px;
         max-height: 100%;
-        overflow-y: auto;
-    }
-    .chat_item_container {
-        display: table-cell;
+        min-width: 255px;
+        max-width: 450px;
     }
         .chat_item_container div {
-        width: fit-content;
-        max-width: 255px;
-        word-wrap: break-word;
-        margin-bottom: 12px;
-        line-height: 24px;
-        padding: 10px 20px;
-        border-radius: 25px;
+            max-width: 450px;
+            word-wrap: break-word;
+            margin-bottom: 20px;
+            text-align: left;
         }
-        .chat_item_container div div {
-            padding: 0px;
-        }
-        .chat_item_container:empty::before {
-            content: 'no messages';
-            display: block;
-            padding: 20px;
-            text-align: center;
-            color: gray;
+        .chat_item_container label {
+            font-weight: 400;
+            font-size: smaller;
+            color: rgb(126, 132, 132);
         }
         .wrapper_Scrollbottom {
-            margin-top: 70px;
+            margin-top: 100px;
         }
-    .input-zone {
-        position: fixed;
-        display: block;
-        width: 255px;
-        bottom: 0%;
-        margin-bottom: 10px;
-        padding: 5px 100px;
-        border: 1px solid black;
-        border-radius: 8px;
-        backdrop-filter: blur(10px);
-    }
+        .input-zone {
+            position: fixed;
+            display: block;
+            min-width: 255px;
+            max-width: 450px;
+            bottom: 0%;
+            margin-bottom: 10px;
+            padding: 5px 50px;
+            border: 1px solid black;
+            border-radius: 8px;
+        }
+
+.hiddenButton {
+    display: none;
+}
+.message:hover .hiddenButton {
+    display: inline-flex;
+}

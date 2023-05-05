@@ -4,6 +4,22 @@ body {
     -moz-transition: all 0.3s;
     transition: all 0.3s;
 }
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    height: 30px;
+    min-height: 30px;
+    max-width: 322px;
+    min-width: 322px;
+    resize: none;
+    outline: none;
+	border: 1px solid;
+    border-radius: 5px;
+    max-height: 500px;
+    overflow: auto;
+    padding: 5px;
+}
 button {
     border: none;
     cursor: pointer;
@@ -16,6 +32,7 @@ button {
     transition: all 0.3s;
     padding: 5px;
 }
+
 button:after {
     z-index: -1;
     -webkit-transition: all 0.3s;

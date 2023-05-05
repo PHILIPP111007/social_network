@@ -23,7 +23,7 @@
 				background-color: rgb(205, 205, 205);
 				color: #2c2a2a;
 			}
-			input[type="text"] {
+			input[type="text"], textarea {
 				background-color: rgb(250, 244, 244);
 				color: #2c2a2a;
 			}
@@ -40,6 +40,9 @@
 			.menu-link:hover{
 				background-color: rgb(220, 220, 220, 0.8);
 			}
+			.input-zone {
+				background: rgb(235, 235, 235, 0.8);
+			}
 		{% else %}
 			body {
 				background-color: rgb(43, 43, 43);
@@ -53,7 +56,7 @@
 				background-color: rgb(101, 101, 110);
 				color: rgb(205, 205, 205);
 			}
-			input[type="text"] {
+			input[type="text"], textarea {
 				background-color: rgb(101, 101, 110);
 				color: rgb(205, 205, 205);
 			}
@@ -70,14 +73,10 @@
 			.menu-link:hover{
 				background-color: rgb(49, 48, 57, 0.8);
 			}
+			.input-zone {
+				background: rgb(61, 61, 71, 0.8);
+			}
 		{% endif %}
-
-		.{{ global_user.username }} {
-			background-color: rgb(121, 202, 39);
-		}
-		.{{ friend.username }} {
-			background-color: rgb(173, 173, 173);
-		}
 	</style>
 </head>
 <body>
@@ -104,9 +103,12 @@
 			<div id="containerScroll" class="container_Scrollbottom" >
 				<div id="id_chat_item_container" class="chat_item_container" >
 					{% for msg in messages %}
-						<div class="{{ msg.sender }}">
-							<h5>{{ msg.sender }}</h5>
-							<div class="text">{{ msg.message|urlize }}</div>
+						<div id="{{ msg.sender }}" class="message">
+							<label>{{ msg.sender.first_name }} {{ msg.sender.last_name }} {{ msg.timestamp|date:'Y-m-d H:i' }}</label>
+							<div id="{{ msg.pk }}" class="text">{{ msg.message|urlize }}</div>
+
+							<button class="hiddenButton" onclick="copyText({{ msg.pk }})">copy</button>
+
 						</div>
 					{% endfor %}
 				</div>
@@ -114,8 +116,7 @@
 			</div>
 		
 			<div class="input-zone" align="center">
-				@{{ friend.username }}<br>
-				<input type="text" id="id_message_send_input" maxlength="1000">
+				<textarea id="id_message_send_input" maxlength="5000" placeholder="type"></textarea>
 				<button type="submit" id="id_message_send_button">send</button>
 			</div>
 		</div>
@@ -132,15 +133,17 @@
 			};
 		</script>
 
-
 		{{ room_name|json_script:"room-name" }}
 		{{ global_user.username|json_script:"global-user" }}
+		{{ global_user.first_name|json_script:"first_name" }}
+		{{ global_user.last_name|json_script:"last_name" }}
 		{{ low_power_mode|json_script:"low-power-mode" }}
-
 
 		<script>
 			const roomName = JSON.parse(document.getElementById('room-name').textContent);
 			const globalUser = JSON.parse(document.getElementById('global-user').textContent);
+			const first_name = JSON.parse(document.getElementById('first_name').textContent);
+			const last_name = JSON.parse(document.getElementById('last_name').textContent);
 			const chatSocket = new WebSocket(
 				'ws://'
 				+ window.location.host
@@ -149,15 +152,13 @@
 				+ '/'
 			);
 
-
 			chatSocket.onopen = function (e) {
-				console.log("The connection was setup successfully !");
+				console.log("The connection was setup successfully!");
 				lastMessageScroll();
 			};
 			chatSocket.onclose = function (e) {
-				console.log("Something unexpected happened !");
+				console.log("Something unexpected happened!");
 			};
-
 
 			document.querySelector("#id_message_send_input").focus();
 			document.querySelector("#id_message_send_input").onkeyup = function (e) {
@@ -172,7 +173,12 @@
 				).value;
 
 				if (messageInput) {
-					chatSocket.send(JSON.stringify({ message: messageInput, username: globalUser}));
+					chatSocket.send(JSON.stringify({
+						message: messageInput,
+						username: globalUser,
+						first_name: first_name,
+						last_name: last_name
+					}));
 				};
 
 			};
@@ -180,23 +186,31 @@
 				const data = JSON.parse(e.data);
 				const lowPowerMode = JSON.parse(document.getElementById('low-power-mode').textContent)
 				
-				var div = document.createElement('div');
-				var userP = document.createElement('h5');
+				var mainDiv = document.createElement('div');
+				var userLabel = document.createElement('label');
 				var messageDiv = document.createElement('div');
+				var copyButton = document.createElement('button');
+
+				mainDiv.id = data.username;
+				mainDiv.className = 'message';
 				
-				userP.innerHTML = data.username;
+				userLabel.innerHTML = `${data.first_name} ${data.last_name} ${data.timestamp}`;
+
+				messageDiv.id = data.message_id;
+				messageDiv.className = 'text';
 				messageDiv.innerHTML = data.message;
 
-				div.className = data.username;
-				messageDiv.className = 'text';
+				copyButton.className = "hiddenButton";
+				copyButton.onclick = `copyText(${data.message_id})`;
 
-				div.appendChild(userP)
-				div.appendChild(messageDiv)
+				mainDiv.appendChild(userLabel)
+				mainDiv.appendChild(messageDiv)
+				mainDiv.appendChild(copyButton)
 
 				document.querySelector("#id_message_send_input").value = "";
-				document.querySelector("#id_chat_item_container").appendChild(div);
+				document.querySelector("#id_chat_item_container").appendChild(mainDiv);
 		
-				// Запускаем функцию скролла (если убрать "smooth", то скролл будет мгновенным)
+				// Trigger the scroll "smooth" property
 				if (!lowPowerMode) {
 					lastMessageScroll();
 				} else {
@@ -206,7 +220,7 @@
 		</script>
 	</div>
 
-	<script src="{% static 'js/main.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+	<script src="{% static 'js/room.js' %}" type="text/javascript" charset="utf-8" async defer></script>
 
 </body>
 </html>

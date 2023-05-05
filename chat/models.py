@@ -50,5 +50,9 @@ class Message(models.Model):
 	class Meta:
 		ordering=['timestamp']
 
+	def get_str_time(self, msg):
+		time = msg.timestamp.strftime('%Y-%m-%d %H:%M')
+		return time
+		
 	def __str__(self):
-		return f'{self.sender}: {self.message} [{self.timestamp}]'
+		return f'{self.room_name} [{self.timestamp}]'
