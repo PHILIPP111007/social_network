@@ -168,11 +168,13 @@
 			};
 			document.querySelector("#id_message_send_button").onclick = function (e) {
 				
-				var messageInput = document.querySelector(
-					"#id_message_send_input"
-				).value;
+				var messageInput = document.querySelector("#id_message_send_input");
+				messageInput.style.height = 0;
+				messageInput = messageInput.value;
 
-				if (messageInput) {
+				messageInput = messageInput.trim()
+
+				if (messageInput !== '') {
 					chatSocket.send(JSON.stringify({
 						message: messageInput,
 						username: globalUser,

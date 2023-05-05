@@ -90,7 +90,7 @@ function threePointsFunc(i) {
 					for (let i = 0; i < text.length; i++) {
 						string += text[i].textContent + '\n\n';
 					}
-					string = string.trim()
+					string = string.trim();
 					textArea.value = string;
 					textArea.style.height = (textArea.scrollHeight) + "px";
 				}
