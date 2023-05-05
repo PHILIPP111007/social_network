@@ -13,10 +13,68 @@
 		{% if settings.theme %}
 			body {
 				background-color: rgb(250, 244, 244);
+				color: rgb(0, 0, 0);
+			}
+			button {
+				background-color: rgb(205, 205, 205);
+				color: #2c2a2a;
+			}
+			input[type="submit"] {
+				background-color: rgb(205, 205, 205);
+				color: #2c2a2a;
+			}
+			.upper-line {
+				background-color: rgb(235, 235, 235, 0.8);
+			}
+			.settings-bar {
+				background-color: rgb(235, 235, 235, 0.8);
+				border-color: #cac3c3;
+			}
+			.left-list {
+				background: rgb(235, 235, 235, 0.8);
+			}
+			.menu-link:hover{
+				background-color: rgb(220, 220, 220, 0.8);
+			}
+			.chat-href {
+				background-color: rgb(250, 244, 244);
+				color: rgb(0, 0, 0);
+			}
+			.chat-href:hover {
+				background-color: rgb(227, 227, 227);
 			}
 		{% else %}
 			body {
-				background-color: rgb(220, 244, 244);
+				background-color: rgb(43, 43, 43);
+				color: rgb(205, 205, 205);
+			}
+			button {
+				background-color: rgb(101, 101, 110);
+				color: rgb(205, 205, 205);
+			}
+			input[type="submit"] {
+				background-color: rgb(101, 101, 110);
+				color: rgb(205, 205, 205);
+			}
+			.upper-line {
+				background-color: rgb(61, 61, 71, 0.8);
+			}
+			.settings-bar {
+				background-color: rgb(61, 61, 71, 0.8);
+				border-color: rgb(80, 80, 90);
+			}
+			.left-list {
+				background: rgb(61, 61, 71, 0.8);
+			}
+			.menu-link:hover{
+				background-color: rgb(49, 48, 57, 0.8);
+			}
+			.chat-href {
+				background-color: rgb(57, 57, 61);
+				color: rgb(205, 205, 205);
+			}
+			.chat-href:hover {
+				background-color: rgb(67, 67, 71);
 			}
 		{% endif %}
 	</style>
@@ -46,7 +104,7 @@
 	<aside class="left-list">
 		<nav>
 			<p class="menu-link"><a href="{% url 'user' global_user.username %}">Homepage</a></p>
-			<p class="menu-link"><a href="{% url 'dialogs' global_user.username %}" style="background-color: rgb(205,205,205);">Messenger</a></p>
+			<p class="menu-link"><a href="{% url 'dialogs' global_user.username %}">Messenger</a></p>
 			<p class="menu-link"><a href="{% url 'friends' global_user.username %}">Friends</a></p>
 			<p class="menu-link"><a href="{% url 'news' global_user.username %}">News</a></p>
 		</nav>
@@ -81,6 +139,7 @@
     <div id="upper-div"></div>
 
 	<script src="{% static 'js/main.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+	<script src="{% static 'js/styles.js' %}" type="text/javascript" charset="utf-8" async defer></script>
 
 </body>
 </html>

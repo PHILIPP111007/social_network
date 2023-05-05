@@ -13,7 +13,6 @@ recordButton.forEach(function (i) {
 	});
 });
 
-
 // AJAX add friend
 let addFriendForms = document.querySelectorAll("#addFriendForm");
 function addFriend(addFriendForm) {

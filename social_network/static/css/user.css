@@ -1,5 +1,8 @@
 body {
     font-family: 'Calibri', sans-serif;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
 }
 textarea {
     font-family: inherit;
@@ -10,9 +13,8 @@ textarea {
     max-width: 322px;
     min-width: 322px;
     resize: none;
-    background-color: rgb(250, 244, 244);
     outline: none;
-	border: 1px solid #999;
+	border: 1px solid;
     border-radius: 5px;
 }
 input[type="checkbox"] {
@@ -68,25 +70,19 @@ input[type="text"], input[type="email"] {
     -moz-transition: all 0.3s;
     transition: all 0.3s;
     padding: 5px;
-    background-color: rgb(234, 227, 227);;
     width: 250px;
     border-radius: 0.25rem;
 }
 #form {
     margin-bottom: 10px;
     width: 250px;
-    background-color: rgb(250, 244, 244);
 }
 .userButton {
     display: flex;
 }
 #userButton {
     font-size: 15px;
-    background-color: rgb(168, 162, 162);
     margin: 0px 10px 10px 20px;
-}
-#userButton:hover {
-    background-color: rgb(119, 114, 114);
 }
 #modalButton {
     margin-top: 10px;
@@ -117,14 +113,12 @@ input[type="text"], input[type="email"] {
     padding: 5px 10px;
     word-wrap: break-word;
     border-radius: 15px 15px 15px 0px;
-    background-color: #cac3c3;
     font-size: 25px;
 }
 .add_record {
     display: inline-block;
     padding: 10px;
     border-radius: 0px 0px 10px 10px;
-    background-color: #cac3c3;
 }
 .record {
     min-width: 560px;
@@ -134,8 +128,7 @@ input[type="text"], input[type="email"] {
     margin-top: 40px;
     padding: 2px 10px 10px 10px;
     border-radius: 10px;
-    background-color: #725c5c0e;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px 0 rgb(0, 0, 0, 0.2);
 }
     .record h6 {
         color: #ada7a7;
@@ -148,10 +141,10 @@ input[type="text"], input[type="email"] {
     .active {
         height: auto;
     }
-#delete_record:hover {
-    background: #f18282;
-    color: #c00f0fe2;
-}
+    #delete_record:hover {
+        background: #f18282;
+        color: #c00f0fe2;
+    }
 .three_points:hover {
     cursor: pointer;
 }

@@ -12,21 +12,15 @@ input[type="text"], input[type="email"] {
     -moz-transition: all 0.3s;
     transition: all 0.3s;
     padding: 5px;
-    background: white;
     width: 250px;
     border-radius: 0.25rem;
 }
 #form {
     margin-bottom: 10px;
     width: 250px;
-    background-color: rgb(250, 244, 244);
 }
 #userButton {
     font-size: 15px;
-    background-color: rgb(168, 162, 162);
-}
-#userButton:hover {
-    background-color: rgb(119, 114, 114);
 }
 .user {
     min-width: 560px;
@@ -34,7 +28,6 @@ input[type="text"], input[type="email"] {
     padding: 5px 10px;
     word-wrap: break-word;
     border-radius: 15px 15px 15px 0px;
-    background-color: #cac3c3;
     font-size: 25px;
 }
 .form {
@@ -44,7 +37,6 @@ input[type="text"], input[type="email"] {
     display: inline-block;
     padding: 20px;
     border-radius: 0px 0px 10px 10px;
-    background-color: #cac3c3;
 }
 .find-users {
     display: grid;
@@ -66,7 +58,6 @@ input[type="text"], input[type="email"] {
         padding: 10px 30px;
         word-wrap: break-word;
         border-radius: 10px;
-        background-color: #725c5c0e;
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     }
     .user-card form {

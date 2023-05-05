@@ -13,10 +13,76 @@
 		{% if settings.theme %}
 			body {
 				background-color: rgb(250, 244, 244);
+				color: rgb(0, 0, 0);
+			}
+			button {
+				background-color: rgb(205, 205, 205);
+				color: #2c2a2a;
+			}
+			input[type="submit"], input[type="reset"] {
+				background-color: rgb(205, 205, 205);
+				color: #2c2a2a;
+			}
+			input[type="text"] {
+				background-color: rgb(250, 244, 244);
+				color: #2c2a2a;
+			}
+			.upper-line {
+				background-color: rgb(235, 235, 235, 0.8);
+			}
+			.settings-bar {
+				background-color: rgb(235, 235, 235, 0.8);
+				border-color: #cac3c3;
+			}
+			.left-list {
+				background: rgb(235, 235, 235, 0.8);
+			}
+			.menu-link:hover{
+				background-color: rgb(220, 220, 220, 0.8);
+			}
+			.user {
+				background-color: rgb(202, 195, 195);
+			}
+			.find-form, .user-card {
+				background-color: rgb(202, 195, 195);
+			}
+			.user-card {
+				background-color: rgb(230, 230, 230, 0.73);
 			}
 		{% else %}
 			body {
-				background-color: rgb(220, 244, 244);
+				background-color: rgb(43, 43, 43);
+				color: rgb(205, 205, 205);
+			}
+			button {
+				background-color: rgb(101, 101, 110);
+				color: rgb(205, 205, 205);
+			}
+			input[type="submit"] {
+				background-color: rgb(101, 101, 110);
+				color: rgb(205, 205, 205);
+			}
+			input[type="text"] {
+				background-color: rgb(43, 43, 43);
+			}
+			.upper-line {
+				background-color: rgb(61, 61, 71, 0.8);
+			}
+			.settings-bar {
+				background-color: rgb(61, 61, 71, 0.8);
+				border-color: rgb(80, 80, 90);
+			}
+			.left-list {
+				background: rgb(61, 61, 71, 0.8);
+			}
+			.menu-link:hover{
+				background-color: rgb(49, 48, 57, 0.8);
+			}
+			.user {
+				background-color: rgb(57, 57, 61);
+			}
+			.find-form, .user-card {
+				background-color: rgb(57, 57, 61);
 			}
 		{% endif %}
 	</style>
@@ -47,7 +113,7 @@
 		<nav>
 			<p class="menu-link"><a href="{% url 'user' user.username %}">Homepage</a></p>
 			<p class="menu-link"><a href="{% url 'dialogs' user.username %}">Messenger</a></p>
-			<p class="menu-link"><a href="{% url 'friends' user.username %}" style="background-color: rgb(205,205,205);">Friends</a></p>
+			<p class="menu-link"><a href="{% url 'friends' user.username %}">Friends</a></p>
 			<p class="menu-link"><a href="{% url 'news' user.username %}" >News</a></p>
 		</nav>
 	</aside>
@@ -179,6 +245,7 @@
 	<div id="upper-div"></div>
 	
 	<script src="{% static 'js/main.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+	<script src="{% static 'js/styles.js' %}" type="text/javascript" charset="utf-8" async defer></script>
 	<script src="{% static 'js/friends.js' %}" type="text/javascript" charset="utf-8" async defer></script>
 
 </body>

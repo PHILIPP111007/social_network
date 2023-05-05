@@ -14,17 +14,106 @@
 		{% if settings.theme %}
 			body {
 				background-color: rgb(250, 244, 244);
+				color: rgb(0, 0, 0);
+			}
+			button {
+				background-color: rgb(205, 205, 205);
+				color: #2c2a2a;
+			}
+			input[type="submit"], input[type="reset"] {
+				background-color: rgb(205, 205, 205);
+				color: #2c2a2a;
+			}
+			input[type="text"], input[type="email"] {
+				background-color: rgb(250, 244, 244);
+				color: #2c2a2a;
+			}
+			textarea {
+				background-color: rgb(250, 244, 244);
+				color: rgb(0, 0, 0);
+				border-color: #777;
+			}
+			.upper-line {
+				background-color: rgb(235, 235, 235, 0.8);
+			}
+			.settings-bar {
+				background-color: rgb(235, 235, 235, 0.8);
+				border-color: #cac3c3;
+			}
+			.left-list {
+				background: rgb(235, 235, 235, 0.8);
+			}
+			.menu-link:hover{
+				background-color: rgb(220, 220, 220, 0.8);
+			}
+			.user {
+				background-color: rgb(202, 195, 195);
+			}
+			#createRecord {
+				background-color: rgb(202, 195, 195);
+			}
+			.record {
+				background-color: rgb(230, 230, 230, 0.73);
+			}
+			.modal_txt {
+				background: rgb(250, 244, 244);
 			}
 		{% else %}
 			body {
-				background-color: rgb(220, 244, 244);
+				background-color: rgb(43, 43, 43);
+				color: rgb(205, 205, 205);
+			}
+			button {
+				background-color: rgb(101, 101, 110);
+				color: rgb(205, 205, 205);
+			}
+			a {
+				color: rgb(205, 205, 205);
+			}
+			input[type="submit"], input[type="reset"] {
+				background-color: rgb(101, 101, 110);
+				color: rgb(205, 205, 205);
+			}
+			input[type="text"], input[type="email"] {
+				background-color: rgb(43, 43, 43);
+				color: rgb(205, 205, 205);
+			}
+			textarea {
+				background-color: rgb(68, 68, 75);
+				color: rgb(205, 205, 205);
+				border-color: rgb(80, 80, 90);
+			}
+			.upper-line {
+				background-color: rgb(61, 61, 71, 0.8);
+			}
+			.settings-bar {
+				background-color: rgb(61, 61, 71, 0.8);
+				border-color: rgb(80, 80, 90);
+			}
+			.left-list {
+				background: rgb(61, 61, 71, 0.8);
+			}
+			.menu-link:hover{
+				background-color: rgb(49, 48, 57, 0.8);
+			}
+			.user {
+				background-color: rgb(57, 57, 61);
+			}
+			#createRecord {
+				background-color: rgb(57, 57, 61);
+			}
+			.record {
+				background-color: rgb(57, 57, 61);
+			}
+			.modal_txt {
+				background: rgb(57, 57, 61);
 			}
 		{% endif %}
 
 		{% if not is_my_page %}
-		.user {
-			border-radius: 15px 15px 15px 15px;
-		}
+			.user {
+				border-radius: 15px 15px 15px 15px;
+			}
 		{% endif %}
 	</style>
 </head>
@@ -100,14 +189,14 @@
 			<h3>Are you sure?</h3>
 			<form method="POST" action="delete_account/">
 				{% csrf_token %}
-				<input id="delete_account" type="submit" value="Delete account">
+				<input id="delete_account" class="delButton" type="submit" value="Delete account">
 			</form>
 		</div>
 	</div>
 
 	<aside class="left-list">
 		<nav>
-			<p class="menu-link"><a href="{% url 'user' global_user.username %}" style="background-color: rgb(205,205,205);">Homepage</a></p>
+			<p class="menu-link"><a href="{% url 'user' global_user.username %}">Homepage</a></p>
 			<p class="menu-link"><a href="{% url 'dialogs' user.username %}">Messenger</a></p>
 			<p class="menu-link"><a href="{% url 'friends' global_user.username %}">Friends</a></p>
 			<p class="menu-link"><a href="{% url 'news' global_user.username %}">News</a></p>
@@ -237,6 +326,7 @@
     <div id="upper-div"></div>
 
 	<script src="{% static 'js/user.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+	<script src="{% static 'js/styles.js' %}" type="text/javascript" charset="utf-8" async defer></script>
 	<script src="{% static 'js/modal.js' %}" type="text/javascript" charset="utf-8" async defer></script>
 	{% if settings.low_power_mode %}
 		<script src="{% static 'js/youtubeAPI.js' %}" type="text/javascript" charset="utf-8" async defer></script>
