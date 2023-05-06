@@ -1,16 +1,16 @@
 // For textarea tag
 const tx = document.getElementsByTagName("textarea");
 for (let i = 0; i < tx.length; i++) {
-  tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight));
-  tx[i].addEventListener("input", OnInput, false);
+	tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight));
+	tx[i].addEventListener("input", OnInput, false);
 };
-function OnInput(f) {
-  this.style.height = 0;
-  this.style.height = (this.scrollHeight) + "px";
+function OnInput() {
+	this.style.height = 0;
+	this.style.height = this.scrollHeight + "px";
 };
 
 // For settings button (menu burger icon)
-let btn = document.querySelectorAll('#toggleTextarea');
+const btn = document.querySelectorAll('#toggleTextarea');
 btn.forEach(function (i) {
 	i.addEventListener('click', function() {
 		
@@ -27,11 +27,11 @@ btn.forEach(function (i) {
 });
 
 // For read-more / read-less buttons
-let recordButton = document.querySelectorAll('.show-hide-btn');
+const recordButton = document.querySelectorAll('.show-hide-btn');
 function recordButtonFunc(i) {
 	i.addEventListener('click', function() {
-		let id = this.id
-		let visibleDiv = i.parentElement.parentElement.id;
+		const id = this.id
+		const visibleDiv = i.parentElement.parentElement.id;
 		document.getElementById(visibleDiv).style.display = 'none';
 		if (visibleDiv === `half-${id}`) {
 			document.getElementById(`full-${id}`).style.display = '';
@@ -42,7 +42,7 @@ function recordButtonFunc(i) {
 };
 
 // linebreaks records full content
-let fullContents = document.querySelectorAll(".full-content");
+const fullContents = document.querySelectorAll(".full-content");
 fullContents.forEach(function (fullContent) {
 
 	let node = fullContent.firstElementChild;
@@ -54,7 +54,7 @@ fullContents.forEach(function (fullContent) {
 })
 
 // Animation for the post settings window
-let threePoints = document.querySelectorAll('.three_points');
+const threePoints = document.querySelectorAll('.three_points');
 function threePointsFunc(i) {
 	i.addEventListener('click', function() {
 
@@ -108,13 +108,13 @@ function threePointsFunc(i) {
 
 
 // AJAX delete record
-let deleteRecordForms = document.querySelectorAll("#deleteRecord");
+const deleteRecordForms = document.querySelectorAll("#deleteRecord");
 function deleteRecord(deleteRecordForm) {
 	deleteRecordForm.addEventListener("submit", event => {
 		event.preventDefault();
 
-		let csrftoken = event.srcElement.csrfmiddlewaretoken.value;
-		let url = event.srcElement.action;
+		const csrftoken = event.srcElement.csrfmiddlewaretoken.value;
+		const url = event.srcElement.action;
 
 		fetch(url, {
 			method: 'POST',
@@ -134,13 +134,13 @@ function deleteRecord(deleteRecordForm) {
 };
 
 // AJAX create record
-let createRecordForms = document.querySelectorAll("#createRecord");
+const createRecordForms = document.querySelectorAll("#createRecord");
 createRecordForms.forEach(function (createRecordForm) {
 	createRecordForm.addEventListener("submit", event => {
 		event.preventDefault();
 
-		let csrftoken = event.srcElement.csrfmiddlewaretoken.value;
-		let url = event.srcElement.action;
+		const csrftoken = event.srcElement.csrfmiddlewaretoken.value;
+		const url = event.srcElement.action;
 		let inputDiv = createRecordForm.getElementsByTagName('textarea')[0];
 		let text = inputDiv.value;
 
@@ -158,10 +158,10 @@ createRecordForms.forEach(function (createRecordForm) {
 			if (data.status) {
 
 				inputDiv.value = '';
-				inputDiv.style.height = 0 + "px";
+				inputDiv.style.height = 0;
 
 				let blogsHome = document.getElementsByClassName('blog')[0];
-				let firstChild = blogsHome.firstElementChild;
+				const firstChild = blogsHome.firstElementChild;
 
 				let node = document.createElement("div");
 				node.className = 'record';
@@ -224,7 +224,7 @@ createRecordForms.forEach(function (createRecordForm) {
 				deleteRecord(node.querySelectorAll('#deleteRecord')[0]);
 
 				if (text.length > 500) {
-					let btns = node.querySelectorAll('.show-hide-btn');
+					const btns = node.querySelectorAll('.show-hide-btn');
 					for (let i = 0; i < btns.length; i++) {
 						recordButtonFunc(btns[i]);
 					}

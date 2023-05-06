@@ -1,7 +1,7 @@
-let openModalButton = document.querySelectorAll('.open_modal');
-let closeModalButton = document.querySelectorAll('.close_modal');
+const openModalButton = document.querySelectorAll('.open_modal');
+const closeModalButton = document.querySelectorAll('.close_modal');
 let body = document.getElementsByTagName('body')[0];
-let modal = ''
+let modal = '';
 
 openModalButton.forEach(function (i) {
 	i.addEventListener('click', function() {

@@ -156,6 +156,7 @@
 				console.log("The connection was setup successfully!");
 				lastMessageScroll();
 			};
+
 			chatSocket.onclose = function (e) {
 				console.log("Something unexpected happened!");
 			};
@@ -168,15 +169,16 @@
 			};
 			document.querySelector("#id_message_send_button").onclick = function (e) {
 				
-				var messageInput = document.querySelector("#id_message_send_input");
+				let messageInput = document.querySelector("#id_message_send_input");
+				let messageInputValue = messageInput.value;
+
 				messageInput.style.height = 0;
-				messageInput = messageInput.value;
+				messageInput.value = '';
+				messageInputValue = messageInputValue.trim()
 
-				messageInput = messageInput.trim()
-
-				if (messageInput !== '') {
+				if (messageInputValue !== '') {
 					chatSocket.send(JSON.stringify({
-						message: messageInput,
+						message: messageInputValue,
 						username: globalUser,
 						first_name: first_name,
 						last_name: last_name
@@ -184,6 +186,7 @@
 				};
 
 			};
+
 			chatSocket.onmessage = function (e) {
 				const data = JSON.parse(e.data);
 				const lowPowerMode = JSON.parse(document.getElementById('low-power-mode').textContent)
@@ -200,10 +203,11 @@
 
 				messageDiv.id = data.message_id;
 				messageDiv.className = 'text';
-				messageDiv.innerHTML = data.message;
+				messageDiv.innerHTML = data.message.trim();
 
 				copyButton.className = "hiddenButton";
-				copyButton.onclick = `copyText(${data.message_id})`;
+				copyButton.setAttribute("onclick", `copyText(${data.message_id});`);
+				copyButton.textContent = 'copy';
 
 				mainDiv.appendChild(userLabel)
 				mainDiv.appendChild(messageDiv)

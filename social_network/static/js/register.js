@@ -1,5 +1,4 @@
-let usernameInput = document.querySelector("#id_username");
-
+const usernameInput = document.querySelector("#id_username");
 function is_username_new(usernameInput) {
 	usernameInput.addEventListener("input", event => {
 
@@ -8,7 +7,7 @@ function is_username_new(usernameInput) {
 
 		if (val) {
 
-			url = `is_username_new/${val}`
+			const url = `is_username_new/${val}`
 
 			fetch(url, {
 				method: 'GET',
@@ -39,7 +38,7 @@ function is_username_new(usernameInput) {
 			})
 		} else {
 			if (myDiv.getElementsByTagName('p')[0]) {
-				p = myDiv.getElementsByTagName('p')[0];
+				let p = myDiv.getElementsByTagName('p')[0];
 				p.remove();
 			}
 		}

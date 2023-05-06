@@ -1,10 +1,10 @@
 // For settings button (menu burger icon)
-let btn = document.querySelectorAll('#toggleTextarea');
+const btn = document.querySelectorAll('#toggleTextarea');
 btn.forEach(function (i) {
 	i.addEventListener('click', function() {
 		
 		var elem = document.querySelector('.settings-bar');
-		let marTop = getComputedStyle(elem).marginTop;
+		const marTop = getComputedStyle(elem).marginTop;
 
 		if (marTop === "-95px") {
 			elem.style.marginTop = "50px"
