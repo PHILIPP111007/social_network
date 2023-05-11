@@ -57,7 +57,7 @@
 				color: rgb(205, 205, 205);
 			}
 			input[type="text"], textarea {
-				background-color: rgb(101, 101, 110);
+				background-color: rgb(43, 43, 43);
 				color: rgb(205, 205, 205);
 			}
 			.upper-line {
@@ -116,7 +116,7 @@
 			</div>
 		
 			<div class="input-zone" align="center">
-				<textarea id="id_message_send_input" maxlength="5000" placeholder="type"></textarea>
+				<textarea id="id_message_send_input" maxlength="5000" placeholder="type..."></textarea>
 				<button type="submit" id="id_message_send_button">send</button>
 			</div>
 		</div>
@@ -213,7 +213,6 @@
 				mainDiv.appendChild(messageDiv)
 				mainDiv.appendChild(copyButton)
 
-				document.querySelector("#id_message_send_input").value = "";
 				document.querySelector("#id_chat_item_container").appendChild(mainDiv);
 		
 				// Trigger the scroll "smooth" property

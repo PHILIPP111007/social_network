@@ -11,7 +11,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 		return Message.objects.create(room_name_id=room_name, sender_id=sender, message=message)
 
 	async def connect(self):
-		self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
+		self.room_name = self.scope['url_route']['kwargs']['room_name']
 		self.room_group_name = self.room_name
 
 		# Join room group
@@ -26,10 +26,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
 	# Receive message from WebSocket
 	async def receive(self, text_data):
 		text_data_json = json.loads(text_data)
-		username = text_data_json["username"]
-		first_name = text_data_json["first_name"]
-		last_name = text_data_json["last_name"]
-		message = text_data_json["message"]
+		username = text_data_json['username']
+		first_name = text_data_json['first_name']
+		last_name = text_data_json['last_name']
+		message = text_data_json['message']
 
 		message_obj = await self.create_message(self.room_name, username, message)
 
@@ -39,13 +39,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
 		await self.channel_layer.group_send(
 			self.room_group_name, 
 			{
-				"type": "chat_message",
-				"message": message,
-				"message_id": message_obj.id,
-				"username" : username,
-				"first_name": first_name,
-				"last_name": last_name,
-				"timestamp": timestamp
+				'type': 'chat_message',
+				'message': message,
+				'message_id': message_obj.pk,
+				'username' : username,
+				'first_name': first_name,
+				'last_name': last_name,
+				'timestamp': timestamp
 			}
 		)
 
@@ -62,10 +62,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
 		await self.send(text_data=json.dumps(
 			{
 				'message': message,
-				"message_id": message_id,
+				'message_id': message_id,
 				'username' : username,
-				"first_name": first_name,
-				"last_name": last_name,
-				"timestamp": timestamp
+				'first_name': first_name,
+				'last_name': last_name,
+				'timestamp': timestamp
 			}
 		))

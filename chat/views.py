@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
+from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -10,7 +11,10 @@ from .models import Room, Message
 @login_required
 def dialogs(request, username):
 	result_dict = make_content(request)
-	rooms = Room.objects.filter(room_name__contains=request.user.username)
+
+	rooms = Room.objects.filter(
+		Q(user_1=request.user.username) | Q(user_2=request.user.username)
+	)
 
 	if rooms:
 		dialogs = []
@@ -20,14 +24,14 @@ def dialogs(request, username):
 			elif request.user.username == item.user_1:
 				dialogs.append(
 					(
-						item.room_name,
+						item.pk,
 						User.objects.get(username=item.user_2)
 					)
 				)
 			elif request.user.username == item.user_2:
 				dialogs.append(
 					(
-						item.room_name,
+						item.pk,
 						User.objects.get(username=item.user_1)
 					)
 				)
@@ -39,17 +43,17 @@ def dialogs(request, username):
 
 @login_required
 def room(request, username, room_name):
-	if Room.objects.filter(room_name=room_name):
+	if Room.objects.filter(pk=room_name):
 		result_dict = make_content(request)
 		result_dict['low_power_mode'] = UserSettings.objects.get(user=request.user.username).low_power_mode
-		result_dict["room_name"] = room_name
-		result_dict["friend"] = User.objects.get(username=username)
+		result_dict['room_name'] = room_name
+		result_dict['friend'] = User.objects.get(username=username)
 
 		messages = Message.objects.filter(room_name_id=room_name)
 		if messages:
-			result_dict["messages"] = messages
+			result_dict['messages'] = messages
 
-		return render(request, "room.html", result_dict)
+		return render(request, 'room.html', result_dict)
 	else:
 		return HttpResponseRedirect(f'/dialogs/{request.user.username}')
 
@@ -68,7 +72,7 @@ def make_content(request):
 @login_required
 def remove_chat(request, username, room_name):
 	if request.method == 'POST':
-		room = Room.objects.get(room_name=room_name)
+		room = Room.objects.get(pk=room_name)
 
 		if room.user_1 == request.user.username:
 			room.delete_user_1 = request.user.username

@@ -79,7 +79,7 @@
 				color: rgb(205, 205, 205);
 			}
 			textarea {
-				background-color: rgb(68, 68, 75);
+				background-color: rgb(43, 43, 43);
 				color: rgb(205, 205, 205);
 				border-color: rgb(80, 80, 90);
 			}
@@ -265,24 +265,24 @@
 						<h6>{{ record.date_time|date:'Y-m-d H:i' }} {% if record.is_changed %}&#91;&#10000; Modified&#93;{% endif %}</h6>
 						
 						{% if record.content|length > 500 %}
-							<div class="half-content" id="half-{{record.id}}">
+							<div class="half-content" id="half-{{record.pk}}">
 								<div>
 									{{ record.content|truncatechars:500|linebreaks|urlize }}
 								</div>
 								<div>
-									<button id="{{record.id}}" href="javascript:void();" class="show-hide-btn">read more</button>
+									<button id="{{record.pk}}" href="javascript:void();" class="show-hide-btn">read more</button>
 									<br>
 									<br>
 								</div>
 							</div>
 							
-							<div class="full-content" id="full-{{record.id}}" style="display: none;">
+							<div class="full-content" id="full-{{record.pk}}" style="display: none;">
 								<div>
 									{{ record.content|urlize }}
 								</div>
 
 								<div>
-									<button id="{{record.id}}" class="show-hide-btn">read less</button>
+									<button id="{{record.pk}}" class="show-hide-btn">read less</button>
 									<br>
 									<br>
 								</div>
@@ -300,14 +300,14 @@
 							<div class="record-bar">
 								<div id="change-record">
 									<div>
-										<form method="POST" action="change_record/{{ record.id }}/">
+										<form method="POST" action="change_record/{{ record.pk }}/">
 											{% csrf_token %}
 											<textarea name="my_textarea" maxlength="5000" placeholder="Edit record"></textarea>
 											<input type="submit" name="edit" value="Edit record">
 										</form>
 									</div>
 								</div>
-								<form id="deleteRecord" method="POST" action="delete_record/{{ record.id }}/">
+								<form id="deleteRecord" method="POST" action="delete_record/{{ record.pk }}/">
 									{% csrf_token %}
 									<input id="delete_record" type="submit" value="Delete record">
 								</form>

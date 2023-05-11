@@ -172,7 +172,7 @@ function darkTheme() {
 	let textarea = document.querySelectorAll('textarea')
 	if (textarea) {
 		textarea.forEach(function (i) {
-			i.style.backgroundColor = 'rgb(68, 68, 75)'
+			i.style.backgroundColor = 'rgb(43, 43, 43)'
 			i.style.color = 'rgb(205, 205, 205)'
 			i.style.borderColor = 'rgb(80, 80, 90)'
 		})

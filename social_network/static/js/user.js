@@ -14,7 +14,7 @@ const btn = document.querySelectorAll('#toggleTextarea');
 btn.forEach(function (i) {
 	i.addEventListener('click', function() {
 		
-		var elem = document.querySelector('.settings-bar');
+		let elem = document.querySelector('.settings-bar');
 		let marTop = getComputedStyle(elem).marginTop;
 
 		if (marTop === "-190px") {
@@ -58,7 +58,7 @@ const threePoints = document.querySelectorAll('.three_points');
 function threePointsFunc(i) {
 	i.addEventListener('click', function() {
 
-		var elem = this.nextElementSibling;
+		let elem = this.nextElementSibling;
 
 		if (elem) {
 			
@@ -96,7 +96,7 @@ function threePointsFunc(i) {
 				}
 
 				elem.classList.add('active');
-				var h = getComputedStyle(elem).height;
+				let h = getComputedStyle(elem).height;
 				elem.style.height = '0';
 				getComputedStyle(elem).height; // reflow
 				elem.style.height = h;

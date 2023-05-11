@@ -19,7 +19,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-	'hypercorn',  # hypercorn social_network.asgi:application
+	'hypercorn',  # hypercorn social_network.asgi:application / hypercorn -b 0.0.0.0 -p 8000 social_network.asgi:application
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
@@ -41,7 +41,7 @@ MIDDLEWARE = [
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
-	'whitenoise.middleware.WhiteNoiseMiddleware' # !!!
+	'whitenoise.middleware.WhiteNoiseMiddleware' # for hypercorn
 ]
 
 ROOT_URLCONF = 'social_network.urls'
@@ -63,12 +63,12 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'social_network.wsgi.application'
-ASGI_APPLICATION = "social_network.asgi.application"
+ASGI_APPLICATION = 'social_network.asgi.application'
 CHANNEL_LAYERS = {
-	"default": {
-		"BACKEND": "channels_redis.core.RedisChannelLayer",
-		"CONFIG": {
-			"hosts": [("127.0.0.1", 6379)],
+	'default': {
+		'BACKEND': 'channels_redis.core.RedisChannelLayer',
+		'CONFIG': {
+			'hosts': [('127.0.0.1', 6379)],
 		},
 	},
 }

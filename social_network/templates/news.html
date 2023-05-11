@@ -118,7 +118,7 @@
 						</a>
 
 						{% if record.content|length > 500 %}
-							<div class="half-content" id="half-{{record.id}}">
+							<div class="half-content" id="half-{{record.pk}}">
 								{{ record.content|truncatechars:500|linebreaks|urlize }}
 								<button id="{{record.id}}" href="javascript:void();" class="show-hide-btn">
 									read more
@@ -127,9 +127,9 @@
 								<br/>
 							</div>
 							
-							<div class="full-content" id="full-{{record.id}}" style="display: none;">
+							<div class="full-content" id="full-{{record.pk}}" style="display: none;">
 								{{ record.content|linebreaks|urlize }}
-								<button id="{{record.id}}" class="show-hide-btn">
+								<button id="{{record.pk}}" class="show-hide-btn">
 									read less
 								</button>
 								<br/>

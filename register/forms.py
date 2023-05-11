@@ -11,5 +11,5 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class LoginForm(forms.Form):
-	username = forms.CharField(min_length=1, max_length=20)
+	username = forms.CharField(min_length=1, max_length=30)
 	password = forms.CharField(min_length=8, widget=forms.PasswordInput())

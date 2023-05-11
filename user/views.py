@@ -189,7 +189,7 @@ def background_color_change(request, username):
 
 	if is_ajax and request.method == 'POST' and request.body:
 
-		color = bool(int(request.body.decode('utf-8')))
+		color = not not int(request.body.decode('utf-8'))
 		try:
 			settings = UserSettings.objects.get(user_id=request.user.username)
 			settings.theme = color
