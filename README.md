@@ -11,6 +11,10 @@ Hi! This is my second Django project. This time I wrote a mini-social network!
 
 4. Meet the dark theme!
 
+
+\
+To run the app use ```hypercorn social_network.asgi:application```
+
 \
 Have fun and if you want please leave feedback!
 
