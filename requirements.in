@@ -1,0 +1,5 @@
+django
+daphne
+whitenoise
+channels
+channels-redis
