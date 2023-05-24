@@ -16,7 +16,7 @@ input[type="submit"] {
     transition: all 0.3s;
     padding: 5px;
     background-color: rgb(205, 205, 205);
-    color: #2c2a2a;
+    color: rgb(44, 42, 42);
 }
 input[type="submit"]:after {
     position: relative;
@@ -28,7 +28,7 @@ input[type="submit"]:after {
 input[type="submit"]:hover {
     position: relative;
     background: rgb(158, 154, 154);
-    color: #2c2a2a;
+    color: rgb(44, 42, 42);
 }
 input[type="submit"]:active {
     position: relative;
@@ -49,9 +49,9 @@ input[type="text"], input[type="email"], input[type="password"] {
     -moz-transition: all 0.3s;
     transition: all 0.3s;
     padding: 5px;
-    background-color: rgb(250, 244, 244);
     width: 250px;
     border-radius: 0.25rem;
+    background-color: rgb(250, 244, 244);
 }
 #hello {
     font-size: 30px;
@@ -64,11 +64,11 @@ input[type="text"], input[type="email"], input[type="password"] {
 }
 .messages .alert-danger {
     background: rgb(233, 110, 110);
-    color:rgb(134, 0, 0) ;
+    color:rgb(134, 0, 0);
 }
 .messages .alert-success {
     background: rgb(145, 233, 110);
-    color:rgb(4, 134, 0) ;
+    color:rgb(4, 134, 0);
 }
 .enter {
     position: fixed;
@@ -76,8 +76,23 @@ input[type="text"], input[type="email"], input[type="password"] {
     width: 400px;
     padding: 10px;
     border: 2px solid black;
-    background: rgb(235,235,235);
+    background: rgb(235, 235, 235);
 }
     .enter input {
         margin-top: 20px;
+    }
+.register {
+    position: fixed;
+    left: calc(50% - 260px);
+    width: 500px;
+    padding: 10px;
+    border: 2px solid black;
+    background: rgb(235, 235, 235);
+}
+    .register input {
+        margin-top: 20px;
+    }
+    .register span {
+        font-size: small;
+        color: rgb(153, 150, 145);
     }

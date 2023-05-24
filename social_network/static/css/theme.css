@@ -1,0 +1,139 @@
+/* Light theme */
+
+.body-light {
+    background-color: rgb(250, 244, 244);
+    color: rgb(0, 0, 0);
+}
+.body-light button {
+    background-color: rgb(205, 205, 205);
+    color: rgb(44, 42, 42);
+}
+.body-light input[type="submit"], .body-light input[type="reset"] {
+    background-color: rgb(205, 205, 205);
+    color: rgb(44, 42, 42);
+}
+.body-light input[type="text"], .body-light input[type="email"] {
+    background-color: rgb(250, 244, 244);
+    color: rgb(44, 42, 42);
+}
+.body-light textarea {
+    background-color: rgb(250, 244, 244);
+    color: rgb(0, 0, 0);
+    border-color: rgb(119, 119, 119);
+}
+.body-light .upper-line {
+    background-color: rgb(235, 235, 235, 0.8);
+}
+.body-light .settings-bar {
+    background-color: rgb(235, 235, 235, 0.8);
+    border-color: rgb(202, 195, 195);
+}
+.body-light .left-list {
+    background: rgb(235, 235, 235, 0.8);
+}
+.body-light .menu-link:hover{
+    background-color: rgb(220, 220, 220, 0.8);
+}
+.body-light .user {
+    background-color: rgb(202, 195, 195);
+}
+.body-light #createRecord {
+    background-color: rgb(202, 195, 195);
+}
+.body-light .record {
+    background-color: rgb(230, 230, 230, 0.73);
+}
+.body-light .modal_txt {
+    background: rgb(250, 244, 244);
+}
+.body-light .input-zone {
+    background: rgb(235, 235, 235, 0.8);
+}
+.body-light .record {
+    background-color: rgb(230, 230, 230, 0.73);
+}
+.body-light .find-form, .user-card {
+    background-color: rgb(202, 195, 195);
+}
+.body-light .user-card {
+    background-color: rgb(230, 230, 230, 0.73);
+}
+.body-light .chat-href {
+    background-color: rgb(250, 244, 244);
+    color: rgb(0, 0, 0);
+}
+.body-light .chat-href:hover {
+    background-color: rgb(227, 227, 227);
+}
+
+
+/* Dark theme */
+
+.body-dark {
+    background-color: rgb(43, 43, 43);
+    color: rgb(205, 205, 205);
+}
+.body-dark button {
+    background-color: rgb(101, 101, 110);
+    color: rgb(205, 205, 205);
+}
+.body-dark a {
+    color: rgb(205, 205, 205);
+}
+.body-dark input[type="submit"], .body-dark input[type="reset"] {
+    background-color: rgb(101, 101, 110);
+    color: rgb(205, 205, 205);
+}
+.body-dark input[type="text"], .body-dark input[type="email"] {
+    background-color: rgb(43, 43, 43);
+    color: rgb(205, 205, 205);
+}
+.body-dark textarea {
+    background-color: rgb(43, 43, 43);
+    color: rgb(205, 205, 205);
+    border-color: rgb(80, 80, 90);
+}
+.body-dark .upper-line {
+    background-color: rgb(61, 61, 71, 0.8);
+}
+.body-dark .settings-bar {
+    background-color: rgb(61, 61, 71, 0.8);
+    border-color: rgb(80, 80, 90);
+}
+.body-dark .left-list {
+    background: rgb(61, 61, 71, 0.8);
+}
+.body-dark .menu-link:hover{
+    background-color: rgb(49, 48, 57, 0.8);
+}
+.body-dark .user {
+    background-color: rgb(57, 57, 61);
+}
+.body-dark #createRecord {
+    background-color: rgb(57, 57, 61);
+}
+.body-dark .record {
+    background-color: rgb(57, 57, 61);
+}
+.body-dark .modal_txt {
+    background: rgb(57, 57, 61);
+}
+.body-dark .input-zone {
+    background: rgb(61, 61, 71, 0.8);
+}
+.body-dark .record {
+    background-color: rgb(57, 57, 61);
+}
+.body-dark .user {
+    background-color: rgb(57, 57, 61);
+}
+.body-dark .find-form, .body-dark .user-card {
+    background-color: rgb(57, 57, 61);
+}
+.body-dark .chat-href {
+    background-color: rgb(57, 57, 61);
+    color: rgb(205, 205, 205);
+}
+.body-dark .chat-href:hover {
+    background-color: rgb(67, 67, 71);
+}

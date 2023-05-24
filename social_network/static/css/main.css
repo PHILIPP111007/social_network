@@ -129,7 +129,7 @@ input[type="submit"]:active, input[type="reset"]:active {
         padding: 10px 8px 6px 12px;
         text-decoration: none;
         font-size: 17px;
-        color: #818181;
+        color: rgb(129, 129, 129);
         display: block;
     }
 .main-content {

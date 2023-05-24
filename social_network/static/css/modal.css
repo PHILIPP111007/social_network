@@ -6,7 +6,7 @@
   bottom: 0;
   right: 0;
   z-index: 99999;
-  background: #59595992;
+  background: rgba(89, 89, 89, 0.573);
   backdrop-filter: blur(5px);
 }
 .modal_vis {
@@ -30,7 +30,7 @@
   background-color: rgb(250, 244, 244);
 }
 .modal_txt {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2), 0 16px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 16px 20px rgba(0, 0, 0, 0.2);
   background: rgb(250, 244, 244);
   margin: 100px auto;
   min-width: 100px;
