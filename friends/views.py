@@ -9,12 +9,12 @@ from chat.models import Room
 
 @login_required
 def index(request, username):
-	if request.method == 'GET':
-		result_dict = make_content(request)
-		return render(request, 'friends.html', result_dict)
-	elif request.method == 'POST':
+	if request.method == 'POST':
 		find_users = find_user(request)
 		result_dict = make_content(request, find_users=find_users)
+		return render(request, 'friends.html', result_dict)
+	else:
+		result_dict = make_content(request)
 		return render(request, 'friends.html', result_dict)
 
 
@@ -85,8 +85,7 @@ def add_friend(request, username):
 				'first_name': subscribe.first_name,
 				'last_name': subscribe.last_name
 			})
-
-		return JsonResponse({'status': False})
+	return JsonResponse({'status': False})
 
 
 @login_required
@@ -104,7 +103,8 @@ def delete_friend(request, username):
 			subscribe.delete()
 			return JsonResponse(data)
 		except Subscriber.DoesNotExist:
-			return JsonResponse({'status': False})
+			pass
+	return JsonResponse({'status': False})
 
 
 @login_required
@@ -116,7 +116,8 @@ def delete_subscriber(request, username):
 			subscribe.delete()
 			return JsonResponse({'status': True})
 		except Subscriber.DoesNotExist:
-			return JsonResponse({'status': False})
+			pass
+	return JsonResponse({'status': False})
 
 
 @login_required
@@ -125,7 +126,6 @@ def make_chat(request, username):
 		if Subscriber.objects.filter(user=username, subscribe=request.user.username).count():
 			room_name = Room().create_chat(request_user=request.user.username, friend=username)
 			return HttpResponseRedirect(f'/dialogs/{username}/chat/{room_name}/')
-
 	return HttpResponseRedirect(f'/dialogs/{request.user.username}')
 
 
@@ -142,4 +142,5 @@ def background_color_change(request, username):
 			settings.save(update_fields=['theme'])
 			return JsonResponse({'status': True})
 		except UserSettings.DoesNotExist:
-			return JsonResponse({'status': False})
+			pass
+	return JsonResponse({'status': False})

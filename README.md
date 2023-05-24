@@ -13,39 +13,20 @@ Hi! This is my second Django project. This time I wrote a mini-social network!
 
 
 \
-To run the app use ```hypercorn social_network.asgi:application```
+To run the app use ```hypercorn social_network.asgi:application``` if you are using hypercorn, or ```python manage.py runserver``` if daphne
+
+Open demo.mp4 to see user experience
 
 \
 Have fun and if you want please leave feedback!
-
-
-## Photos
-
-<img src="./images_for_README/image_1.png" alt="Alt text" title="Optional title" width="500">
-<img src="./images_for_README/image_2.png" alt="Alt text" title="Optional title" width="500">
-<img src="./images_for_README/image_3.png" alt="Alt text" title="Optional title" width="500">
-<img src="./images_for_README/image_4.png" alt="Alt text" title="Optional title" width="500">
-<img src="./images_for_README/image_5.png" alt="Alt text" title="Optional title" width="500">
-<img src="./images_for_README/image_6.png" alt="Alt text" title="Optional title" width="500">
-<img src="./images_for_README/image_7.png" alt="Alt text" title="Optional title" width="500">
-<img src="./images_for_README/image_8.png" alt="Alt text" title="Optional title" width="500">
-<img src="./images_for_README/image_9.png" alt="Alt text" title="Optional title" width="500">
-
 
 ## Technologies used:
 
 ### 1) django-channels
 -- Django channels documentation https://channels.readthedocs.io/en/stable/index.html
-```console
-pip install channels
-```
 
-### 2) hypercorn
+### 2) daphne
 -- ASGI and WSGI web server
-```console
-pip install hypercorn
-```
--- for running the server call `hypercorn social_network.asgi:application`
 
 ### 3) AJAX
 

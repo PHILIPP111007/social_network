@@ -19,7 +19,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-	'hypercorn',  # hypercorn social_network.asgi:application / hypercorn -b 0.0.0.0 -p 8000 social_network.asgi:application
+    'daphne',  # python manage.py runserver
+	# 'hypercorn',  # hypercorn social_network.asgi:application / hypercorn -b 0.0.0.0 -p 8000 social_network.asgi:application
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
@@ -41,7 +42,7 @@ MIDDLEWARE = [
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
-	'whitenoise.middleware.WhiteNoiseMiddleware' # for hypercorn
+	'whitenoise.middleware.WhiteNoiseMiddleware' # for hypercorn server
 ]
 
 ROOT_URLCONF = 'social_network.urls'

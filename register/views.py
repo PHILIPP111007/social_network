@@ -73,5 +73,4 @@ def is_username_new(request, username):
 			return JsonResponse({'status': False})
 		except User.DoesNotExist:
 			return JsonResponse({'status': True})
-
 	return HttpResponseRedirect('/')

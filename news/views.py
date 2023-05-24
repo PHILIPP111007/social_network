@@ -47,4 +47,5 @@ def background_color_change(request, username):
 			settings.save(update_fields=['theme'])
 			return JsonResponse({'status': True})
 		except UserSettings.DoesNotExist:
-			return JsonResponse({'status': False})
+			pass
+	return JsonResponse({'status': False})

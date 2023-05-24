@@ -1,4 +1,5 @@
 from django.shortcuts import render
+# from django.urls import reverse
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
@@ -9,31 +10,24 @@ from chat.models import Room
 
 @login_required
 def index(request, username):
-	result_dict = make_content(request, username)
-	return render(request, 'user.html', result_dict)
-
-
-def make_content(request, username):
-
-	global_user = User.objects.get(username=request.user.username)
-
 	# If I am on other persons's page:
 	if username != request.user.username:
 		try:
 			user = User.objects.get(username=username)
 		except User.DoesNotExist:
 			return HttpResponseRedirect(f'/user/{request.user.username}')
-		is_my_page = False
+		my_page = False
 	else:
-		is_my_page = True
-		user = global_user
-	
+		my_page = True
+		user = User.objects.get(username=request.user.username)
+	global_user = user
+
 	blog = Blog.objects.filter(user_id=username)
 	friends_count = Subscriber().get_friends(username=username).count()
 	settings = UserSettings.objects.get(user_id=request.user.username)
 
 	result_dict = {
-		'is_my_page': is_my_page,
+		'is_my_page': my_page,
 		'global_user': global_user,
 		'user': user,
 		'friends_count': friends_count,
@@ -41,7 +35,7 @@ def make_content(request, username):
 		'settings': settings
 	}
 
-	if not is_my_page:
+	if not my_page:
 		user_1 = Subscriber.objects.filter(user=request.user.username, subscribe=username)
 		user_2 = Subscriber.objects.filter(user=username, subscribe=request.user.username)
 		# If we are friends, I can see his blog
@@ -52,7 +46,7 @@ def make_content(request, username):
 		elif user_2:
 			result_dict['he_is_subscriber'] = True
 
-	return result_dict
+	return render(request, 'user.html', result_dict)
 
 
 def quit(request, username):
@@ -86,17 +80,16 @@ def create_record(request, username):
 				'id': new_record.pk,
 				'datetime': new_record.date_time.strftime('%Y-%m-%d %H:%M')
 			})
-		return JsonResponse({'status': False})
+	return JsonResponse({'status': False})
 
 
 @login_required
 def change_record(request, username, id):
-	if request.method == 'POST':
-		if request.POST.get('my_textarea', ''):
-			record = Blog.objects.get(user_id=request.user.username, id=id)
-			record.content=request.POST.get('my_textarea')
-			record.is_changed = True
-			record.save(update_fields=['content', 'is_changed'])
+	if request.method == 'POST' and request.POST.get('my_textarea', ''):
+		record = Blog.objects.get(user_id=request.user.username, id=id)
+		record.content=request.POST.get('my_textarea')
+		record.is_changed = True
+		record.save(update_fields=['content', 'is_changed'])
 
 	return HttpResponseRedirect(f'/user/{request.user.username}')
 
@@ -111,7 +104,8 @@ def delete_record(request, username, id):
 			return JsonResponse({'status': True})
 
 		except Blog.DoesNotExist:
-			return JsonResponse({'status': False})
+			pass
+	return JsonResponse({'status': False})
 
 
 @login_required
@@ -157,7 +151,6 @@ def delete_friend(request, username):
             subscribe.delete()
         except Subscriber.DoesNotExist:
             pass
-
     return HttpResponseRedirect(f'/user/{username}')
 
 
@@ -169,7 +162,6 @@ def delete_subscriber(request, username):
             subscribe.delete()
         except Subscriber.DoesNotExist:
             pass
-
     return HttpResponseRedirect(f'/user/{username}')
 
 
@@ -179,7 +171,6 @@ def make_chat(request, username):
 		if Subscriber.objects.filter(user=username, subscribe=request.user.username).count():
 			room_name = Room().create_chat(request_user=request.user.username, friend=username)
 			return HttpResponseRedirect(f'/dialogs/{username}/chat/{room_name}/')
-
 	return HttpResponseRedirect(f'/dialogs/{request.user.username}')
 
 

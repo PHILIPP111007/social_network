@@ -11,10 +11,7 @@ from .models import Room, Message
 @login_required
 def dialogs(request, username):
 	result_dict = make_content(request)
-
-	rooms = Room.objects.filter(
-		Q(user_1=request.user.username) | Q(user_2=request.user.username)
-	)
+	rooms = Room.objects.filter(Q(user_1=request.user.username) | Q(user_2=request.user.username))
 
 	if rooms:
 		dialogs = []
