@@ -20,7 +20,7 @@ def index(request, username):
 	else:
 		my_page = True
 		user = User.objects.get(username=request.user.username)
-	global_user = user
+	global_user = User.objects.get(username=request.user.username)
 
 	blog = Blog.objects.filter(user_id=username)
 	friends_count = Subscriber().get_friends(username=username).count()

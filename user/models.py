@@ -50,7 +50,7 @@ class Subscriber(models.Model):
 
 class UserSettings(models.Model):
 	user = models.OneToOneField(User, to_field='username', db_column='user', on_delete=models.CASCADE, primary_key=True)
-	low_power_mode = models.BooleanField(default=False)
+	low_power_mode = models.BooleanField(default=True)
 	theme = models.BooleanField(default=True)  # True = light theme, False = dark theme
 
 	def __str__(self):

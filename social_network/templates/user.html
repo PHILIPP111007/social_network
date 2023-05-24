@@ -98,7 +98,7 @@
 	<aside class="left-list">
 		<nav>
 			<p class="menu-link"><a href="{% url 'user' global_user.username %}">Homepage</a></p>
-			<p class="menu-link"><a href="{% url 'dialogs' user.username %}">Messenger</a></p>
+			<p class="menu-link"><a href="{% url 'dialogs' global_user.username %}">Messenger</a></p>
 			<p class="menu-link"><a href="{% url 'friends' global_user.username %}">Friends</a></p>
 			<p class="menu-link"><a href="{% url 'news' global_user.username %}">News</a></p>
 		</nav>
