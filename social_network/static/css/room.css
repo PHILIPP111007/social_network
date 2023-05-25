@@ -35,6 +35,6 @@
 .hiddenButton {
     display: none;
 }
-.message:hover .hiddenButton {
+.chat_item_container div:hover .hiddenButton {
     display: inline-flex;
 }

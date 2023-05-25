@@ -8,6 +8,7 @@
 	<title>{{ global_user.first_name }} {{ global_user.last_name }}</title>
 	<link rel="stylesheet" href='{% static "css/main.css" %}'>
 	<link rel="stylesheet" href='{% static "css/room.css" %}'>
+	<link rel="stylesheet" href='{% static "css/modal.css" %}'>
 	<link rel="stylesheet" href='{% static "css/theme.css" %}'>
 </head>
 <body {% if settings.theme %}class="body-light"{% else %}class="body-dark"{% endif %}>
@@ -31,16 +32,25 @@
 
 	<div class="main-content">
 
+		<div id="modal" class="modal">
+			<img class="close_modal" onclick="hideDeleteModal()" src="{% static 'images/005close1_99908.svg' %}" alt="cross black circular button">
+			<div class="modal_txt">
+				<h3>Are you sure?</h3>
+				<button class="delMessageButton" type="submit">delete message</button>
+			</div>
+		</div>
+
 		<div class="chat" align="center">
 			<div id="containerScroll" class="container_Scrollbottom" >
 				<div id="id_chat_item_container" class="chat_item_container" >
 					{% for msg in messages %}
-						<div id="{{ msg.sender }}" class="message">
+						<div id="{{ msg.pk }}">
 							<label>{{ msg.sender.first_name }} {{ msg.sender.last_name }} {{ msg.timestamp|date:'Y-m-d H:i' }}</label>
-							<div id="{{ msg.pk }}" class="text">{{ msg.message|urlize }}</div>
-
+							<div class="text">{{ msg.message|urlize }}</div>
+							{% if msg.sender.username == global_user.username %}
+								<button class="hiddenButton" onclick="showDeleteModal({{ msg.pk }})">delete</button>
+							{% endif %}
 							<button class="hiddenButton" onclick="copyText({{ msg.pk }})">copy</button>
-
 						</div>
 					{% endfor %}
 				</div>
@@ -49,112 +59,15 @@
 		
 			<div class="input-zone" align="center">
 				<textarea id="id_message_send_input" maxlength="5000" placeholder="type..."></textarea>
-				<button type="submit" id="id_message_send_button">send</button>
+				<button type="submit" class="id_message_send_button">send</button>
 			</div>
 		</div>
-
-		<script>
-			function lastMessageScroll(b) {
-				var e = document.querySelector('.wrapper_Scrollbottom');
-				if (!e) return ;
-			
-				e.scrollIntoView({
-					behavior: b || 'auto',
-					block: 'end',
-				});
-			};
-		</script>
 
 		{{ room_name|json_script:"room-name" }}
 		{{ global_user.username|json_script:"global-user" }}
 		{{ global_user.first_name|json_script:"first_name" }}
 		{{ global_user.last_name|json_script:"last_name" }}
-		{{ low_power_mode|json_script:"low-power-mode" }}
 
-		<script>
-			const roomName = JSON.parse(document.getElementById('room-name').textContent);
-			const globalUser = JSON.parse(document.getElementById('global-user').textContent);
-			const first_name = JSON.parse(document.getElementById('first_name').textContent);
-			const last_name = JSON.parse(document.getElementById('last_name').textContent);
-			const chatSocket = new WebSocket(
-				'ws://'
-				+ window.location.host
-				+ '/ws/chat/'
-				+ roomName
-				+ '/'
-			);
-
-			chatSocket.onopen = function (e) {
-				console.log("The connection was setup successfully!");
-				lastMessageScroll();
-			};
-
-			chatSocket.onclose = function (e) {
-				console.log("Something unexpected happened!");
-			};
-
-			document.querySelector("#id_message_send_input").focus();
-			document.querySelector("#id_message_send_input").onkeyup = function (e) {
-				if (e.keyCode == 13) {
-					document.querySelector("#id_message_send_button").click();
-				}
-			};
-			document.querySelector("#id_message_send_button").onclick = function (e) {
-				
-				let messageInput = document.querySelector("#id_message_send_input");
-				let messageInputValue = messageInput.value;
-
-				messageInput.style.height = 0;
-				messageInput.value = '';
-				messageInputValue = messageInputValue.trim()
-
-				if (messageInputValue !== '') {
-					chatSocket.send(JSON.stringify({
-						message: messageInputValue,
-						username: globalUser,
-						first_name: first_name,
-						last_name: last_name
-					}));
-				};
-
-			};
-
-			chatSocket.onmessage = function (e) {
-				const data = JSON.parse(e.data);
-				const lowPowerMode = JSON.parse(document.getElementById('low-power-mode').textContent)
-				
-				var mainDiv = document.createElement('div');
-				var userLabel = document.createElement('label');
-				var messageDiv = document.createElement('div');
-				var copyButton = document.createElement('button');
-
-				mainDiv.id = data.username;
-				mainDiv.className = 'message';
-				
-				userLabel.innerHTML = `${data.first_name} ${data.last_name} ${data.timestamp}`;
-
-				messageDiv.id = data.message_id;
-				messageDiv.className = 'text';
-				messageDiv.innerHTML = data.message.trim();
-
-				copyButton.className = "hiddenButton";
-				copyButton.setAttribute("onclick", `copyText(${data.message_id});`);
-				copyButton.textContent = 'copy';
-
-				mainDiv.appendChild(userLabel)
-				mainDiv.appendChild(messageDiv)
-				mainDiv.appendChild(copyButton)
-
-				document.querySelector("#id_chat_item_container").appendChild(mainDiv);
-		
-				// Trigger the scroll "smooth" property
-				if (!lowPowerMode) {
-					lastMessageScroll();
-				} else {
-					lastMessageScroll("smooth");
-				}
-			};
-		</script>
 	</div>
 
 	<script src="{% static 'js/room.js' %}" type="text/javascript" charset="utf-8" async defer></script>

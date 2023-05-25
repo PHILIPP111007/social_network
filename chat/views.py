@@ -1,9 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.contrib.auth.models import User
-from django.contrib.auth import logout
-from django.contrib.auth.decorators import login_required
 from user.models import UserSettings
 from .models import Room, Message
 
@@ -42,10 +41,8 @@ def dialogs(request, username):
 def room(request, username, room_name):
 	if Room.objects.filter(pk=room_name):
 		result_dict = make_content(request)
-		result_dict['low_power_mode'] = UserSettings.objects.get(user=request.user.username).low_power_mode
 		result_dict['room_name'] = room_name
 		result_dict['friend'] = User.objects.get(username=username)
-
 		messages = Message.objects.filter(room_name_id=room_name)
 		if messages:
 			result_dict['messages'] = messages
@@ -81,25 +78,3 @@ def remove_chat(request, username, room_name):
 			room.delete()
 
 	return HttpResponseRedirect(f'/dialogs/{request.user.username}')
-
-
-def quit(request, username):
-	if request.method == 'GET':
-		logout(request)
-	return HttpResponseRedirect('/')
-
-
-@login_required
-def background_color_change(request, username):
-	is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
-
-	if is_ajax and request.method == 'POST' and request.body:
-
-		color = bool(int(request.body.decode('utf-8')))
-		try:
-			settings = UserSettings.objects.get(user_id=request.user.username)
-			settings.theme = color
-			settings.save(update_fields=['theme'])
-			return JsonResponse({'status': True})
-		except UserSettings.DoesNotExist:
-			return JsonResponse({'status': False})

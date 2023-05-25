@@ -1,8 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, JsonResponse
-from django.contrib.auth.models import User
-from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from user.models import Blog, Subscriber, UserSettings
 
 
@@ -26,26 +24,3 @@ def make_content(request):
         'settings': settings
 	}
     return result_dict
-
-
-def quit(request, username):
-	if request.method == 'GET':
-		logout(request)
-	return HttpResponseRedirect('/')
-
-
-@login_required
-def background_color_change(request, username):
-	is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
-
-	if is_ajax and request.method == 'POST' and request.body:
-
-		color = not not int(request.body.decode('utf-8'))
-		try:
-			settings = UserSettings.objects.get(user_id=request.user.username)
-			settings.theme = color
-			settings.save(update_fields=['theme'])
-			return JsonResponse({'status': True})
-		except UserSettings.DoesNotExist:
-			pass
-	return JsonResponse({'status': False})

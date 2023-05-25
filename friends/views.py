@@ -1,10 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, JsonResponse
-from django.contrib.auth.models import User
-from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.contrib.auth.models import User
 from user.models import Subscriber, UserSettings
-from chat.models import Room
 
 
 @login_required
@@ -40,12 +38,7 @@ def make_content(request, find_users=None):
 	return result_dict
 
 
-def quit(request, username):
-	if request.method == 'GET':
-		logout(request)
-	return HttpResponseRedirect('/')
-
-
+@login_required
 def find_user(request):
 	username = request.POST.get('username')
 	find_users = ''
@@ -78,7 +71,7 @@ def add_friend(request, username):
 		if not Subscriber.objects.filter(user=request.user.username, subscribe=username).count():
 			subscribe = User.objects.get(username=username)
 			Subscriber.objects.create(user=request.user, subscribe=subscribe)
-				
+
 			return JsonResponse({
 				'status': True,
 				'username': subscribe.username,
@@ -116,31 +109,5 @@ def delete_subscriber(request, username):
 			subscribe.delete()
 			return JsonResponse({'status': True})
 		except Subscriber.DoesNotExist:
-			pass
-	return JsonResponse({'status': False})
-
-
-@login_required
-def make_chat(request, username):
-	if request.method == 'POST':
-		if Subscriber.objects.filter(user=username, subscribe=request.user.username).count():
-			room_name = Room().create_chat(request_user=request.user.username, friend=username)
-			return HttpResponseRedirect(f'/dialogs/{username}/chat/{room_name}/')
-	return HttpResponseRedirect(f'/dialogs/{request.user.username}')
-
-
-@login_required
-def background_color_change(request, username):
-	is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
-
-	if is_ajax and request.method == 'POST' and request.body:
-
-		color = not not int(request.body.decode('utf-8'))
-		try:
-			settings = UserSettings.objects.get(user_id=request.user.username)
-			settings.theme = color
-			settings.save(update_fields=['theme'])
-			return JsonResponse({'status': True})
-		except UserSettings.DoesNotExist:
 			pass
 	return JsonResponse({'status': False})
