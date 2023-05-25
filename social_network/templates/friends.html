@@ -6,6 +6,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{{ user.first_name }} {{ user.last_name }}</title>
+	<script type="text/javascript">
+		window.CSRF_TOKEN = "{{ csrf_token }}";
+	</script>
 	<link rel="stylesheet" href='{% static "css/main.css" %}'>
 	<link rel="stylesheet" href='{% static "css/friends.css" %}'>
 	<link rel="stylesheet" href='{% static "css/theme.css" %}'>
@@ -25,7 +28,6 @@
 
 	<div class="settings-bar">
 		<form id="backgroundColorChangeForm" method="POST" action="background_color_change/">
-			{% csrf_token %}
 			<input type="submit" value="Change theme">
 		</form>
 		<form id="quitButton" method="GET" action="quit/">
@@ -70,7 +72,6 @@
 							<h4 style="color:gray; font-size: 13px">@{{ u.username }}</h4>
 						</a>
 						<form id="addSubscriptionForm" method="POST" action="add_friend/{{ u.username }}/">
-							{% csrf_token %}
 							<input id="addButton" class="add_friend" type="submit" value="add">
 						</form>
 					</div>
@@ -97,7 +98,6 @@
 							</form>
 						
 							<form id="deleteFriendForm" method="POST" action="delete_friend/{{ friend.username }}/">
-								{% csrf_token %}
 								<input id="delButton" class="delete_friend" type="submit" value="delete">
 							</form>
 						</div>
@@ -120,7 +120,6 @@
 							</a>
 
 							<form id="deleteSubscriptionForm" method="POST" action="delete_friend/{{ friend.username }}/">
-								{% csrf_token %}
 								<input id="delButton" class="remove_subscribe" type="submit" value="delete">
 							</form>
 						</div>
@@ -148,12 +147,10 @@
 							</form>
 								
 							<form id="addFriendForm" method="POST" action="add_friend/{{ friend.username }}/" name="{{ friend.username }}">
-								{% csrf_token %}
 								<input id="addButton" class="add_friend" type="submit" value="add">
 							</form>
 
 							<form id="deleteSubscriberForm" method="POST" action="delete_subscriber/{{ friend.username }}/">
-								{% csrf_token %}
 								<input id="delButton" class="remove_subscribe" type="submit" value="delete">
 							</form>
 						</div>

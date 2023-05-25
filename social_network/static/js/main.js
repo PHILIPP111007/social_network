@@ -3,7 +3,7 @@ const btn = document.querySelectorAll('#toggleTextarea');
 btn.forEach(function (i) {
 	i.addEventListener('click', function() {
 		
-		let elem = document.querySelector('.settings-bar');
+		const elem = document.querySelector('.settings-bar');
 		const marTop = getComputedStyle(elem).marginTop;
 
 		if (marTop === "-95px") {

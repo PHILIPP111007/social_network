@@ -4,7 +4,7 @@ const modal = document.querySelector('#modal');
 
 
 function lastMessageScroll(b) {
-	let e = document.querySelector('.wrapper_Scrollbottom');
+	const e = document.querySelector('.wrapper_Scrollbottom');
 	if (e) {
 		e.scrollIntoView({
 			behavior: b || 'auto',

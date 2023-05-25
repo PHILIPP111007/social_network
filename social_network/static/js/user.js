@@ -1,3 +1,5 @@
+const csrftoken = window.CSRF_TOKEN;
+
 // For textarea tag
 const tx = document.getElementsByTagName("textarea");
 for (let i = 0; i < tx.length; i++) {
@@ -14,8 +16,8 @@ const btn = document.querySelectorAll('#toggleTextarea');
 btn.forEach(function (i) {
 	i.addEventListener('click', function() {
 		
-		let elem = document.querySelector('.settings-bar');
-		let marTop = getComputedStyle(elem).marginTop;
+		const elem = document.querySelector('.settings-bar');
+		const marTop = getComputedStyle(elem).marginTop;
 
 		if (marTop === "-190px") {
 			elem.style.marginTop = "50px"
@@ -45,7 +47,7 @@ function recordButtonFunc(i) {
 const fullContents = document.querySelectorAll(".full-content");
 fullContents.forEach(function (fullContent) {
 
-	let node = fullContent.firstElementChild;
+	const node = fullContent.firstElementChild;
 	let text = fullContent.firstElementChild.textContent;
 
 	node.textContent = '';
@@ -58,7 +60,7 @@ const threePoints = document.querySelectorAll('.three_points');
 function threePointsFunc(i) {
 	i.addEventListener('click', function() {
 
-		let elem = this.nextElementSibling;
+		const elem = this.nextElementSibling;
 
 		if (elem) {
 			
@@ -69,12 +71,13 @@ function threePointsFunc(i) {
 				elem.style.height = '';
 			} else {
 
-			  	let record = this.closest('.record');
-				let textArea = elem.getElementsByTagName('textarea')[0];
+			  	const record = this.closest('.record');
+				const textArea = elem.getElementsByTagName('textarea')[0];
 
 				if (!textArea.value) {
-					let textList = record.getElementsByTagName('div');
+					const textList = record.getElementsByTagName('div');
 					let string = '';
+					let text;
 
 					if (textList.length === 4 | textList.length === 5) {
 						text = textList[0];
@@ -96,7 +99,7 @@ function threePointsFunc(i) {
 				}
 
 				elem.classList.add('active');
-				let h = getComputedStyle(elem).height;
+				const h = getComputedStyle(elem).height;
 				elem.style.height = '0';
 				getComputedStyle(elem).height; // reflow
 				elem.style.height = h;
@@ -113,7 +116,6 @@ function deleteRecord(deleteRecordForm) {
 	deleteRecordForm.addEventListener("submit", event => {
 		event.preventDefault();
 
-		const csrftoken = event.srcElement.csrfmiddlewaretoken.value;
 		const url = event.srcElement.action;
 
 		fetch(url, {
@@ -139,9 +141,8 @@ createRecordForms.forEach(function (createRecordForm) {
 	createRecordForm.addEventListener("submit", event => {
 		event.preventDefault();
 
-		const csrftoken = event.srcElement.csrfmiddlewaretoken.value;
 		const url = event.srcElement.action;
-		let inputDiv = createRecordForm.getElementsByTagName('textarea')[0];
+		const inputDiv = createRecordForm.getElementsByTagName('textarea')[0];
 		let text = inputDiv.value;
 
 		fetch(url, {
@@ -160,10 +161,10 @@ createRecordForms.forEach(function (createRecordForm) {
 				inputDiv.value = '';
 				inputDiv.style.height = 0;
 
-				let blogsHome = document.getElementsByClassName('blog')[0];
+				const blogsHome = document.getElementsByClassName('blog')[0];
 				const firstChild = blogsHome.firstElementChild;
 
-				let node = document.createElement("div");
+				const node = document.createElement("div");
 				node.className = 'record';
 				node.innerHTML += `<h6>${data.datetime}</h6>`
 
@@ -212,7 +213,6 @@ createRecordForms.forEach(function (createRecordForm) {
 						</div>
 					</div>
 					<form id="deleteRecord" method="POST" action="delete_record/${data.id}/">
-						<input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
 						<input id="delete_record" type="submit" value="Delete record">
 					</form>
 				</div>`;

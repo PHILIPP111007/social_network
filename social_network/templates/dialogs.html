@@ -6,6 +6,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ global_user.first_name }} {{ global_user.last_name }}</title>
+	<script type="text/javascript">
+		window.CSRF_TOKEN = "{{ csrf_token }}";
+	</script>
 	<link rel="stylesheet" href='{% static "css/main.css" %}'>
     <link rel="stylesheet" href='{% static "css/dialogs.css" %}'>
 	<link rel="stylesheet" href='{% static "css/theme.css" %}'>

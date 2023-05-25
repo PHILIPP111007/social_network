@@ -19,8 +19,7 @@ def index(request, username):
 def make_content(request, find_users=None):
 	user = User.objects.get(username=request.user.username)
 	settings = UserSettings.objects.get(user_id=request.user.username)
-	obj = Subscriber()
-	friends, subscriptions, subscribers = obj.get_friends_subscriptions_subscribers(username=request.user.username)
+	friends, subscriptions, subscribers = Subscriber.get_friends_subscriptions_subscribers(username=request.user.username)
 
 	result_dict = {
 		'user': user,

@@ -23,7 +23,7 @@ def index(request, username):
 	global_user = User.objects.get(username=request.user.username)
 
 	blog = Blog.objects.filter(user_id=username)
-	friends_count = Subscriber().get_friends(username=username).count()
+	friends_count = Subscriber.get_friends(username=username).count()
 	settings = UserSettings.objects.get(user_id=request.user.username)
 
 	result_dict = {
@@ -102,7 +102,6 @@ def delete_record(request, username, id):
 			record = Blog.objects.get(user_id=request.user.username, id=id)
 			record.delete()
 			return JsonResponse({'status': True})
-
 		except Blog.DoesNotExist:
 			pass
 	return JsonResponse({'status': False})
@@ -169,7 +168,7 @@ def delete_subscriber(request, username):
 def make_chat(request, username):
 	if request.method == 'POST':
 		if Subscriber.objects.filter(user=username, subscribe=request.user.username).count():
-			room_name = Room().create_chat(request_user=request.user.username, friend=username)
+			room_name = Room.create_chat(request_user=request.user.username, friend=username)
 			return HttpResponseRedirect(f'/dialogs/{username}/chat/{room_name}/')
 	return HttpResponseRedirect(f'/dialogs/{request.user.username}')
 
@@ -187,4 +186,5 @@ def background_color_change(request, username):
 			settings.save(update_fields=['theme'])
 			return JsonResponse({'status': True})
 		except UserSettings.DoesNotExist:
-			return JsonResponse({'status': False})
+			pass
+	return JsonResponse({'status': False})

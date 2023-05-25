@@ -1,9 +1,11 @@
 const usernameInput = document.querySelector("#id_username");
+const myDiv = usernameInput.parentElement;
+
+
 function is_username_new(usernameInput) {
 	usernameInput.addEventListener("input", event => {
 
-		myDiv = usernameInput.parentElement;
-		val = usernameInput.value;
+		const val = usernameInput.value;
 
 		if (val) {
 
@@ -20,7 +22,7 @@ function is_username_new(usernameInput) {
 			.then(data => {
 
 				if (myDiv.getElementsByTagName('p')[0]) {
-					p = myDiv.getElementsByTagName('p')[0];
+					let p = myDiv.getElementsByTagName('p')[0];
 					p.remove();
 				}
 

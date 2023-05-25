@@ -10,6 +10,9 @@
 	<link rel="stylesheet" href='{% static "css/user.css" %}'>
 	<link rel="stylesheet" href='{% static "css/modal.css" %}'>
 	<link rel="stylesheet" href='{% static "css/theme.css" %}'>
+	<script type="text/javascript">
+		window.CSRF_TOKEN = "{{ csrf_token }}";
+	</script>
 	<style>
 		{% if not is_my_page %}
 			.user {
@@ -33,7 +36,6 @@
 
 	<div class="settings-bar">
 		<form id="backgroundColorChangeForm" method="POST" action="background_color_change/">
-			{% csrf_token %}
 			<input type="submit" value="Change theme">
 		</form>
 
@@ -114,38 +116,37 @@
 			<p>@{{ user.username }}</p>
 			<p>&#91; friends: {{ friends_count }} &#93;</p>
 			{% if not is_my_page %}
-
-			<div class="userButton">
-				{% if is_my_friend %}
-					<form method="POST" action="make_chat/{{ user.username }}/">
-						{% csrf_token %}
-						<input id="userButton" class="make_chat" type="submit" value="Chat">
-					</form>
-					<form method="POST" action="delete_friend/{{ user.username }}/">
-						{% csrf_token %}
-						<input id="userButton" class="remove_subscribe" type="submit" value="Remove from friends">
-					</form>
-				{% elif i_am_subscriber %}
-					<form method="POST" action="delete_friend/{{ user.username }}/">
-						{% csrf_token %}
-						<input id="userButton" class="remove_subscribe" type="submit" value="Remove subscription">
-					</form>
-				{% elif he_is_subscriber %}
-					<form method="POST" action="add_friend/{{ user.username }}/">
-						{% csrf_token %}
-						<input id="userButton" class="add_friend" type="submit" value="Add to friends">
-					</form>
-					<form method="POST" action="delete_subscriber/{{ user.username }}/">
-						{% csrf_token %}
-						<input id="userButton" class="remove_subscribe" type="submit" value="Delete his subscription">
-					</form>
-				{% else %}
-					<form method="POST" action="add_friend/{{ user.username }}/">
-						{% csrf_token %}
-						<input id="userButton" class="add_friend" type="submit" value="Add to friends">
-					</form>
-				{% endif %}
-			</div>
+				<div class="userButton">
+					{% if is_my_friend %}
+						<form method="POST" action="make_chat/{{ user.username }}/">
+							{% csrf_token %}
+							<input id="userButton" class="make_chat" type="submit" value="Chat">
+						</form>
+						<form method="POST" action="delete_friend/{{ user.username }}/">
+							{% csrf_token %}
+							<input id="userButton" class="remove_subscribe" type="submit" value="Remove from friends">
+						</form>
+					{% elif i_am_subscriber %}
+						<form method="POST" action="delete_friend/{{ user.username }}/">
+							{% csrf_token %}
+							<input id="userButton" class="remove_subscribe" type="submit" value="Remove subscription">
+						</form>
+					{% elif he_is_subscriber %}
+						<form method="POST" action="add_friend/{{ user.username }}/">
+							{% csrf_token %}
+							<input id="userButton" class="add_friend" type="submit" value="Add to friends">
+						</form>
+						<form method="POST" action="delete_subscriber/{{ user.username }}/">
+							{% csrf_token %}
+							<input id="userButton" class="remove_subscribe" type="submit" value="Delete his subscription">
+						</form>
+					{% else %}
+						<form method="POST" action="add_friend/{{ user.username }}/">
+							{% csrf_token %}
+							<input id="userButton" class="add_friend" type="submit" value="Add to friends">
+						</form>
+					{% endif %}
+				</div>
 			{% endif %}
 		</div>
 
@@ -209,7 +210,6 @@
 									</div>
 								</div>
 								<form id="deleteRecord" method="POST" action="delete_record/{{ record.pk }}/">
-									{% csrf_token %}
 									<input id="delete_record" type="submit" value="Delete record">
 								</form>
 							</div>

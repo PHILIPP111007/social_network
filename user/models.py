@@ -23,18 +23,19 @@ class Subscriber(models.Model):
 	def __str__(self):
 		return self.user.username
 
-	def get_friends(self, username):
-		set_1 = self.__class__.objects.filter(user=username).values_list('subscribe', flat=True)
-		set_2 = self.__class__.objects.filter(subscribe=username).values_list('user', flat=True)
-
+	@staticmethod
+	def get_friends(username):
+		set_1 = Subscriber.objects.filter(user=username).values_list('subscribe', flat=True)
+		set_2 = Subscriber.objects.filter(subscribe=username).values_list('user', flat=True)
 		friends = User.objects.filter(
 			Q(username__in=set_1) & Q(username__in=set_2)
 		)
 		return friends
 
-	def get_friends_subscriptions_subscribers(self, username):
-		set_1 = self.__class__.objects.filter(user=username).values_list('subscribe', flat=True)
-		set_2 = self.__class__.objects.filter(subscribe=username).values_list('user', flat=True)
+	@staticmethod
+	def get_friends_subscriptions_subscribers(username):
+		set_1 = Subscriber.objects.filter(user=username).values_list('subscribe', flat=True)
+		set_2 = Subscriber.objects.filter(subscribe=username).values_list('user', flat=True)
 
 		friends = User.objects.filter(
 			Q(username__in=set_1) & Q(username__in=set_2)
@@ -52,6 +53,9 @@ class UserSettings(models.Model):
 	user = models.OneToOneField(User, to_field='username', db_column='user', on_delete=models.CASCADE, primary_key=True)
 	low_power_mode = models.BooleanField(default=True)
 	theme = models.BooleanField(default=True)  # True = light theme, False = dark theme
+
+	class Meta:
+		verbose_name_plural = "UserSettings"
 
 	def __str__(self):
 		return self.user.username

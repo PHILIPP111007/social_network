@@ -11,11 +11,12 @@ class Room(models.Model):
 	def __str__(self):
 		return f'{self.pk}: {self.user_1}_{self.user_2}'
 
-	def create_chat(self, request_user, friend):
+	@staticmethod
+	def create_chat(request_user, friend):
 		a = min(request_user, friend)
 		b = max(request_user, friend)
 
-		room = self.__class__.objects.filter(user_1=a, user_2=b)
+		room = Room.objects.filter(user_1=a, user_2=b)
 
 		if room:
 			room = room[0]
@@ -35,7 +36,7 @@ class Room(models.Model):
 					room.user_2 = request_user
 					room.save(update_fields=['user_2'])
 		else:
-			room = self.__class__.objects.create(user_1=a, user_2=b)
+			room = Room.objects.create(user_1=a, user_2=b)
 		
 		return room.pk
 
@@ -48,10 +49,11 @@ class Message(models.Model):
 
 	class Meta:
 		ordering=['timestamp']
-
-	def get_str_time(self, msg):
-		time = msg.timestamp.strftime('%Y-%m-%d %H:%M')
-		return time
-		
+	
 	def __str__(self):
 		return f'{self.room_name} [{self.timestamp}]'
+	
+	@staticmethod
+	def get_str_time(msg):
+		time = msg.timestamp.strftime('%Y-%m-%d %H:%M')
+		return time

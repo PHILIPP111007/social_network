@@ -1,9 +1,13 @@
+const blogDiv = document.querySelector('.blog');
+const lazyDiv = document.querySelector('.lazyDiv');
+const number = Number(JSON.parse(document.getElementById('posts_to_download').textContent));
+
+
 // For read-more / read-less buttons
-const recordButton = document.querySelectorAll('.show-hide-btn');
-recordButton.forEach(function (i) {
-	i.addEventListener('click', function() {
+function recordButtonFunc(i) {
+	i.addEventListener('click', function () {
 		const id = this.id
-		const visibleDiv = i.closest('div')?.id
+		const visibleDiv = i.parentElement.parentElement.id;
 		document.getElementById(visibleDiv).style.display = 'none';
 		if (visibleDiv === `half-${id}`) {
 			document.getElementById(`full-${id}`).style.display = '';
@@ -11,4 +15,95 @@ recordButton.forEach(function (i) {
 			document.getElementById(`half-${id}`).style.display = '';
 		}
 	});
+};
+
+
+// lazy download posts
+const observer = new IntersectionObserver((entries) => {
+	if (entries[0].isIntersecting) {
+
+		const posts_number = Number(lazyDiv.id);
+		const url = `lazy_loader/${posts_number}`;
+
+		if (blogDiv.innerHTML === "") {
+			blogDiv.innerHTML = "<h4>Wait...</h4>";
+		}
+
+		fetch(url, {
+			method: 'GET',
+			credentials: "same-origin",
+			headers: {
+				"X-Requested-With": "XMLHttpRequest",
+			}
+		})
+			.then(response => response.json())
+			.then(data => {
+				if (data.status) {
+
+					if (blogDiv.innerHTML === "<h4>Wait...</h4>") {
+						blogDiv.innerHTML = "";
+					}
+
+					lazyDiv.id = posts_number + number;
+
+					const posts = data.friends_records;
+
+					for (let i = 0; i < posts.length; i++) {
+
+						const node = document.createElement("div");
+						node.className = 'record';
+						node.innerHTML += `
+						<a class="profile-link" href="/user/${posts[i].user_id}/">
+							<h3>${posts[i].first_name} ${posts[i].last_name}</h3>
+							<h6>@${posts[i].user_id}</h6>
+							<h6>${posts[i].date_time}</h6>
+						</a>`
+
+						if (posts[i].content.length > 500) {
+							node.innerHTML += `
+							<div class="half-content" id="half-${posts[i].id}">
+								<div>
+									<p>${posts[i].content.substring(0,499)}...</p>
+								</div>
+								
+								<div>
+									<button id="${posts[i].id}" href="javascript:void();" class="show-hide-btn">read more</button>
+									<br/>
+									<br/>
+								</div>
+							</div>
+						
+							<div class="full-content" id="full-${posts[i].id}" style="display: none;">
+								<div>
+									<p>${posts[i].content.replace('\n\n', '\n\n<br/><br/>')}</p>
+								</div>
+								
+								<div>
+									<button id="${posts[i].id}" class="show-hide-btn">read less</button>
+									<br/>
+									<br/>
+								</div>
+							</div>`;
+						} else {
+							node.innerHTML += `<div><p>${posts[i].content}</p></div>`;
+						}
+
+						blogDiv.appendChild(node);
+
+						if (posts[i].content.length > 500) {
+							const btns = node.querySelectorAll('.show-hide-btn');
+							for (let i = 0; i < btns.length; i++) {
+								recordButtonFunc(btns[i]);
+							}
+						}
+					}
+				} else {
+					if (blogDiv.innerHTML === "<h4>Wait...</h4>") {
+						blogDiv.innerHTML = "";
+					}
+				}
+			})
+	}
 });
+
+observer.observe(lazyDiv);

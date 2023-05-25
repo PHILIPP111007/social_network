@@ -1,9 +1,11 @@
+const csrftoken = window.CSRF_TOKEN;
+
 // For read-more / read-less buttons
-let recordButton = document.querySelectorAll('.show-hide-btn');
+const recordButton = document.querySelectorAll('.show-hide-btn');
 recordButton.forEach(function (i) {
 	i.addEventListener('click', function() {
-		let id = this.id
-		let visibleDiv = i.closest('div')?.id
+		const id = this.id
+		const visibleDiv = i.closest('div')?.id
 		document.getElementById(visibleDiv).style.display = 'none';
 		if (visibleDiv === `half-${id}`) {
 			document.getElementById(`full-${id}`).style.display = '';
@@ -19,8 +21,7 @@ function addFriend(addFriendForm) {
 	addFriendForm.addEventListener("submit", event => {
 		event.preventDefault();
 
-		let csrftoken = event.srcElement.csrfmiddlewaretoken.value;
-		let url = event.srcElement.action;
+		const url = event.srcElement.action;
 
 		fetch(url, {
 			method: 'POST',
@@ -37,8 +38,8 @@ function addFriend(addFriendForm) {
 
 				// Удаление карточки подписчика
 
-				let h_3_1 = document.getElementById('friends').getElementsByTagName('h3')[0];
-				num = h_3_1.innerText.split(' ')[1];
+				const h_3_1 = document.getElementById('friends').getElementsByTagName('h3')[0];
+				let num = h_3_1.innerText.split(' ')[1];
 
 				if (Number(num)) {
 					num = Number(num) + 1;
@@ -46,11 +47,11 @@ function addFriend(addFriendForm) {
 					num = 1;
 					h_3_1.style = ''
 				}
-				text = `Friends: ${num}`;
-				h_3_1.innerText = text;
+
+				h_3_1.innerText = `Friends: ${num}`;
 
 
-				let h_3_2 = document.getElementById('subscribers').getElementsByTagName('h3')[0];
+				const h_3_2 = document.getElementById('subscribers').getElementsByTagName('h3')[0];
 				num = h_3_2.innerText.split(' ')[1];
 				num = Number(num);
 
@@ -65,10 +66,10 @@ function addFriend(addFriendForm) {
 				addFriendForm.parentElement.remove();
 
 				// Вставка этой карточки в новый div друзей
-				let friendsHome = document.getElementById('friends');
-				let h = friendsHome.getElementsByTagName('h3')[0].nextElementSibling;
+				const friendsHome = document.getElementById('friends');
+				const h = friendsHome.getElementsByTagName('h3')[0].nextElementSibling;
 
-				let placeholder = document.createElement("div");
+				const placeholder = document.createElement("div");
 				placeholder.innerHTML = `
 				<div class="user-card">
 					<a class="profile-link" href="/user/${data.username}/">
@@ -82,11 +83,10 @@ function addFriend(addFriendForm) {
 					</form>
 
 					<form id="deleteFriendForm" method="POST" action="delete_friend/${data.username}/">
-						<input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
 						<input id="delButton" class="delete_friend" type="submit" value="delete">
 					</form>
 				</div>`;
-				let node = placeholder.firstElementChild;
+				const node = placeholder.firstElementChild;
 
 				friendsHome.insertBefore(node, h);
 				deleteFriend(node.getElementsByTagName('form')[1]);
@@ -102,8 +102,7 @@ function deleteFriend(deleteFriendForm) {
 	deleteFriendForm.addEventListener("submit", event => {
 		event.preventDefault();
 
-		let csrftoken = event.srcElement.csrfmiddlewaretoken.value;
-		let url = event.srcElement.action;
+		const url = event.srcElement.action;
 
 		fetch(url, {
 			method: 'POST',
@@ -119,9 +118,8 @@ function deleteFriend(deleteFriendForm) {
 			if (data.status) {
 
 				// Удаление карточки друга
-
-				let h_3_1 = document.getElementById('subscribers').getElementsByTagName('h3')[0];
-				num = h_3_1.innerText.split(' ')[1];
+				const h_3_1 = document.getElementById('subscribers').getElementsByTagName('h3')[0];
+				let num = h_3_1.innerText.split(' ')[1];
 
 				if (Number(num)) {
 					num = Number(num) + 1;
@@ -129,11 +127,11 @@ function deleteFriend(deleteFriendForm) {
 					num = 1;
 					h_3_1.style = ''
 				}
-				text = `Subscribers: ${num}`;
-				h_3_1.innerText = text;
+
+				h_3_1.innerText = `Subscribers: ${num}`;
 
 
-				let h_3_2 = document.getElementById('friends').getElementsByTagName('h3')[0];
+				const h_3_2 = document.getElementById('friends').getElementsByTagName('h3')[0];
 				num = h_3_2.innerText.split(' ')[1];
 				num = Number(num);
 
@@ -149,10 +147,10 @@ function deleteFriend(deleteFriendForm) {
 
 				// Вставка этой карточки в новый div подписчиков
 
-				let subscribersHome = document.getElementById('subscribers');
-				let h = subscribersHome.getElementsByTagName('h3')[0].nextElementSibling;
+				const subscribersHome = document.getElementById('subscribers');
+				const h = subscribersHome.getElementsByTagName('h3')[0].nextElementSibling;
 
-				let placeholder = document.createElement("div");
+				const placeholder = document.createElement("div");
 				placeholder.innerHTML = `
 				<div class="user-card">
 					<a class="profile-link" href="/user/${data.username}/">
@@ -166,16 +164,14 @@ function deleteFriend(deleteFriendForm) {
 					</form>
 					
 					<form id="addFriendForm" method="POST" action="add_friend/${data.username}/" name="${data.username}">
-						<input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
 						<input id="addButton" class="add_friend" type="submit" value="add">
 					</form>
 
 					<form id="deleteSubscriberForm" method="POST" action="delete_subscriber/${data.username}/">
-						<input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
 						<input id="delButton" class="remove_subscribe" type="submit" value="delete">
 					</form>
 				</div>`;
-				let node = placeholder.firstElementChild;
+				const node = placeholder.firstElementChild;
 
 				subscribersHome.insertBefore(node, h);
 
@@ -193,8 +189,7 @@ function deleteSubscription(deleteSubscriptionForm) {
 	deleteSubscriptionForm.addEventListener("submit", event => {
 		event.preventDefault();
 
-		let csrftoken = event.srcElement.csrfmiddlewaretoken.value;
-		let url = event.srcElement.action;
+		const url = event.srcElement.action;
 
 		fetch(url, {
 			method: 'POST',
@@ -210,9 +205,8 @@ function deleteSubscription(deleteSubscriptionForm) {
 			if (data.status) {
 
 				// Удаление карточки друга
-
-				let h_3 = document.getElementById('subscriptions').getElementsByTagName('h3')[0];
-				num = h_3.innerText.split(' ')[1];
+				const h_3 = document.getElementById('subscriptions').getElementsByTagName('h3')[0];
+				let num = h_3.innerText.split(' ')[1];
 				num = Number(num);
 
 				if (num === 1) {
@@ -236,8 +230,7 @@ function addSubscription(addSubscriptionForm) {
 	addSubscriptionForm.addEventListener("submit", event => {
 		event.preventDefault();
 
-		let csrftoken = event.srcElement.csrfmiddlewaretoken.value;
-		let url = event.srcElement.action;
+		const url = event.srcElement.action;
 
 		fetch(url, {
 			method: 'POST',
@@ -252,8 +245,8 @@ function addSubscription(addSubscriptionForm) {
 
 			if (data.status) {
 
-				let h_3 = document.getElementById('subscriptions').getElementsByTagName('h3')[0];
-				num = h_3.innerText.split(' ')[1];
+				const h_3 = document.getElementById('subscriptions').getElementsByTagName('h3')[0];
+				let num = h_3.innerText.split(' ')[1];
 
 				if (Number(num)) {
 					num = Number(num) + 1;
@@ -261,17 +254,17 @@ function addSubscription(addSubscriptionForm) {
 					num = 1;
 					h_3.style = ''
 				}
-				text = `Subscriptions: ${num}`;
-				h_3.innerText = text;
+
+				h_3.innerText = `Subscriptions: ${num}`;
 
 				addSubscriptionForm.parentElement.remove();
 
 				// Вставка этой карточки в новый div подписок
-				let subscriptionsHome = document.getElementById('subscriptions');
+				const subscriptionsHome = document.getElementById('subscriptions');
 
-				let h = subscriptionsHome.getElementsByTagName('h3')[0].nextElementSibling;
+				const h = subscriptionsHome.getElementsByTagName('h3')[0].nextElementSibling;
 
-				let placeholder = document.createElement("div");
+				const placeholder = document.createElement("div");
 				placeholder.innerHTML = `
 				<div class="user-card">
 					<a class="profile-link" href="/user/${data.username}/">
@@ -280,11 +273,10 @@ function addSubscription(addSubscriptionForm) {
 					</a>
 
 					<form id="deleteSubscriptionForm" method="POST" action="delete_friend/${data.username}/">
-						<input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
 						<input id="delButton" class="remove_subscribe" type="submit" value="delete">
 					</form>
 				</div>`;
-				let node = placeholder.firstElementChild;
+				const node = placeholder.firstElementChild;
 
 				subscriptionsHome.insertBefore(node, h);
 				deleteSubscription(node.getElementsByTagName('form')[0]);
@@ -300,8 +292,7 @@ function deleteSubscriber(deleteSubscriberForm) {
 	deleteSubscriberForm.addEventListener("submit", event => {
 		event.preventDefault();
 
-		let csrftoken = event.srcElement.csrfmiddlewaretoken.value;
-		let url = event.srcElement.action;
+		const url = event.srcElement.action;
 
 		fetch(url, {
 			method: 'POST',
@@ -317,9 +308,8 @@ function deleteSubscriber(deleteSubscriberForm) {
 			if (data.status) {
 
 				// Удаление карточки подписчика
-
-				let h_3 = document.getElementById('subscribers').getElementsByTagName('h3')[0];
-				num = h_3.innerText.split(' ')[1];
+				const h_3 = document.getElementById('subscribers').getElementsByTagName('h3')[0];
+				let num = h_3.innerText.split(' ')[1];
 				num = Number(num);
 
 				if (num === 1) {
@@ -329,7 +319,6 @@ function deleteSubscriber(deleteSubscriberForm) {
 					num -= 1;
 					h_3.innerText = `Subscribers: ${num}`;
 				}
-
 				deleteSubscriberForm.parentElement.remove();
 			}
 		})

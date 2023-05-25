@@ -4,7 +4,7 @@ backgroundColorChange.forEach(function (form) {
 	form.addEventListener("submit", event => {
 		event.preventDefault();
 
-		const csrftoken = event.srcElement.csrfmiddlewaretoken.value;
+		const csrftoken = window.CSRF_TOKEN;
 		const url = event.srcElement.action;
 		const color = window.getComputedStyle(document.body, null).getPropertyValue('background-color');
 		let color_id;
