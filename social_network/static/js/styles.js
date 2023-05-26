@@ -1,6 +1,5 @@
 // Changing system theme
-const backgroundColorChange = document.querySelectorAll("#backgroundColorChangeForm");
-backgroundColorChange.forEach(function (form) {
+function changeTheme(form) {
 	form.addEventListener("submit", event => {
 		event.preventDefault();
 
@@ -36,4 +35,7 @@ backgroundColorChange.forEach(function (form) {
 			}
 		})
 	})
-});
+};
+
+const themeForm = document.querySelector("#backgroundColorChangeForm");
+changeTheme(themeForm);

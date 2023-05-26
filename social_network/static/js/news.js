@@ -70,11 +70,16 @@ const observer = new IntersectionObserver((entries) => {
 							</a>`;
 						}
 
-						if (posts[i].content.length > 500) {
+						const text = linkify(posts[i].content.replace('\n', '\n<br/><br/>'));
+
+						if (text.length > 500) {
+
+							const halfText = text.substring(0,499);
+
 							node.innerHTML += `
 							<div class="half-content" id="half-${posts[i].id}">
 								<div>
-									<p>${posts[i].content.substring(0,499).replace('\n\n', '\n\n<br/><br/>')}...</p>
+									<p>${halfText}...</p>
 								</div>
 								
 								<div>
@@ -86,7 +91,7 @@ const observer = new IntersectionObserver((entries) => {
 						
 							<div class="full-content" id="full-${posts[i].id}" style="display: none;">
 								<div>
-									<p>${posts[i].content.replace('\n\n', '\n\n<br/><br/>')}</p>
+									<p>${text}</p>
 								</div>
 								
 								<div>
@@ -96,7 +101,7 @@ const observer = new IntersectionObserver((entries) => {
 								</div>
 							</div>`;
 						} else {
-							node.innerHTML += `<div><p>${posts[i].content.replace('\n\n', '\n\n<br/><br/>')}</p></div>`;
+							node.innerHTML += `<div><p>${text}</p></div>`;
 						}
 
 						if (posts[i].content.length > 500) {

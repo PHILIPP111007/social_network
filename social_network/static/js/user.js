@@ -15,6 +15,16 @@ function OnInput() {
 };
 
 
+function showHideFunc(node, text) {
+	if (text.length > 500) {
+		const btns = node.querySelectorAll('.show-hide-btn');
+		for (let i = 0; i < btns.length; i++) {
+			recordButtonFunc(btns[i]);
+		}
+	}
+}
+
+
 // For textarea tag
 function textareaScroll(textArea) {
 	textArea.setAttribute("style", "height:" + (textArea.scrollHeight));
@@ -24,8 +34,8 @@ function textareaScroll(textArea) {
 
 // For settings button (menu burger icon)
 function settingsButton(i) {
-	i.addEventListener('click', function() {
-		
+	i.addEventListener('click', function () {
+
 		const elem = document.querySelector('.settings-bar');
 		const marTop = getComputedStyle(elem).marginTop;
 
@@ -41,7 +51,7 @@ function settingsButton(i) {
 
 // For read-more / read-less buttons
 function recordButtonFunc(i) {
-	i.addEventListener('click', function() {
+	i.addEventListener('click', function () {
 		const id = this.id
 		const visibleDiv = i.parentElement.parentElement.id;
 		document.getElementById(visibleDiv).style.display = 'none';
@@ -56,12 +66,12 @@ function recordButtonFunc(i) {
 
 // Animation for the post settings window
 function threePointsFunc(i) {
-	i.addEventListener('click', function() {
+	i.addEventListener('click', function () {
 
 		const elem = this.nextElementSibling;
 
 		if (elem) {
-			
+
 			if (elem.classList.contains('active')) {
 				elem.style.height = getComputedStyle(elem).height;
 				elem.classList.remove('active');
@@ -69,7 +79,7 @@ function threePointsFunc(i) {
 				elem.style.height = '';
 			} else {
 
-			  	const record = this.closest('.record');
+				const record = this.closest('.record');
 				const textArea = elem.getElementsByTagName('textarea')[0];
 
 				if (!textArea.value) {
@@ -79,8 +89,8 @@ function threePointsFunc(i) {
 
 					if (textList.length === 4 | textList.length === 5) {
 						text = textList[0];
-					} else if (textList.length === 9 | textList.length === 10) {
-						text = textList[3];
+					} else if (textList.length === 10 | textList.length === 11) {
+						text = textList[4];
 						text = text.getElementsByTagName('div')[0];
 					}
 
@@ -100,10 +110,85 @@ function threePointsFunc(i) {
 				getComputedStyle(elem).height; // reflow
 				elem.style.height = h;
 				setTimeout(function () { elem.style.height = '' }, 300);
-		  	}
+			}
 		}
 	});
 };
+
+
+// AJAX change record
+function changeRecord(node) {
+
+	const changeRecordForm = node.querySelector('#changeRecord');
+
+	changeRecordForm.addEventListener("submit", event => {
+		event.preventDefault();
+
+		const url = event.srcElement.action;
+		const inputDiv = changeRecordForm.getElementsByTagName('textarea')[0];
+		let text = inputDiv.value;
+
+		if (text) {
+
+			fetch(url, {
+				method: 'POST',
+				credentials: "same-origin",
+				headers: {
+					"X-Requested-With": "XMLHttpRequest",
+					"X-CSRFToken": csrftoken,
+				},
+				body: text
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.status) {
+
+						const h_6 = node.getElementsByTagName('h6')[0];
+						if (!h_6.textContent.includes('Modified')) {
+							h_6.textContent += ' Modified';
+						}
+
+						const textDiv = node.querySelector('.text');
+						text = linkify(text.replace('\n', '\n<br/><br/>'));
+
+						if (text.length > 500) {
+
+							const halfText = text.substring(0, 499);
+
+							textDiv.innerHTML = `
+							<div class="half-content" id="half-${data.id}">
+								<div>
+									<p>${halfText}...</p>
+								</div>
+								
+								<div>
+									<button id="${data.id}" href="javascript:void();" class="show-hide-btn">read more</button>
+									<br/>
+									<br/>
+								</div>
+							</div>
+						
+							<div class="full-content" id="full-${data.id}" style="display: none;">
+								<div>
+									<p>${text}</p>
+								</div>
+								
+								<div>
+									<button id="${data.id}" class="show-hide-btn">read less</button>
+									<br/>
+									<br/>
+								</div>
+							</div>`;
+
+						} else {
+							textDiv.innerHTML = `<p>${text}</p>`;
+						}
+						showHideFunc(node, text);
+					}
+				})
+		}
+	})
+}
 
 
 // AJAX delete record
@@ -117,16 +202,16 @@ function deleteRecord(deleteRecordForm) {
 			method: 'POST',
 			credentials: "same-origin",
 			headers: {
-			"X-Requested-With": "XMLHttpRequest",
-			"X-CSRFToken": csrftoken,
+				"X-Requested-With": "XMLHttpRequest",
+				"X-CSRFToken": csrftoken,
 			},
 		})
-		.then(response => response.json())
-		.then(data => {
-			if (data.status) {
-				deleteRecordForm.parentElement.parentElement.remove();
-			}
-		})
+			.then(response => response.json())
+			.then(data => {
+				if (data.status) {
+					deleteRecordForm.parentElement.parentElement.remove();
+				}
+			})
 	})
 };
 
@@ -140,90 +225,93 @@ function createRecord(createRecordForm) {
 		const inputDiv = createRecordForm.getElementsByTagName('textarea')[0];
 		let text = inputDiv.value;
 
-		fetch(url, {
-			method: 'POST',
-			credentials: "same-origin",
-			headers: {
-			"X-Requested-With": "XMLHttpRequest",
-			"X-CSRFToken": csrftoken,
-			},
-			body: text
-		})
-		.then(response => response.json())
-		.then(data => {
-			if (data.status) {
+		if (text) {
 
-				inputDiv.value = '';
-				inputDiv.style.height = 0;
+			fetch(url, {
+				method: 'POST',
+				credentials: "same-origin",
+				headers: {
+					"X-Requested-With": "XMLHttpRequest",
+					"X-CSRFToken": csrftoken,
+				},
+				body: text
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.status) {
 
-				const blogsHome = document.getElementsByClassName('blog')[0];
-				const firstChild = blogsHome.firstElementChild;
+						inputDiv.value = '';
+						inputDiv.style.height = 0;
 
-				const node = document.createElement("div");
-				node.className = 'record';
-				node.innerHTML += `<h6>${data.datetime}</h6>`
+						const blogsHome = document.getElementsByClassName('blog')[0];
+						const firstChild = blogsHome.firstElementChild;
 
-				if (text.length > 500) {
-					node.innerHTML += `
-					<div class="half-content" id="half-${data.id}">
-						<div>
-							<p>${text.substring(0,499).replace('\n\n', '\n\n<br/><br/>')}...</p>
-						</div>
-						
-						<div>
-							<button id="${data.id}" href="javascript:void();" class="show-hide-btn">read more</button>
-							<br/>
-							<br/>
-						</div>
-					</div>
-				
-					<div class="full-content" id="full-${data.id}" style="display: none;">
-						<div>
-							<p>${text.replace('\n\n', '\n\n<br/><br/>')}</p>
-						</div>
-						
-						<div>
-							<button id="${data.id}" class="show-hide-btn">read less</button>
-							<br/>
-							<br/>
-						</div>
-					</div>`;
+						const node = document.createElement("div");
+						node.className = 'record';
+						node.innerHTML += `<h6>${data.datetime}</h6>`
 
+						text = linkify(text.replace('\n', '\n<br/><br/>'));
 
-				} else {
-					node.innerHTML += `<div><p>${text}</p></div>`;
-				}
+						if (text.length > 500) {
 
-				node.innerHTML += `
-				<img class="three_points" src="/static/images/three_points.svg" width="20" height="20" alt="three points">
+							const halfText = text.substring(0, 499);
 
-				<div class="record-bar">
-					<div id="change-record">
-						<div>
-							<form method="POST" action="change_record/${data.id}/">
-								<input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
-								<textarea name="my_textarea" maxlength="5000" placeholder="Edit record"></textarea>
-								<input type="submit" name="edit" value="Edit record">
+							node.innerHTML += `
+							<div class="text">
+								<div class="half-content" id="half-${data.id}">
+									<div>
+										<p>${halfText}...</p>
+									</div>
+									
+									<div>
+										<button id="${data.id}" href="javascript:void();" class="show-hide-btn">read more</button>
+										<br/>
+										<br/>
+									</div>
+								</div>
+							
+								<div class="full-content" id="full-${data.id}" style="display: none;">
+									<div>
+										<p>${text}</p>
+									</div>
+									
+									<div>
+										<button id="${data.id}" class="show-hide-btn">read less</button>
+										<br/>
+										<br/>
+									</div>
+								</div>
+							</div>`;
+						} else {
+							node.innerHTML += `<div class="text"><p>${text}</p></div>`;
+						}
+
+						node.innerHTML += `
+						<img class="three_points" src="/static/images/three_points.svg" width="20" height="20" alt="three points">
+
+						<div class="record-bar">
+							<div>
+								<div>
+									<form id="changeRecord" method="POST" action="change_record/${data.id}/">
+										<input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+										<textarea name="my_textarea" maxlength="5000" placeholder="Edit record"></textarea>
+										<input type="submit" name="edit" value="Edit record">
+									</form>
+								</div>
+							</div>
+							<form id="deleteRecord" method="POST" action="delete_record/${data.id}/">
+								<input id="delete_record" type="submit" value="Delete record">
 							</form>
-						</div>
-					</div>
-					<form id="deleteRecord" method="POST" action="delete_record/${data.id}/">
-						<input id="delete_record" type="submit" value="Delete record">
-					</form>
-				</div>`;
+						</div>`;
 
-				blogsHome.insertBefore(node, firstChild);
+						blogsHome.insertBefore(node, firstChild);
 
-				nodeAddListeners(node);
+						nodeAddListeners(node);
 
-				if (text.length > 500) {
-					const btns = node.querySelectorAll('.show-hide-btn');
-					for (let i = 0; i < btns.length; i++) {
-						recordButtonFunc(btns[i]);
+						showHideFunc(node, text);
 					}
-				}
-			}
-		})
+				})
+		}
 	})
 };
 
@@ -269,43 +357,51 @@ const observer = new IntersectionObserver((entries) => {
 							node.innerHTML += `<h6>${posts[i].date_time}</h6>`;
 						}
 
-						if (posts[i].content.length > 500) {
+						const text = linkify(posts[i].content.replace('\n', '\n<br/><br/>'));
+
+						if (text.length > 500) {
+
+							const halfText = text.substring(0, 499);
+
 							node.innerHTML += `
-							<div class="half-content" id="half-${posts[i].id}">
-								<div>
-									<p>${posts[i].content.substring(0,499).replace('\n\n', '\n\n<br/><br/>')}...</p>
+							<div class="text">
+								<div class="half-content" id="half-${posts[i].id}">
+									<div>
+										<p>${halfText}...</p>
+									</div>
+									
+									<div>
+										<button id="${posts[i].id}" href="javascript:void();" class="show-hide-btn">read more</button>
+										<br/>
+										<br/>
+									</div>
 								</div>
-								
-								<div>
-									<button id="${posts[i].id}" href="javascript:void();" class="show-hide-btn">read more</button>
-									<br/>
-									<br/>
-								</div>
-							</div>
-						
-							<div class="full-content" id="full-${posts[i].id}" style="display: none;">
-								<div>
-									<p>${posts[i].content.replace('\n\n', '\n\n<br/><br/>')}</p>
-								</div>
-								
-								<div>
-									<button id="${posts[i].id}" class="show-hide-btn">read less</button>
-									<br/>
-									<br/>
+							
+								<div class="full-content" id="full-${posts[i].id}" style="display: none;">
+									<div>
+										<p>${text}</p>
+									</div>
+									
+									<div>
+										<button id="${posts[i].id}" class="show-hide-btn">read less</button>
+										<br/>
+										<br/>
+									</div>
 								</div>
 							</div>`;
 						} else {
-							node.innerHTML += `<div><p>${posts[i].content.replace('\n\n', '\n\n<br/><br/>')}</p></div>`;
+							node.innerHTML += `<div class="text"><p>${text}</p></div>`;
 						}
 
 						if (is_my_page) {
+
 							node.innerHTML += `
 							<img class="three_points" src="/static/images/three_points.svg" width="20" height="20" alt="three points">
 
 							<div class="record-bar">
-								<div id="change-record">
+								<div>
 									<div>
-										<form method="POST" action="change_record/${posts[i].id}/">
+										<form id="changeRecord" method="POST" action="change_record/${posts[i].id}/">
 											<input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
 											<textarea name="my_textarea" maxlength="5000" placeholder="Edit record"></textarea>
 											<input type="submit" name="edit" value="Edit record">
@@ -322,12 +418,7 @@ const observer = new IntersectionObserver((entries) => {
 							nodeAddListeners(node);
 						}
 
-						if (posts[i].content.length > 500) {
-							const btns = node.querySelectorAll('.show-hide-btn');
-							for (let i = 0; i < btns.length; i++) {
-								recordButtonFunc(btns[i]);
-							}
-						}
+						showHideFunc(node, text);
 
 						blogDiv.appendChild(node);
 					}
@@ -344,7 +435,8 @@ const observer = new IntersectionObserver((entries) => {
 function nodeAddListeners(node) {
 	threePointsFunc(node.getElementsByClassName('three_points')[0]);
 	textareaScroll(node.getElementsByTagName("textarea")[0]);
-	deleteRecord(node.querySelectorAll('#deleteRecord')[0]);
+	deleteRecord(node.querySelector('#deleteRecord'));
+	changeRecord(node);
 
 	if (low_power_mode) {
 		youTubeAPI(node);

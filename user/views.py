@@ -48,7 +48,6 @@ def index(request, username):
 	return render(request, "user.html", result_dict)
 
 
-
 @login_required
 def lazy_loader(request, username, posts_number):
 
@@ -89,30 +88,33 @@ def delete_account(request, username):
 @login_required
 def create_record(request, username):
 	is_ajax = request.headers.get("X-Requested-With") == "XMLHttpRequest"
-	if is_ajax and request.method == "POST":
+	if is_ajax and request.method == "POST" and request.body:
 
-		if request.body:
-			body = request.body.decode("utf-8")
+		body = request.body.decode("utf-8")
 
-			new_record = Blog.objects.create(user_id=request.user.username, content=body)
+		new_record = Blog.objects.create(user_id=request.user.username, content=body)
 
-			return JsonResponse({
-				"status": True,
-				"id": new_record.pk,
-				"datetime": new_record.date_time.strftime("%Y-%m-%d %H:%M")
-			})
+		return JsonResponse({
+			"status": True,
+			"id": new_record.pk,
+			"datetime": new_record.date_time.strftime("%Y-%m-%d %H:%M")
+		})
 	return JsonResponse({"status": False})
 
 
 @login_required
 def change_record(request, username, id):
-	if request.method == "POST" and request.POST.get("my_textarea", ""):
+	is_ajax = request.headers.get("X-Requested-With") == "XMLHttpRequest"
+	if is_ajax and request.method == "POST" and request.body:
+
+		text = request.body.decode("utf-8")
 		record = Blog.objects.get(user_id=request.user.username, id=id)
-		record.content=request.POST.get("my_textarea")
+		record.content = text
 		record.is_changed = True
 		record.save(update_fields=["content", "is_changed"])
 
-	return redirect("user", request.user.username)
+		return JsonResponse({"status": True})
+	return JsonResponse({"status": False})
 
 
 @login_required
