@@ -102,15 +102,15 @@ sendButton.onclick = function (e) {
 
 chatSocket.onmessage = function (e) {
 	const data = JSON.parse(e.data);
+	const text = linkify(data.message.trim().replace('\n', '\n<br/><br/>'));
 
 	chatItemContainer.innerHTML += `
 	<div id="${data.message_id}">
 		<label>${data.first_name} ${data.last_name} ${data.timestamp}</label>
-		<div id="${data.message_id}" class="text">${data.message.trim()}</div>
+		<div id="${data.message_id}" class="text">${text}</div>
 
 		<button class="hiddenButton" onclick="showDeleteModal(${data.message_id})">delete</button>
 		<button class="hiddenButton" onclick="copyText(${data.message_id})">copy</button>
-
 	</div>`;
 
 	lastMessageScroll("smooth");
