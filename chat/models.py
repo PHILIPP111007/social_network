@@ -5,11 +5,11 @@ from django.contrib.auth.models import User
 class Room(models.Model):
 	user_1 = models.CharField(max_length=30)
 	user_2 = models.CharField(max_length=30)
-	delete_user_1 = models.CharField(max_length=30, default='0')
-	delete_user_2 = models.CharField(max_length=30, default='0')
+	delete_user_1 = models.CharField(max_length=30, default="0")
+	delete_user_2 = models.CharField(max_length=30, default="0")
 	
 	def __str__(self):
-		return f'{self.pk}: {self.user_1}_{self.user_2}'
+		return f"{self.pk}: {self.user_1}_{self.user_2}"
 
 	@staticmethod
 	def create_chat(request_user, friend):
@@ -21,20 +21,20 @@ class Room(models.Model):
 		if room:
 			room = room[0]
 			if a == request_user:
-				if room.delete_user_1 != '0':
-					room.delete_user_1 = '0'
-					room.save(update_fields=['delete_user_1'])
-				elif room.user_1 == '0':
+				if room.delete_user_1 != "0":
+					room.delete_user_1 = "0"
+					room.save(update_fields=["delete_user_1"])
+				elif room.user_1 == "0":
 					room.user_1 = request_user
-					room.save(update_fields=['user_1'])
+					room.save(update_fields=["user_1"])
 
 			elif b == request_user:
-				if room.delete_user_2 != '0':
-					room.delete_user_2 = '0'
-					room.save(update_fields=['delete_user_2'])
-				elif room.user_2 == '0':
+				if room.delete_user_2 != "0":
+					room.delete_user_2 = "0"
+					room.save(update_fields=["delete_user_2"])
+				elif room.user_2 == "0":
 					room.user_2 = request_user
-					room.save(update_fields=['user_2'])
+					room.save(update_fields=["user_2"])
 		else:
 			room = Room.objects.create(user_1=a, user_2=b)
 		
@@ -42,18 +42,18 @@ class Room(models.Model):
 
 
 class Message(models.Model):
-	room_name = models.ForeignKey(Room, to_field='id', db_column='room_name', on_delete=models.CASCADE)
-	sender = models.ForeignKey(User, to_field='username', db_column='sender', on_delete=models.CASCADE)
+	room_name = models.ForeignKey(Room, to_field="id", db_column="room_name", on_delete=models.CASCADE)
+	sender = models.ForeignKey(User, to_field="username", db_column="sender", on_delete=models.CASCADE)
 	message = models.CharField(max_length=5000)
 	timestamp = models.DateTimeField(auto_now_add=True)
 
 	class Meta:
-		ordering=['timestamp']
+		ordering=["timestamp"]
 	
 	def __str__(self):
-		return f'{self.room_name} [{self.timestamp}]'
+		return f"{self.room_name} [{self.timestamp}]"
 	
 	@staticmethod
 	def get_str_time(msg):
-		time = msg.timestamp.strftime('%Y-%m-%d %H:%M')
+		time = msg.timestamp.strftime("%Y-%m-%d %H:%M")
 		return time

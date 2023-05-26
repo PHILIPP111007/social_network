@@ -12,6 +12,10 @@
 	<link rel="stylesheet" href='{% static "css/main.css" %}'>
 	<link rel="stylesheet" href='{% static "css/news.css" %}'>
 	<link rel="stylesheet" href='{% static "css/theme.css" %}'>
+
+	{{ posts_to_download|json_script:"posts_to_download" }}
+	{{ settings.low_power_mode|json_script:"low_power_mode" }}
+
 </head>
 <body {% if settings.theme %}class="body-light"{% else %}class="body-dark"{% endif %}>
 
@@ -46,8 +50,6 @@
 
 	<div class="main-content">
 
-		{{ posts_to_download|json_script:"posts_to_download" }}
-
 		<div class="blog"></div>
 
 		<div id="0" class="lazyDiv"></div>
@@ -56,11 +58,12 @@
 
     <div id="upper-div"></div>
 
-	<script src="{% static 'js/main.js' %}" type="text/javascript" charset="utf-8" async defer></script>
-	<script src="{% static 'js/styles.js' %}" type="text/javascript" charset="utf-8" async defer></script>
-	<script src="{% static 'js/news.js' %}" type="text/javascript" charset="utf-8" async defer></script>
 	{% if settings.low_power_mode %}
 		<script src="{% static 'js/youtubeAPI.js' %}" type="text/javascript" charset="utf-8" async defer></script>
 	{% endif %}
+	<script src="{% static 'js/main.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+	<script src="{% static 'js/styles.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+	<script src="{% static 'js/news.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+
 </body>
 </html>

@@ -20,6 +20,11 @@
 			}
 		{% endif %}
 	</style>
+
+	{{ is_my_page|json_script:"is_my_page" }}
+	{{ posts_to_download|json_script:"posts_to_download" }}
+	{{ settings.low_power_mode|json_script:"low_power_mode" }}
+
 </head>
 <body {% if settings.theme %}class="body-light"{% else %}class="body-dark"{% endif %}>
 
@@ -158,79 +163,24 @@
 			</form>
 		{% endif %}
 
-		<div class="blog">
-			
-			{% if is_my_page or is_my_friend %}
-				{% for record in blog %}
-					<div class="record">
-					
-						<h6>{{ record.date_time|date:'Y-m-d H:i' }} {% if record.is_changed %}&#91;&#10000; Modified&#93;{% endif %}</h6>
-						
-						{% if record.content|length > 500 %}
-							<div class="half-content" id="half-{{record.pk}}">
-								<div>
-									{{ record.content|truncatechars:500|linebreaks|urlize }}
-								</div>
-								<div>
-									<button id="{{record.pk}}" href="javascript:void();" class="show-hide-btn">read more</button>
-									<br>
-									<br>
-								</div>
-							</div>
-							
-							<div class="full-content" id="full-{{record.pk}}" style="display: none;">
-								<div>
-									{{ record.content|urlize }}
-								</div>
+		<div class="blog"></div>
 
-								<div>
-									<button id="{{record.pk}}" class="show-hide-btn">read less</button>
-									<br>
-									<br>
-								</div>
-							</div>
-						{% else %}
-							<div>
-								{{ record.content|linebreaks|urlize }}
-							</div>
-						{% endif %}
+		{% if is_my_page or is_my_friend or he_is_subscriber %}
+			<div id="0" class="lazyDiv"></div>
+		{% else %}
+			<h3>Make friends to see his blog!</h3>
+		{% endif %}
 
-						{% if is_my_page %}
-
-							<img class="three_points" src="{% static 'images/three_points.svg' %}" width="20" height="20" alt="three points">
-
-							<div class="record-bar">
-								<div id="change-record">
-									<div>
-										<form method="POST" action="change_record/{{ record.pk }}/">
-											{% csrf_token %}
-											<textarea name="my_textarea" maxlength="5000" placeholder="Edit record"></textarea>
-											<input type="submit" name="edit" value="Edit record">
-										</form>
-									</div>
-								</div>
-								<form id="deleteRecord" method="POST" action="delete_record/{{ record.pk }}/">
-									<input id="delete_record" type="submit" value="Delete record">
-								</form>
-							</div>
-
-						{% endif %}
-					</div>
-				{% endfor %}
-			{% else %}
-				<h3>Make friends to see his blog!</h3>
-			{% endif %}
-
-		</div>
 	</div>
 
-    <div id="upper-div"></div>
+	<div id="upper-div"></div>
 
-	<script src="{% static 'js/user.js' %}" type="text/javascript" charset="utf-8" async defer></script>
-	<script src="{% static 'js/styles.js' %}" type="text/javascript" charset="utf-8" async defer></script>
-	<script src="{% static 'js/modal.js' %}" type="text/javascript" charset="utf-8" async defer></script>
 	{% if settings.low_power_mode %}
 		<script src="{% static 'js/youtubeAPI.js' %}" type="text/javascript" charset="utf-8" async defer></script>
 	{% endif %}
+	<script src="{% static 'js/user.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+	<script src="{% static 'js/styles.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+	<script src="{% static 'js/modal.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+
 </body>
 </html>

@@ -1,6 +1,7 @@
 const blogDiv = document.querySelector('.blog');
 const lazyDiv = document.querySelector('.lazyDiv');
 const number = Number(JSON.parse(document.getElementById('posts_to_download').textContent));
+const low_power_mode = JSON.parse(document.getElementById('low_power_mode').textContent);
 
 
 // For read-more / read-less buttons
@@ -52,18 +53,28 @@ const observer = new IntersectionObserver((entries) => {
 
 						const node = document.createElement("div");
 						node.className = 'record';
-						node.innerHTML += `
-						<a class="profile-link" href="/user/${posts[i].user_id}/">
-							<h3>${posts[i].first_name} ${posts[i].last_name}</h3>
-							<h6>@${posts[i].user_id}</h6>
-							<h6>${posts[i].date_time}</h6>
-						</a>`
+
+						if (posts[i].is_changed) {
+							node.innerHTML += `
+							<a class="profile-link" href="/user/${posts[i].user_id}/">
+								<h3>${posts[i].first_name} ${posts[i].last_name}</h3>
+								<h6>@${posts[i].user_id}</h6>
+								<h6>${posts[i].date_time} Modified</h6>
+							</a>`;
+						} else {
+							node.innerHTML += `
+							<a class="profile-link" href="/user/${posts[i].user_id}/">
+								<h3>${posts[i].first_name} ${posts[i].last_name}</h3>
+								<h6>@${posts[i].user_id}</h6>
+								<h6>${posts[i].date_time}</h6>
+							</a>`;
+						}
 
 						if (posts[i].content.length > 500) {
 							node.innerHTML += `
 							<div class="half-content" id="half-${posts[i].id}">
 								<div>
-									<p>${posts[i].content.substring(0,499)}...</p>
+									<p>${posts[i].content.substring(0,499).replace('\n\n', '\n\n<br/><br/>')}...</p>
 								</div>
 								
 								<div>
@@ -85,10 +96,8 @@ const observer = new IntersectionObserver((entries) => {
 								</div>
 							</div>`;
 						} else {
-							node.innerHTML += `<div><p>${posts[i].content}</p></div>`;
+							node.innerHTML += `<div><p>${posts[i].content.replace('\n\n', '\n\n<br/><br/>')}</p></div>`;
 						}
-
-						blogDiv.appendChild(node);
 
 						if (posts[i].content.length > 500) {
 							const btns = node.querySelectorAll('.show-hide-btn');
@@ -96,6 +105,12 @@ const observer = new IntersectionObserver((entries) => {
 								recordButtonFunc(btns[i]);
 							}
 						}
+
+						if (low_power_mode) {
+							youTubeAPI(node);
+						}
+
+						blogDiv.appendChild(node);
 					}
 				} else {
 					if (blogDiv.innerHTML === "<h4>Wait...</h4>") {

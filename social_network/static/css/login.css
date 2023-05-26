@@ -71,24 +71,28 @@ input[type="text"], input[type="email"], input[type="password"] {
     color:rgb(4, 134, 0);
 }
 .enter {
-    position: fixed;
-    left: calc(50% - 210px);
+    margin-left: calc(50% - 210px);
     width: 400px;
     padding: 10px;
     border: 2px solid black;
     background: rgb(235, 235, 235);
 }
+    .enter table {
+        margin-left: calc(50% - 130px);
+    }
     .enter input {
         margin-top: 20px;
     }
 .register {
-    position: fixed;
-    left: calc(50% - 260px);
+    margin-left: calc(50% - 260px);
     width: 500px;
     padding: 10px;
     border: 2px solid black;
     background: rgb(235, 235, 235);
 }
+    .register table {
+        margin-left: calc(50% - 130px);
+    }
     .register input {
         margin-top: 20px;
     }

@@ -10,6 +10,12 @@
 	<link rel="stylesheet" href='{% static "css/room.css" %}'>
 	<link rel="stylesheet" href='{% static "css/modal.css" %}'>
 	<link rel="stylesheet" href='{% static "css/theme.css" %}'>
+	
+	{{ room_name|json_script:"room-name" }}
+	{{ global_user.username|json_script:"global-user" }}
+	{{ global_user.first_name|json_script:"first_name" }}
+	{{ global_user.last_name|json_script:"last_name" }}
+
 </head>
 <body {% if settings.theme %}class="body-light"{% else %}class="body-dark"{% endif %}>
 
@@ -62,11 +68,6 @@
 				<button type="submit" class="id_message_send_button">send</button>
 			</div>
 		</div>
-
-		{{ room_name|json_script:"room-name" }}
-		{{ global_user.username|json_script:"global-user" }}
-		{{ global_user.first_name|json_script:"first_name" }}
-		{{ global_user.last_name|json_script:"last_name" }}
 
 	</div>
 
