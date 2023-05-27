@@ -5,7 +5,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from .models import Blog, Subscriber, UserSettings
 from chat.models import Room
-from social_network.settings import POSTS_TO_DOWNLOAD
+from social_network.settings import POSTS_TO_DOWNLOAD, TIME_PATTERN
 
 
 @login_required
@@ -54,14 +54,21 @@ def lazy_loader(request, username, posts_number):
 	is_ajax = request.headers.get("X-Requested-With") == "XMLHttpRequest"
 	if is_ajax and request.method == "GET":
 
-		blog = Blog.objects.filter(user_id=username)[posts_number:posts_number + POSTS_TO_DOWNLOAD].values()
+		blog = Blog.objects.filter(user_id=username)[posts_number:posts_number + POSTS_TO_DOWNLOAD]
 
-		result = [item for item in blog]
+		if blog:
+			result = [
+				{
+					'id': post.id,
+					'user_id': post.user.username,
+					'first_name': post.user.first_name,
+					'last_name': post.user.last_name,
+					'date_time': post.date_time.strftime(TIME_PATTERN),
+					'content': post.content,
+					'is_changed': post.is_changed
+				} for post in blog
+			]
 
-		for item in result:
-			item["date_time"] = item["date_time"].strftime("%Y-%m-%d %H:%M")
-
-		if result:
 			return JsonResponse({
 				"status": True,
 				"blog": result
@@ -91,13 +98,12 @@ def create_record(request, username):
 	if is_ajax and request.method == "POST" and request.body:
 
 		body = request.body.decode("utf-8")
-
 		new_record = Blog.objects.create(user_id=request.user.username, content=body)
 
 		return JsonResponse({
 			"status": True,
 			"id": new_record.pk,
-			"datetime": new_record.date_time.strftime("%Y-%m-%d %H:%M")
+			"datetime": new_record.date_time.strftime(TIME_PATTERN)
 		})
 	return JsonResponse({"status": False})
 

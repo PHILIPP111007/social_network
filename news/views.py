@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from user.models import Blog, Subscriber, UserSettings
-from social_network.settings import POSTS_TO_DOWNLOAD
+from social_network.settings import POSTS_TO_DOWNLOAD, TIME_PATTERN
 
 
 @login_required
@@ -26,17 +26,21 @@ def lazy_loader(request, username, posts_number):
 	if is_ajax and request.method == "GET":
 
 		friends = Subscriber.get_friends(username=request.user.username)
-		friends_records = Blog.objects.filter(user_id__in=friends)[posts_number:posts_number + POSTS_TO_DOWNLOAD].values()
+		friends_records = Blog.objects.filter(user_id__in=friends)[posts_number:posts_number + POSTS_TO_DOWNLOAD]
 
-		result = [item for item in friends_records]
+		if friends_records:
+			result = [
+				{
+					'id': post.id,
+					'user_id': post.user.username,
+					'first_name': post.user.first_name,
+					'last_name': post.user.last_name,
+					'date_time': post.date_time.strftime(TIME_PATTERN),
+					'content': post.content,
+					'is_changed': post.is_changed
+				} for post in friends_records
+			]
 
-		for item in result:
-			user = User.objects.get(username=item["user_id"])
-			item["first_name"] = user.first_name
-			item["last_name"] = user.last_name
-			item["date_time"] = item["date_time"].strftime("%Y-%m-%d %H:%M")
-		
-		if result:
 			return JsonResponse({
 				"status": True,
 				"friends_records": result

@@ -139,3 +139,4 @@ LOGIN_URL = "/login"  # !!!
 # ----- My settings -----
 
 POSTS_TO_DOWNLOAD = 20
+TIME_PATTERN = "%Y-%m-%d %H:%M"

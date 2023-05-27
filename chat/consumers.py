@@ -1,5 +1,6 @@
 import json
 from .models import Message
+from social_network.settings import TIME_PATTERN
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 
@@ -31,8 +32,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 		message = text_data_json["message"]
 
 		message_obj = await self.create_message(self.room_name, username, message)
-
-		timestamp = Message.get_str_time(message_obj)
+		timestamp = message_obj.timestamp.strftime(TIME_PATTERN)
 
 		# Send message to room group
 		await self.channel_layer.group_send(

@@ -52,8 +52,3 @@ class Message(models.Model):
 	
 	def __str__(self):
 		return f"{self.room_name} [{self.timestamp}]"
-	
-	@staticmethod
-	def get_str_time(msg):
-		time = msg.timestamp.strftime("%Y-%m-%d %H:%M")
-		return time

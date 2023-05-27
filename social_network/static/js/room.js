@@ -135,6 +135,7 @@ deleteMessageSocket.onmessage = function (e) {
 	const data = JSON.parse(e.data);
 	hideDeleteModal();
 	if (data.deleted) {
-		document.getElementById(`${data.pk}`).remove();
+		let removedMsg = document.getElementById(`${data.pk}`).getElementsByClassName('text')[0];
+		removedMsg.innerHTML = '<div style="color: gray">deleted</div>';
 	}
 };
