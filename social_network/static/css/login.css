@@ -11,9 +11,6 @@ input[type="submit"] {
     text-transform: uppercase;
     letter-spacing: 1px;
     outline: none;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
     padding: 5px;
     background-color: rgb(205, 205, 205);
     color: rgb(44, 42, 42);
@@ -21,9 +18,6 @@ input[type="submit"] {
 input[type="submit"]:after {
     position: relative;
     z-index: -1;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
 }
 input[type="submit"]:hover {
     position: relative;
@@ -45,9 +39,6 @@ input[type="text"], input[type="email"], input[type="password"] {
     display: inline-block;
     letter-spacing: 1px;
     outline: none;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
     padding: 5px;
     width: 250px;
     border-radius: 0.25rem;
@@ -70,33 +61,25 @@ input[type="text"], input[type="email"], input[type="password"] {
     background: rgb(145, 233, 110);
     color:rgb(4, 134, 0);
 }
+.main p {
+    text-align: center;
+}
 .enter {
-    margin-left: calc(50% - 210px);
+    margin: 0 auto;
     width: 400px;
     padding: 10px;
     border: 2px solid black;
     background: rgb(235, 235, 235);
 }
-    .enter table {
-        margin-left: calc(50% - 130px);
-    }
     .enter input {
+        display: block;
+        margin: 0 auto;
         margin-top: 20px;
     }
-.register {
-    margin-left: calc(50% - 260px);
-    width: 500px;
-    padding: 10px;
-    border: 2px solid black;
-    background: rgb(235, 235, 235);
-}
-    .register table {
-        margin-left: calc(50% - 130px);
-    }
-    .register input {
-        margin-top: 20px;
-    }
-    .register span {
-        font-size: small;
+    .enter span {
+        text-align: center;
+        justify-content: center;
+        margin: 0 auto;
+        font-size: medium;
         color: rgb(153, 150, 145);
     }

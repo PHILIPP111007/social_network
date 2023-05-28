@@ -32,9 +32,7 @@
 			<h3>Log in</h3>
 			<form method="POST" action="">
 				{% csrf_token %}
-				<table class="form">
-					{{ loginform }}
-				</table>
+				{{ loginform }}
 				<input id="loginButton" type="submit" value="Login">
 			</form>
 			<p><a href="/register">Register</a></p>

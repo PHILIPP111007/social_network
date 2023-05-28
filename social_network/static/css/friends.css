@@ -8,9 +8,6 @@ input[type="text"], input[type="email"] {
     display: inline-block;
     letter-spacing: 1px;
     outline: none;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
     padding: 5px;
     width: 250px;
     border-radius: 0.25rem;

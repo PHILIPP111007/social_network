@@ -1,8 +1,5 @@
 body {
     font-family: 'Calibri', sans-serif;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
 }
 input[type="checkbox"] {
     position: relative;
