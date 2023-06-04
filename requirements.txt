@@ -64,6 +64,8 @@ pycparser==2.21
     # via cffi
 pyopenssl==23.1.1
     # via twisted
+python-dotenv==1.0.0
+    # via -r requirements.in
 redis==4.5.4
     # via channels-redis
 service-identity==21.1.0
@@ -80,8 +82,6 @@ txaio==23.1.1
     # via autobahn
 typing-extensions==4.6.1
     # via twisted
-whitenoise==6.4.0
-    # via -r requirements.in
 zope-interface==6.0
     # via twisted
 

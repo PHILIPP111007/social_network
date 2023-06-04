@@ -82,6 +82,9 @@ input[type="submit"]:active, input[type="reset"]:active {
     margin-top: 7px;
     margin-left: 20px;
 }
+    .menu_burger_icon {
+        height: 22px;
+    }
     .menu_burger_icon:hover {
         cursor: pointer;
     }

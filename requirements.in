@@ -1,5 +1,5 @@
 django
 daphne
-whitenoise
 channels
 channels-redis
+python-dotenv
