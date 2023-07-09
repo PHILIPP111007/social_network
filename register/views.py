@@ -45,7 +45,6 @@ def user_auth(request):
 		login(request, user)
 		return redirect("user", username)
 	else:
-		messages.error(request, "Incorrect login or password")
 		return redirect("login")
 
 
