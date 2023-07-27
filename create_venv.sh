@@ -13,14 +13,11 @@ read answer
 
 if [ $answer = "y" ]
     then
-        if [ ! -d ".venv" ] && [ ! -d "venv" ] && [ ! -d ".env" ]
+        if [ ! -d "venv" ]
             then
-                python3 -m venv .venv
-            
+                python3 -m venv venv
             else
-                if [ -d ".venv" ]; then source $PWD/.venv/bin/activate; echo $venvActived; fi
                 if [ -d "venv" ]; then source $PWD/venv/bin/activate; echo $venvActived; fi
-                if [ -d ".env" ]; then source $PWD/.env/bin/activate; echo $venvActived; fi
         fi
 
         pip install --upgrade pip
